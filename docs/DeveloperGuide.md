@@ -289,10 +289,10 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 | Priority | As a ...                                    | I want to ...                 | So that I can…​                                                        |
 |----------|---------------------------------------------|-------------------------------|------------------------------------------------------------------------|
-| `*`      | User                                        | add patients with essential details (name, phone, address, income, medical info) | record their data for future reference and case management |
-| `*`      | User                                        | list all patients at once    | browse patient records easily and get an overview of my caseload      |
-| `*`      | User                                        | delete patient records        | clean up patient records when they are no longer relevant or cases are closed |
-| `*`      | New User                                    | see usage instructions and command help | refer to instructions when I forget how to use the app |
+| `* * *`  | User                                        | add patients with essential details (name, phone, address, income, medical info) | record their data for future reference and case management |
+| `* * *`  | User                                        | list all patients at once    | browse patient records easily and get an overview of my caseload      |
+| `* * *`  | User                                        | delete patient records        | clean up patient records when they are no longer relevant or cases are closed |
+| `* * *`  | New User                                    | see usage instructions and command help | refer to instructions when I forget how to use the app |
 | `* *`     | Social Worker                               | filter contacts by attributes (medical condition, income level, name) | get information about my patients quickly during sessions |
 | `* *`     | Social Worker                               | take quick notes during or right after a session, even with incomplete data | capture important context immediately and avoid forgetting key details later |
 | `* *`     | Social Worker                               | enter partial patient details and still retrieve useful results | still access key patient information even when the data I have is incomplete |
@@ -307,9 +307,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* *`     | Expert User                                 | create custom aliases for commands | work faster with familiar shortcuts |
 | `* *`     | Expert User                                 | customize where the app saves data to / loads data from | easily make backups of data and revert to older versions if necessary |
 | `* *`     | New User                                    | easily discover available commands | use the product immediately, without having to consult a guide |
-| `* * *`    | New User                                    | import data from CSV/Excel files | migrate my existing records from other systems |
-| `* * *`    | Social Worker                               | see patients close to my proximity | plan home visits efficiently |
-| `* * *`    | Social Worker                               | group patients by neighbourhood | cover multiple visits in one area |
+| `*`      | New User                                    | import data from CSV/Excel files | migrate my existing records from other systems |
+| `*`      | Social Worker                               | see patients close to my proximity | plan home visits efficiently |
+| `*`      | Social Worker                               | group patients by neighbourhood | cover multiple visits in one area |
 
 *{More to be added}*
 
