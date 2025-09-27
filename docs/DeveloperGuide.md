@@ -356,8 +356,16 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Glossary
 
-* **Mainstream OS**: Windows, Linux, Unix, MacOS
-* **Private contact detail**: A contact detail that is not meant to be shared with others
+| Term | Definition |
+|------|------------|
+| **Mainstream OS** | Windows, Linux, Unix, MacOS |
+| **Patient Record** | A data entry with a patient's name, phone, address, income, medical info, and notes|
+| **Quick Note** | A brief text annotation attached to a patient record, typically captured during or immediately after a session |
+| **Session** | A meeting or consultation between a social worker and a patient |
+| **Duplicate Patient** | A patient record with identical name (case-insensitive) and phone number as an existing record |
+| **Medical Information** | Health-related details about a patient including conditions, medications, or treatment notes |
+| **Partial Data** | Incomplete patient information, common during initial visits or when full details are not available |
+| **Prefix** | Command parameter identifiers (e.g., n/ for name, p/ for phone) used in the CLI syntax |
 
 --------------------------------------------------------------------------------------------------------------------
 
