@@ -274,13 +274,15 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
+* Tech-savvy social workers in hospitals (with no access to patient information from the hospital database)
 * has a need to manage a significant number of contacts
 * prefer desktop apps over other types
 * can type fast
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
+**Value proposition**: quickly work with large amounts of patient information during sessions or home visits, 
+optimized for fast CLI interactions.
 
 
 ### User stories
