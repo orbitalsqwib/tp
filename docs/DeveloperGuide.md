@@ -29,7 +29,7 @@ Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
 <puml src="diagrams/ArchitectureDiagram.puml" width="280" />
 
-The ***Architecture Diagram*** given above explains the high-level design of the App.
+The * * *Architecture Diagram* * * given above explains the high-level design of the App.
 
 Given below is a quick overview of main components and how they interact with each other.
 
@@ -293,23 +293,23 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `*`      | User                                        | list all patients at once    | browse patient records easily and get an overview of my caseload      |
 | `*`      | User                                        | delete patient records        | clean up patient records when they are no longer relevant or cases are closed |
 | `*`      | New User                                    | see usage instructions and command help | refer to instructions when I forget how to use the app |
-| `**`     | Social Worker                               | filter contacts by attributes (medical condition, income level, name) | get information about my patients quickly during sessions |
-| `**`     | Social Worker                               | take quick notes during or right after a session, even with incomplete data | capture important context immediately and avoid forgetting key details later |
-| `**`     | Social Worker                               | enter partial patient details and still retrieve useful results | still access key patient information even when the data I have is incomplete |
-| `**`     | Social Worker                               | tag and categorize patients based on needs | prioritize cases and follow up more systematically |
-| `**`     | Social Worker                               | link related patient records  | see family connections and related cases                               |
-| `**`     | Social Worker                               | quickly copy information out of the application | work effortlessly with other systems and reports |
-| `**`     | Social Worker                               | pin frequently accessed patient records | decrease the amount of time spent searching for cases I am working on |
-| `**`     | Social Worker                               | search across all patient notes and records by keyword | quickly retrieve specific information without manually scanning through each record |
-| `**`     | Social Worker                               | set reminders or follow-up dates for patients | ensure timely check-ins and avoid missing important appointments |
-| `**`     | Social Worker                               | export selected patient records into a shareable format | easily collaborate with colleagues or submit reports without retyping data |
-| `**`     | Expert User                                 | enter command arguments in any order | focus less on the act of keying in a command and work more naturally |
-| `**`     | Expert User                                 | create custom aliases for commands | work faster with familiar shortcuts |
-| `**`     | Expert User                                 | customize where the app saves data to / loads data from | easily make backups of data and revert to older versions if necessary |
-| `**`     | New User                                    | easily discover available commands | use the product immediately, without having to consult a guide |
-| `***`    | New User                                    | import data from CSV/Excel files | migrate my existing records from other systems |
-| `***`    | Social Worker                               | see patients close to my proximity | plan home visits efficiently |
-| `***`    | Social Worker                               | group patients by neighbourhood | cover multiple visits in one area |
+| `* *`     | Social Worker                               | filter contacts by attributes (medical condition, income level, name) | get information about my patients quickly during sessions |
+| `* *`     | Social Worker                               | take quick notes during or right after a session, even with incomplete data | capture important context immediately and avoid forgetting key details later |
+| `* *`     | Social Worker                               | enter partial patient details and still retrieve useful results | still access key patient information even when the data I have is incomplete |
+| `* *`     | Social Worker                               | tag and categorize patients based on needs | prioritize cases and follow up more systematically |
+| `* *`     | Social Worker                               | link related patient records  | see family connections and related cases                               |
+| `* *`     | Social Worker                               | quickly copy information out of the application | work effortlessly with other systems and reports |
+| `* *`     | Social Worker                               | pin frequently accessed patient records | decrease the amount of time spent searching for cases I am working on |
+| `* *`     | Social Worker                               | search across all patient notes and records by keyword | quickly retrieve specific information without manually scanning through each record |
+| `* *`     | Social Worker                               | set reminders or follow-up dates for patients | ensure timely check-ins and avoid missing important appointments |
+| `* *`     | Social Worker                               | export selected patient records into a shareable format | easily collaborate with colleagues or submit reports without retyping data |
+| `* *`     | Expert User                                 | enter command arguments in any order | focus less on the act of keying in a command and work more naturally |
+| `* *`     | Expert User                                 | create custom aliases for commands | work faster with familiar shortcuts |
+| `* *`     | Expert User                                 | customize where the app saves data to / loads data from | easily make backups of data and revert to older versions if necessary |
+| `* *`     | New User                                    | easily discover available commands | use the product immediately, without having to consult a guide |
+| `* * *`    | New User                                    | import data from CSV/Excel files | migrate my existing records from other systems |
+| `* * *`    | Social Worker                               | see patients close to my proximity | plan home visits efficiently |
+| `* * *`    | Social Worker                               | group patients by neighbourhood | cover multiple visits in one area |
 
 *{More to be added}*
 
