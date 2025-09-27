@@ -287,8 +287,8 @@ _{Explain here how the data archiving feature will be implemented}_
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a ...                                    | I want to ...                 | So that I can…​                                                        |
-|----------|---------------------------------------------|-------------------------------|------------------------------------------------------------------------|
+| Priority | As a …​                                    | I want to …​                 | So that I can…​                                                        |
+|----------|--------------------------------------------|------------------------------|------------------------------------------------------------------------|
 | `* * *`  | User                                        | add patients with essential details (name, phone, address, income, medical info) | record their data for future reference and case management |
 | `* * *`  | User                                        | list all patients at once    | browse patient records easily and get an overview of my caseload      |
 | `* * *`  | User                                        | delete patient records        | clean up patient records when they are no longer relevant or cases are closed |
