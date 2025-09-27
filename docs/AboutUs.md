@@ -45,7 +45,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 <img src="images/niyniy123.png" width="200px">
 
 [[github](http://github.com/niyniy123)]
-[[portfolio](team/niyniy123.md)]
+[[portfolio](team/johndoe.md)]
 
 * Role: Developer
 * Responsibilities: Testing
