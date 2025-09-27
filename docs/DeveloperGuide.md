@@ -346,9 +346,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Non-Functional Requirements
 
-1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+1. Should work on any mainstream OS as long as it has Java `17` or above installed.
+2. Should be able to store and retrieve up to 10,000 patient records without noticeable delay (< 3 seconds for search operations).
+3. All patient data must be stored locally with no transmission over networks to ensure patient privacy compliance.
+4. Healthcare helpers with basic computer literacy should be able to perform common tasks (add, search, update patient records) within 5 minutes of initial training.
+5. A user with above average typing speed for regular English text should be able to accomplish most of the tasks faster using commands than using the mouse.
 
 *{More to be added}*
 
