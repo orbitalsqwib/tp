@@ -21,15 +21,15 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 * Role: Project Advisor
 
-### Jane Doe
+### Jeyavishnu 
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/appdevin.png" width="200px">
 
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[github](http://github.com/appdevin)]
+[[portfolio](https://www.linkedin.com/in/jeya/)]
 
-* Role: Team Lead
-* Responsibilities: UI
+* Role: Developer
+* Responsibilities: DevOps + Data Storage 
 
 ### Johnny Doe
 
