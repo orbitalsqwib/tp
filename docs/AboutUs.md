@@ -31,14 +31,14 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Role: Developer
 * Responsibilities: DevOps + Data Storage 
 
-### Johnny Doe
+### Lim Hur
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/lhurr.png" width="200px">
 
-[[github](http://github.com/johndoe)] [[portfolio](team/johndoe.md)]
+[[github](http://github.com/lhurr)] [[portfolio](team/johndoe.md)]
 
 * Role: Developer
-* Responsibilities: Data
+* Responsibilities: Data storage and management
 
 ### Yin
 
