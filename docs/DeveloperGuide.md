@@ -341,6 +341,10 @@ CaseTrack informs the user that there are no patients available
 
       Use case ends.
 
+* a. At anytime, Social Worker cancels the action.
+
+  Use case ends.
+  
 #### Use case (UC04): Filter Patient by Attributes
 
 #### Use case (UC05): Add Quick Note
