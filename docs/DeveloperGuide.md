@@ -534,6 +534,65 @@ Use case ends.
 
     Use case ends.
 
+#### Use case (UC07): Search/Filter Patients
+
+**MSS**
+
+1. User enters the `search` command with one or more filter attributes (name, condition, and/or income).
+2. System parses the command and validates input parameters.
+3. System filters the patient list based on the provided criteria.
+4. System displays all matching patient records showing name, condition, and income.
+
+   Use case ends.
+
+**Extensions**
+
+* 1a. No attributes specified (empty search command).
+
+    * 1a1. System shows error: "Specify attribute to search."
+
+      Use case ends.
+
+* 2a. Invalid name format (contains non-alphabetic characters except spaces and hyphens).
+
+    * 2a1. System shows error: "Invalid name format. Names may only contain alphabetic characters, spaces, hyphens."
+
+      Use case ends.
+
+* 2b. Invalid condition format (contains non-alphabetic characters except spaces and hyphens).
+
+    * 2b1. System shows error: "Invalid condition format. Conditions can only contain letters and spaces, hyphens."
+
+      Use case ends.
+
+* 2c. Invalid income format (not a positive number, contains commas or currency symbols).
+
+    * 2c1. System shows error: "Invalid income format. Enter a positive whole number."
+
+      Use case ends.
+
+* 2d. Unrecognized attribute prefix (e.g., age/, city/).
+
+    * 2d1. System shows error: "Invalid attribute."
+
+      Use case ends.
+
+* 2e. Empty attribute value (e.g., name/, condition/, income/).
+
+    * 2e1. System shows error for the specific empty attribute.
+
+      Use case ends.
+
+* 3a. No patients match the search criteria.
+
+    * 3a1. System shows message: "No patient found."
+
+      Use case ends.
+
+* *a. At any time, User cancels the action.
+
+    Use case ends.
+
 *{More to be added}*
 
 ### Non-Functional Requirements
