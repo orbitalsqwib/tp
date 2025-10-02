@@ -481,6 +481,60 @@ Use case ends.
 
     * Use case ends.
 
+#### Use case: (UC06): Remove Quick Note
+
+**Preconditions**
+* Patient record exists in the system (by ID or by Name + Phone).
+
+**Guarantees**
+* A note will only be deleted if a valid patient is identified and the note index exists.
+* Only notes from the linked patient will be deleted.
+* Invalid inputs will not delete notes.
+
+**MSS**
+1.	Actor types the command to remove a quick note with patient reference and note index.
+2.	System validates the patient reference (ID or Name + Phone).
+3.	System validates the note index.
+4.	System deletes the specified note under the patient’s record.
+5.	System confirms success by displaying the deleted note.
+
+    Use case ends.
+
+**Extensions**
+*	2a. Missing patient reference.
+
+    * 2a1. System shows error: “Either ID or (Name and Phone) is required.”
+
+    Use case ends.
+
+*	2b. No matching patient found.
+
+    * 2b1. System shows error: “No patient found with the given details.”
+
+    Use case ends.
+
+*	2c. Phone number invalid (not 8 digits).
+
+    * 2c1. System shows an error: “Phone number must be 8 digits.”
+
+    Use case ends.
+
+*	3a. Note index is empty.
+
+    * 3a1. System shows an error: “Note index is required”
+
+    Use case ends.
+
+*	3b. Note index is invalid (not a number, less than 1, or more than the number of total notes the patient currently has)
+
+    * 3b1. System shows an error: “The note index must be in the range 1 to [total number of notes the patient has].”
+
+    Use case ends.
+
+* *a. At any time, Actor cancels the action.
+
+  Use case ends.
+
 *{More to be added}*
 
 ### Non-Functional Requirements
