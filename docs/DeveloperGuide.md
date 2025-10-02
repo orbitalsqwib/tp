@@ -281,7 +281,7 @@ _{Explain here how the data archiving feature will be implemented}_
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
 
-**Value proposition**: quickly work with large amounts of patient information during sessions or home visits, 
+**Value proposition**: quickly work with large amounts of patient information during sessions or home visits,
 optimized for fast CLI interactions.
 
 
@@ -380,6 +380,10 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
   Use case ends.
 
+* *a. At anytime, user cancels the action.
+
+  Use case ends.
+
 #### Use case (UC02): View All Patients
 
 **MSS**
@@ -407,7 +411,7 @@ Use case ends.
 * 2a. The list is empty.
 
     * 2a1. System informs the user that there are no patients available
-  
+
       Use case ends.
 
 * 3a. The given index is invalid.
@@ -418,19 +422,18 @@ Use case ends.
 
 * 4a. Deletion fails due to system error.
 
-    * System shows an error message.
+    * 4a1. System shows an error message.
 
       Use case ends.
 
-* a. At anytime, user cancels the action.
+* *a. At anytime, user cancels the action.
 
   Use case ends.
 
 
-**Use case (UC05): Add Quick Note**
+#### Use case (UC05): Add Quick Note
 
 **Preconditions**
-* User is logged into the system.
 * Patient record exists in the system (by ID or by Name + Phone).
 
 **Guarantees**
@@ -452,34 +455,30 @@ Use case ends.
 *	2a. Missing patient reference.
 
     * 2a1. System shows error: “Either ID or (Name and Phone) is required.”
-  
-    * 2a2. Use case ends.
-  
+
+      Use case ends.
+
 *	2b. No matching patient found.
 
     * 2b1. System shows error: “No patient found with the given details.”
-  
-    * 2b2. Use case ends.
+
+      Use case ends.
 
 *	2c. Phone number invalid (not 8 digits).
 
     * 2c1. System shows an error: “Phone number must be 8 digits.”
 
-    * 2c2. Use case ends.
+      Use case ends.
 
 *	3a. Note text is empty.
 
     * 3a1. System shows an error: “Note cannot be empty.”
 
-    * 3a2. Use case ends.
+      Use case ends.
 
 *	*a. At any time, User cancels the action.
 
-    * *a1. System confirms cancellation.
-
-    * *a2. User confirms.
-
-    * Use case ends.
+    Use case ends.
 
 #### Use case: (UC06): Remove Quick Note
 
@@ -505,35 +504,35 @@ Use case ends.
 
     * 2a1. System shows error: “Either ID or (Name and Phone) is required.”
 
-    Use case ends.
+      Use case ends.
 
 *	2b. No matching patient found.
 
     * 2b1. System shows error: “No patient found with the given details.”
 
-    Use case ends.
+      Use case ends.
 
 *	2c. Phone number invalid (not 8 digits).
 
     * 2c1. System shows an error: “Phone number must be 8 digits.”
 
-    Use case ends.
+      Use case ends.
 
 *	3a. Note index is empty.
 
     * 3a1. System shows an error: “Note index is required”
 
-    Use case ends.
+      Use case ends.
 
 *	3b. Note index is invalid (not a number, less than 1, or more than the number of total notes the patient currently has)
 
     * 3b1. System shows an error: “The note index must be in the range 1 to [total number of notes the patient has].”
 
-    Use case ends.
+      Use case ends.
 
 * *a. At any time, Actor cancels the action.
 
-  Use case ends.
+    Use case ends.
 
 *{More to be added}*
 
