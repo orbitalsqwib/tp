@@ -412,7 +412,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-* a. At anytime, Social Worker cancels the action.
+* a. At anytime, user cancels the action.
 
   Use case ends.
 
