@@ -49,8 +49,11 @@ jobs:
         id: deploy
         run: |
           echo "Testing secret access..."
+          echo "Looking for SURGE_LOGIN..."
+          echo "Looking for SURGE_TOKEN..."
           echo "Email set: ${{ secrets.SURGE_LOGIN != '' }}"
           echo "Token set: ${{ secrets.SURGE_TOKEN != '' }}"
+          echo "Available context: ${{ toJSON(secrets) }}"
           DEPLOY_DOMAIN="cs2103-tp-pr-${{ github.event.pull_request.number }}.surge.sh"
           echo "$DEPLOY_DOMAIN" > ./docs/_site/CNAME
           cd docs/_site
