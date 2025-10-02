@@ -380,6 +380,16 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
   Use case ends.
 
+#### Use case (UC02): View All Patients
+
+**MSS**
+
+1. Social Worker inputs a list command.
+2. CaseTrack displays a list of all patients.
+
+Use case ends.
+
+
 #### Use case (UC03): Delete patient
 
 **MSS**
