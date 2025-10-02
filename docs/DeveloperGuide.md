@@ -385,10 +385,10 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1. User requests to list patients
-2.  CaseTrack <u>shows a list of patients</u> ([UC02](#use-case-uc02-view-all-patients))
+2.  System <u>shows a list of patients</u> ([UC02](#use-case-uc02-view-all-patients))
 3.  User requests to delete a specific patients in the list
-4.  CaseTrack deletes the patient
-5.  CaseTrack shows success message
+4.  System deletes the patient
+5.  System shows success message
 
     Use case ends.
 
@@ -396,19 +396,19 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2a. The list is empty.
 
-    * 2a1. CaseTrack informs the user that there are no patients available
+    * 2a1. System informs the user that there are no patients available
   
       Use case ends.
 
 * 3a. The given index is invalid.
 
-    * 3a1. CaseTrack shows an error message.
+    * 3a1. System shows an error message.
 
       Use case resumes at step 2.
 
 * 4a. Deletion fails due to system error.
 
-    * CaseTrack shows an error message.
+    * System shows an error message.
 
       Use case ends.
 
