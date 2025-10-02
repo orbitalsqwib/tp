@@ -1,7 +1,7 @@
 name: MarkBind PR Preview
 
 on:
-  pull_request:
+  pull_request_target:
     paths:
       - "docs/**"
     types: [opened, synchronize, reopened]
