@@ -1,0 +1,88 @@
+name: MarkBind PR Preview
+
+on:
+  pull_request:
+    paths:
+      - 'docs/**'
+    types: [opened, synchronize, reopened]
+
+permissions:
+  pull-requests: write
+
+jobs:
+  build_and_preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Graphviz
+        run: sudo apt-get install graphviz
+
+      - name: Install Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'zulu'
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install MarkBind
+        run: |
+          cd docs
+          npm ci
+
+      - name: Build MarkBind site
+        run: |
+          cd docs
+          npm run build
+
+      - name: Install Surge
+        run: npm install -g surge
+
+      - name: Deploy to Surge
+        id: deploy
+        run: |
+          DEPLOY_DOMAIN="tp-pr-${{ github.event.pull_request.number }}-appdevin.surge.sh"
+          surge ./docs/_site $DEPLOY_DOMAIN --token ${{ secrets.SURGE_TOKEN }}
+          echo "url=https://$DEPLOY_DOMAIN" >> $GITHUB_OUTPUT
+
+      - name: Comment preview URL
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prNumber = context.payload.pull_request.number;
+            const repo = context.repo;
+            const previewUrl = "${{ steps.deploy.outputs.url }}";
+
+            const comment = `Preview: ${previewUrl}`;
+
+            const { data: comments } = await github.rest.issues.listComments({
+              issue_number: prNumber,
+              owner: repo.owner,
+              repo: repo.repo,
+            });
+
+            const botComment = comments.find(comment =>
+              comment.user.type === 'Bot' &&
+              comment.body.includes('Preview:')
+            );
+
+            if (botComment) {
+              await github.rest.issues.updateComment({
+                comment_id: botComment.id,
+                owner: repo.owner,
+                repo: repo.repo,
+                body: comment
+              });
+            } else {
+              await github.rest.issues.createComment({
+                issue_number: prNumber,
+                owner: repo.owner,
+                repo: repo.repo,
+                body: comment
+              });
+            }
