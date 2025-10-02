@@ -21,7 +21,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Role: Team Lead, Developer
 * Responsibilities: UI
 
-### Jeyavishnu 
+### Jeyavishnu
 
 <img src="images/appdevin.png" width="200px">
 
@@ -29,7 +29,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[portfolio](team/johndoe.md)]
 
 * Role: Developer
-* Responsibilities: DevOps + Data Storage 
+* Responsibilities: DevOps + Data Storage
 
 ### Lim Hur
 
