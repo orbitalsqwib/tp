@@ -3,7 +3,7 @@ name: MarkBind PR Preview
 on:
   pull_request:
     paths:
-      - 'docs/**'
+      - "docs/**"
     types: [opened, synchronize, reopened]
 
 permissions:
@@ -23,13 +23,13 @@ jobs:
       - name: Install Java
         uses: actions/setup-java@v3
         with:
-          java-version: '17'
-          distribution: 'zulu'
+          java-version: "17"
+          distribution: "zulu"
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: "18"
 
       - name: Install MarkBind
         run: |
@@ -46,9 +46,12 @@ jobs:
 
       - name: Deploy to Surge
         id: deploy
+        env:
+          SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
+          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
         run: |
-          DEPLOY_DOMAIN="tp-pr-${{ github.event.pull_request.number }}-appdevin.surge.sh"
-          surge ./docs/_site $DEPLOY_DOMAIN --token ${{ secrets.SURGE_TOKEN }}
+          DEPLOY_DOMAIN="tp-pr-${{ github.event.pull_request.number }}-AY2526S1-CS2103-F12-3.surge.sh"
+          surge ./docs/_site $DEPLOY_DOMAIN
           echo "url=https://$DEPLOY_DOMAIN" >> $GITHUB_OUTPUT
 
       - name: Comment preview URL
