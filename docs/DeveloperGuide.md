@@ -4,7 +4,7 @@
   pageNav: 3
 ---
 
-# AB-3 Developer Guide
+# CaseTrack Developer Guide
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -274,13 +274,15 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
+* Tech-savvy social workers in hospitals (with no access to patient information from the hospital database)
 * has a need to manage a significant number of contacts
 * prefer desktop apps over other types
 * can type fast
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
+**Value proposition**: quickly work with large amounts of patient information during sessions or home visits, 
+optimized for fast CLI interactions.
 
 
 ### User stories
@@ -289,12 +291,27 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 | Priority | As a …​                                    | I want to …​                 | So that I can…​                                                        |
 |----------|--------------------------------------------|------------------------------|------------------------------------------------------------------------|
-| `* * *`  | new user                                   | see usage instructions       | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person             |                                                                        |
-| `* * *`  | user                                       | delete a person              | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name        | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name         | locate a person easily                                                 |
+| `* * *`  | User                                        | add patients with essential details (name, phone, address, income, medical info) | record their data for future reference and case management |
+| `* * *`  | User                                        | list all patients at once    | browse patient records easily and get an overview of my caseload      |
+| `* * *`  | User                                        | delete patient records        | clean up patient records when they are no longer relevant or cases are closed |
+| `* * *`  | New User                                    | see usage instructions and command help | refer to instructions when I forget how to use the app |
+| `* *`     | Social Worker                               | filter contacts by attributes (medical condition, income level, name) | get information about my patients quickly during sessions |
+| `* *`     | Social Worker                               | take quick notes during or right after a session, even with incomplete data | capture important context immediately and avoid forgetting key details later |
+| `* *`     | Social Worker                               | enter partial patient details and still retrieve useful results | still access key patient information even when the data I have is incomplete |
+| `* *`     | Social Worker                               | tag and categorize patients based on needs | prioritize cases and follow up more systematically |
+| `* *`     | Social Worker                               | link related patient records  | see family connections and related cases                               |
+| `* *`     | Social Worker                               | quickly copy information out of the application | work effortlessly with other systems and reports |
+| `* *`     | Social Worker                               | pin frequently accessed patient records | decrease the amount of time spent searching for cases I am working on |
+| `* *`     | Social Worker                               | search across all patient notes and records by keyword | quickly retrieve specific information without manually scanning through each record |
+| `* *`     | Social Worker                               | set reminders or follow-up dates for patients | ensure timely check-ins and avoid missing important appointments |
+| `* *`     | Social Worker                               | export selected patient records into a shareable format | easily collaborate with colleagues or submit reports without retyping data |
+| `* *`     | Expert User                                 | enter command arguments in any order | focus less on the act of keying in a command and work more naturally |
+| `* *`     | Expert User                                 | create custom aliases for commands | work faster with familiar shortcuts |
+| `* *`     | Expert User                                 | customize where the app saves data to / loads data from | easily make backups of data and revert to older versions if necessary |
+| `* *`     | New User                                    | easily discover available commands | use the product immediately, without having to consult a guide |
+| `*`      | New User                                    | import data from CSV/Excel files | migrate my existing records from other systems |
+| `*`      | Social Worker                               | see patients close to my proximity | plan home visits efficiently |
+| `*`      | Social Worker                               | group patients by neighbourhood | cover multiple visits in one area |
 
 *{More to be added}*
 
@@ -329,16 +346,26 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Non-Functional Requirements
 
-1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+1. Should work on any mainstream OS as long as it has Java `17` or above installed.
+2. Should be able to store and retrieve up to 10,000 patient records without noticeable delay (< 3 seconds for search operations).
+3. All patient data must be stored locally with no transmission over networks to ensure patient privacy compliance.
+4. Healthcare helpers with basic computer literacy should be able to perform common tasks (add, search, update patient records) within 5 minutes of initial training.
+5. A user with above average typing speed for regular English text should be able to accomplish most of the tasks faster using commands than using the mouse.
 
 *{More to be added}*
 
 ### Glossary
 
-* **Mainstream OS**: Windows, Linux, Unix, MacOS
-* **Private contact detail**: A contact detail that is not meant to be shared with others
+| Term | Definition |
+|------|------------|
+| **Mainstream OS** | Windows, Linux, Unix, MacOS |
+| **Patient Record** | A data entry with a patient's name, phone, address, income, medical info, and notes|
+| **Quick Note** | A brief text annotation attached to a patient record, typically captured during or immediately after a session |
+| **Session** | A meeting or consultation between a social worker and a patient |
+| **Duplicate Patient** | A patient record with identical name (case-insensitive) and phone number as an existing record |
+| **Medical Information** | Health-related details about a patient including conditions, medications, or treatment notes |
+| **Partial Data** | Incomplete patient information, common during initial visits or when full details are not available |
+| **Prefix** | Command parameter identifiers (e.g., n/ for name, p/ for phone) used in the CLI syntax |
 
 --------------------------------------------------------------------------------------------------------------------
 
