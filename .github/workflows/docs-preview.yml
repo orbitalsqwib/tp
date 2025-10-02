@@ -47,14 +47,11 @@ jobs:
 
       - name: Deploy to Surge
         id: deploy
-        env:
-          SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
-          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
         run: |
           DEPLOY_DOMAIN="tp-pr-${{ github.event.pull_request.number }}-appdevin.surge.sh"
           echo "$DEPLOY_DOMAIN" > ./docs/_site/CNAME
           cd docs/_site
-          surge . $DEPLOY_DOMAIN
+          echo "${{ secrets.SURGE_LOGIN }}" | surge . $DEPLOY_DOMAIN --token ${{ secrets.SURGE_TOKEN }}
           echo "url=https://$DEPLOY_DOMAIN" >> $GITHUB_OUTPUT
 
       - name: Comment preview URL
