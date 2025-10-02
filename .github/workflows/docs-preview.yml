@@ -51,7 +51,7 @@ jobs:
           DEPLOY_DOMAIN="cs2103-tp-pr-${{ github.event.pull_request.number }}.surge.sh"
           echo "$DEPLOY_DOMAIN" > ./docs/_site/CNAME
           cd docs/_site
-          echo "${{ secrets.SURGE_LOGIN }}" | npx surge --domain $DEPLOY_DOMAIN --token ${{ secrets.SURGE_TOKEN }}
+          echo "${{ secrets.SURGE_LOGIN }}" | npx surge . --domain $DEPLOY_DOMAIN --token ${{ secrets.SURGE_TOKEN }}
           echo "url=https://$DEPLOY_DOMAIN" >> $GITHUB_OUTPUT
 
       - name: Comment preview URL
