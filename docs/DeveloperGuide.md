@@ -304,11 +304,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is the `CaseTrack` and the **Actor** is the `user`, unless specified otherwise)
 
-#### Use case (UC01): Add patient
-
-
-#### Use case (UC02): View all patients
-
 
 #### Use case (UC03): Delete patient
 
@@ -326,8 +321,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2a. The list is empty.
 
-CaseTrack informs the user that there are no patients available
-  Use case ends.
+    * 2a1. CaseTrack informs the user that there are no patients available
+  
+      Use case ends.
 
 * 3a. The given index is invalid.
 
@@ -345,11 +341,7 @@ CaseTrack informs the user that there are no patients available
 
   Use case ends.
   
-#### Use case (UC04): Filter Patient by Attributes
 
-#### Use case (UC05): Add Quick Note
-
-#### Use case (UC06): Remove Quick Note
 
 *{More to be added}*
 
