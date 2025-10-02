@@ -281,7 +281,7 @@ _{Explain here how the data archiving feature will be implemented}_
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
 
-**Value proposition**: quickly work with large amounts of patient information during sessions or home visits, 
+**Value proposition**: quickly work with large amounts of patient information during sessions or home visits,
 optimized for fast CLI interactions.
 
 
