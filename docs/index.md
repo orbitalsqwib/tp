@@ -5,7 +5,7 @@
 
 # CaseTrack
 
-[![CI Status](https://github.com/se-edu/addressbook-level3/workflows/Java%20CI/badge.svg)](https://github.com/se-edu/addressbook-level3/actions)
+[![CI Status](https://github.com/AY2526S1-CS2103-F12-3/tp/workflows/Java%20CI/badge.svg)](https://github.com/AY2526S1-CS2103-F12-3/tp/actions)
 [![codecov](https://codecov.io/gh/se-edu/addressbook-level3/branch/master/graph/badge.svg)](https://codecov.io/gh/se-edu/addressbook-level3)
 
 ![Ui](images/Ui.png)

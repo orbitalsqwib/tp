@@ -291,12 +291,27 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 | Priority | As a …​                                    | I want to …​                 | So that I can…​                                                        |
 |----------|--------------------------------------------|------------------------------|------------------------------------------------------------------------|
-| `* * *`  | new user                                   | see usage instructions       | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person             |                                                                        |
-| `* * *`  | user                                       | delete a person              | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name        | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name         | locate a person easily                                                 |
+| `* * *`  | User                                        | add patients with essential details (name, phone, address, income, medical info) | record their data for future reference and case management |
+| `* * *`  | User                                        | list all patients at once    | browse patient records easily and get an overview of my caseload      |
+| `* * *`  | User                                        | delete patient records        | clean up patient records when they are no longer relevant or cases are closed |
+| `* * *`  | New User                                    | see usage instructions and command help | refer to instructions when I forget how to use the app |
+| `* *`     | Social Worker                               | filter contacts by attributes (medical condition, income level, name) | get information about my patients quickly during sessions |
+| `* *`     | Social Worker                               | take quick notes during or right after a session, even with incomplete data | capture important context immediately and avoid forgetting key details later |
+| `* *`     | Social Worker                               | enter partial patient details and still retrieve useful results | still access key patient information even when the data I have is incomplete |
+| `* *`     | Social Worker                               | tag and categorize patients based on needs | prioritize cases and follow up more systematically |
+| `* *`     | Social Worker                               | link related patient records  | see family connections and related cases                               |
+| `* *`     | Social Worker                               | quickly copy information out of the application | work effortlessly with other systems and reports |
+| `* *`     | Social Worker                               | pin frequently accessed patient records | decrease the amount of time spent searching for cases I am working on |
+| `* *`     | Social Worker                               | search across all patient notes and records by keyword | quickly retrieve specific information without manually scanning through each record |
+| `* *`     | Social Worker                               | set reminders or follow-up dates for patients | ensure timely check-ins and avoid missing important appointments |
+| `* *`     | Social Worker                               | export selected patient records into a shareable format | easily collaborate with colleagues or submit reports without retyping data |
+| `* *`     | Expert User                                 | enter command arguments in any order | focus less on the act of keying in a command and work more naturally |
+| `* *`     | Expert User                                 | create custom aliases for commands | work faster with familiar shortcuts |
+| `* *`     | Expert User                                 | customize where the app saves data to / loads data from | easily make backups of data and revert to older versions if necessary |
+| `* *`     | New User                                    | easily discover available commands | use the product immediately, without having to consult a guide |
+| `*`      | New User                                    | import data from CSV/Excel files | migrate my existing records from other systems |
+| `*`      | Social Worker                               | see patients close to my proximity | plan home visits efficiently |
+| `*`      | Social Worker                               | group patients by neighbourhood | cover multiple visits in one area |
 
 *{More to be added}*
 
@@ -304,6 +319,66 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is the `CaseTrack` and the **Actor** is the `user`, unless specified otherwise)
 
+**Use case (UC01): Add a patient**
+
+**MSS**
+
+1. User enters the `add` command in the format add n/NAME p/PHONE a/ADDRESS i/INCOME [m/MEDICAL_INFO].
+2. System parses the command and validates input
+3. System normalizes NAME case and spaces for internal comparison and checks for duplicates using NAME+PHONE.
+4. System creates and saves the new patient record.
+5. System confirms success by displaying: Patient added: <Name> (<Phone>).
+
+   Use case ends.
+
+**Extensions**
+
+* 1a. Missing mandatory fields (n/ or p/ absent, or empty after prefix)
+
+    * 1a1. System shows "Name and phone are required fields.".
+
+    * 1a2. No patient is added.
+
+  Use case ends.
+
+* 2a. Invalid NAME (contains digits/symbols)
+    * 2a1. System shows "Invalid name format. Names may only contain letters and spaces.".
+
+    * 2a2. No patient is added.
+
+  Use case ends.
+
+* 2b. Invalid PHONE (not 8 digits after trimming):
+
+    * 2b1. System shows "Phone number must be 8 digits.".
+
+    * 2b2. No patient is added.
+
+  Use case ends.
+
+* 2c. Invalid INCOME (not numeric or < 0):
+
+    * 2c1. System shows "Income must be a non-negative number.".
+
+    * 2c2. No patient is added.
+
+  Use case ends.
+
+* 2d. Invalid input format (e.g., unrecognized/missing prefixes, duplicated prefixes or empty values):
+
+    * 2d1. System shows an appropriate input format error message, including the correct command usage and example.
+
+    * 2d2. No patient is added.
+
+  Use case ends.
+
+* 3a. Duplicate patient found (same normalized NAME and same PHONE already exist):
+
+    * 3a1. System shows "This patient already exists.".
+
+    * 3a2. No patient is added.
+
+  Use case ends.
 
 #### Use case (UC03): Delete patient
 
@@ -340,23 +415,86 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * a. At anytime, Social Worker cancels the action.
 
   Use case ends.
-  
 
+
+**Use case (UC05): Add Quick Note**
+
+**Preconditions**
+* User is logged into the system.
+* Patient record exists in the system (by ID or by Name + Phone).
+
+**Guarantees**
+* A new note will be stored only if a valid patient is identified.
+* Notes are linked correctly to the intended patient.
+* Invalid inputs will not create notes.
+
+**MSS**
+
+1.	User types the command to add a quick note with patient reference and text.
+2.	System validates the patient reference (ID or Name + Phone).
+3.	System validates the note text is not empty.
+4.	System stores the note under the patient’s record.
+5.	System confirms success by displaying the created note.
+
+    Use case ends.
+
+**Extensions**
+*	2a. Missing patient reference.
+
+    * 2a1. System shows error: “Either ID or (Name and Phone) is required.”
+  
+    * 2a2. Use case ends.
+  
+*	2b. No matching patient found.
+
+    * 2b1. System shows error: “No patient found with the given details.”
+  
+    * 2b2. Use case ends.
+
+*	2c. Phone number invalid (not 8 digits).
+
+    * 2c1. System shows an error: “Phone number must be 8 digits.”
+
+    * 2c2. Use case ends.
+
+*	3a. Note text is empty.
+
+    * 3a1. System shows an error: “Note cannot be empty.”
+
+    * 3a2. Use case ends.
+
+*	*a. At any time, User cancels the action.
+
+    * *a1. System confirms cancellation.
+
+    * *a2. User confirms.
+
+    * Use case ends.
 
 *{More to be added}*
 
 ### Non-Functional Requirements
 
-1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+1. Should work on any mainstream OS as long as it has Java `17` or above installed.
+2. Should be able to store and retrieve up to 10,000 patient records without noticeable delay (< 3 seconds for search operations).
+3. All patient data must be stored locally with no transmission over networks to ensure patient privacy compliance.
+4. Healthcare helpers with basic computer literacy should be able to perform common tasks (add, search, update patient records) within 5 minutes of initial training.
+5. A user with above average typing speed for regular English text should be able to accomplish most of the tasks faster using commands than using the mouse.
 
 *{More to be added}*
 
 ### Glossary
 
-* **Mainstream OS**: Windows, Linux, Unix, MacOS
-* **Private contact detail**: A contact detail that is not meant to be shared with others
+| Term | Definition |
+|------|------------|
+| **Mainstream OS** | Windows, Linux, Unix, MacOS |
+| **Patient Record** | A data entry with a patient's name, phone, address, income, medical info, and notes|
+| **Quick Note** | A brief text annotation attached to a patient record, typically captured during or immediately after a session |
+| **Session** | A meeting or consultation between a social worker and a patient |
+| **Duplicate Patient** | A patient record with identical name (case-insensitive) and phone number as an existing record |
+| **Medical Information** | Health-related details about a patient including conditions, medications, or treatment notes |
+| **Partial Data** | Incomplete patient information, common during initial visits or when full details are not available |
+| **Prefix** | Command parameter identifiers (e.g., n/ for name, p/ for phone) used in the CLI syntax |
 
 --------------------------------------------------------------------------------------------------------------------
 
