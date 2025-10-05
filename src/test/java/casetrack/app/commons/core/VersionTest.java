@@ -1,8 +1,8 @@
 package casetrack.app.commons.core;
 
+import static casetrack.app.testutil.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static casetrack.app.testutil.Assert.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
