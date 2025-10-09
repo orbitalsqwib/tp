@@ -27,9 +27,6 @@ public class DeletePatientCommandParser implements Parser<DeletePatientCommand> 
      */
     private Index parseIndexArg(String args) throws ParseException {
         final String trimmedArgs = args.trim();
-        if (trimmedArgs.length() < 1) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeletePatientCommand.MESSAGE_USAGE));
-        }
 
         if (!trimmedArgs.startsWith("patient")) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeletePatientCommand.MESSAGE_USAGE));
