@@ -40,12 +40,9 @@ public class DeletePatientCommandParser implements Parser<DeletePatientCommand> 
         if (candidate.isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeletePatientCommand.MESSAGE_USAGE));
         }
-        try {
-            return ParserUtil.parseIndex(candidate);
-        } catch (ParseException pe) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeletePatientCommand.MESSAGE_USAGE), pe);
-        }
+
+        return ParserUtil.parseIndex(candidate);
+
     }
 
 }
