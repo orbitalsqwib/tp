@@ -11,7 +11,7 @@ import casetrack.app.commons.core.LogsCenter;
 import casetrack.app.logic.commands.AddCommand;
 import casetrack.app.logic.commands.ClearCommand;
 import casetrack.app.logic.commands.Command;
-import casetrack.app.logic.commands.DeleteCommand;
+import casetrack.app.logic.commands.DeletePatientCommand;
 import casetrack.app.logic.commands.EditCommand;
 import casetrack.app.logic.commands.ExitCommand;
 import casetrack.app.logic.commands.FindCommand;
@@ -27,7 +27,8 @@ public class AddressBookParser {
     /**
      * Used for initial separation of command word and args.
      */
-    private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
+    private static final Pattern BASIC_COMMAND_FORMAT =
+            Pattern.compile("(?<commandWord>\\S+)(?:\\s+(?<commandType>\\S+))?(?:\\s+(?<arguments>.*))?");
     private static final Logger logger = LogsCenter.getLogger(AddressBookParser.class);
 
     /**
@@ -43,8 +44,20 @@ public class AddressBookParser {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
         }
 
-        final String commandWord = matcher.group("commandWord");
-        final String arguments = matcher.group("arguments");
+        String commandWord = matcher.group("commandWord");
+        final String commandType = matcher.group("commandType");
+        String arguments = matcher.group("arguments");
+
+        arguments = (arguments == null || arguments.isEmpty()) ? "" : " " + arguments;
+
+        if (commandType != null) {
+            final String combined = commandWord + " " + commandType;
+            if (DeletePatientCommand.COMMAND_WORD.equals(combined)) {
+                commandWord = combined;
+            } else {
+                arguments = " " + commandType + arguments;
+            }
+        }
 
         // Note to developers: Change the log level in config.json to enable lower level (i.e., FINE, FINER and lower)
         // log messages such as the one below.
@@ -59,8 +72,8 @@ public class AddressBookParser {
         case EditCommand.COMMAND_WORD:
             return new EditCommandParser().parse(arguments);
 
-        case DeleteCommand.COMMAND_WORD:
-            return new DeleteCommandParser().parse(arguments);
+        case DeletePatientCommand.COMMAND_WORD:
+            return new DeletePatientCommandParser().parse(arguments);
 
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
