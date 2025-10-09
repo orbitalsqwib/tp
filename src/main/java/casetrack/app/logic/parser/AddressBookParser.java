@@ -27,8 +27,7 @@ public class AddressBookParser {
     /**
      * Used for initial separation of command word and args.
      */
-    private static final Pattern BASIC_COMMAND_FORMAT =
-            Pattern.compile("(?<commandWord>\\S+)(?:\\s+(?<commandType>\\S+))?(?:\\s+(?<arguments>.*))?");
+    private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
     private static final Logger logger = LogsCenter.getLogger(AddressBookParser.class);
 
     /**
@@ -44,20 +43,8 @@ public class AddressBookParser {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
         }
 
-        String commandWord = matcher.group("commandWord");
-        final String commandType = matcher.group("commandType");
-        String arguments = matcher.group("arguments");
-
-        arguments = (arguments == null || arguments.isEmpty()) ? "" : " " + arguments;
-
-        if (commandType != null) {
-            final String combined = commandWord + " " + commandType;
-            if (DeletePatientCommand.COMMAND_WORD.equals(combined)) {
-                commandWord = combined;
-            } else {
-                arguments = " " + commandType + arguments;
-            }
-        }
+        final String commandWord = matcher.group("commandWord");
+        final String arguments = matcher.group("arguments");
 
         // Note to developers: Change the log level in config.json to enable lower level (i.e., FINE, FINER and lower)
         // log messages such as the one below.
