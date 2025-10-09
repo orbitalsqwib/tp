@@ -17,23 +17,16 @@ public class DeletePatientCommandParser implements Parser<DeletePatientCommand> 
      * @throws ParseException if the user input does not conform the expected format
      */
     public DeletePatientCommand parse(String args) throws ParseException {
-        final String indexGroup = extractIndexArg(args);
-        try {
-            Index index = ParserUtil.parseIndex(indexGroup);
-            return new DeletePatientCommand(index);
-        } catch (ParseException pe) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeletePatientCommand.MESSAGE_USAGE), pe);
-        }
+        final Index index = parseIndexArg(args);
+        return new DeletePatientCommand(index);
     }
 
     /**
-     * Normalizes and validates the raw arguments for delete, supporting either
-     * {@code <index>} or {@code patient <index>} forms.
-     * Returns the string to parse as an index.
+     * Normalizes and parses the raw arguments for delete.
+     * Only supports the form {@code patient <index>} and returns the parsed index.
      */
-    private String extractIndexArg(String args) throws ParseException {
-        final String trimmedArgs = (args == null ? "" : args).trim();
+    private Index parseIndexArg(String args) throws ParseException {
+        final String trimmedArgs = args.trim();
         if (trimmedArgs.isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeletePatientCommand.MESSAGE_USAGE));
         }
@@ -47,7 +40,12 @@ public class DeletePatientCommandParser implements Parser<DeletePatientCommand> 
         if (candidate.isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeletePatientCommand.MESSAGE_USAGE));
         }
-        return candidate;
+        try {
+            return ParserUtil.parseIndex(candidate);
+        } catch (ParseException pe) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeletePatientCommand.MESSAGE_USAGE), pe);
+        }
     }
 
 }
