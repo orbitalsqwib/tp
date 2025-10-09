@@ -28,11 +28,11 @@ public class DeletePatientCommandParser implements Parser<DeletePatientCommand> 
     private Index parseIndexArg(String args) throws ParseException {
         final String trimmedArgs = args.trim();
 
-        if (!trimmedArgs.startsWith("patient")) {
+        if (!trimmedArgs.startsWith(ParserUtil.PATIENT_STRING)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeletePatientCommand.MESSAGE_USAGE));
         }
 
-        final String candidate = trimmedArgs.substring("patient".length()).trim();
+        final String candidate = trimmedArgs.substring(ParserUtil.PATIENT_STRING.length()).trim();
 
         return ParserUtil.parseIndex(candidate);
 
