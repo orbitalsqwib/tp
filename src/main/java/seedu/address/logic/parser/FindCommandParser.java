@@ -4,10 +4,12 @@ import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
 
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.Person;
 
 /**
  * Parses input arguments and creates a new FindCommand object
@@ -36,13 +38,25 @@ public class FindCommandParser implements Parser<FindCommand> {
         String searchType = argParts[0].toLowerCase();
         List<String> keywords = Arrays.asList(Arrays.copyOfRange(argParts, 1, argParts.length));
 
-        if (!"name".equals(searchType)) {
+        Predicate<Person> predicate = subcommand(searchType, keywords);
+        return new FindCommand(predicate);
+    }
+
+    /**
+     * Creates the appropriate predicate based on the search subcommand type.
+     * @param searchType the type of search (name, email, phone, etc.)
+     * @param keywords the keywords to search for
+     * @return the appropriate predicate for the search type
+     * @throws ParseException if the search type is invalid
+     */
+    private Predicate<Person> subcommand(String searchType, List<String> keywords) throws ParseException {
+        switch (searchType) {
+        case "name":
+            return new NameContainsKeywordsPredicate(keywords); 
+        default:
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
-
-        NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(keywords);
-        return new FindCommand(predicate);
     }
 
 }
