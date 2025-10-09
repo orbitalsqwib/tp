@@ -29,7 +29,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         }
 
         String[] argParts = trimmedArgs.split("\\s+");
-        
+
         if (argParts.length < 2) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
@@ -52,7 +52,7 @@ public class FindCommandParser implements Parser<FindCommand> {
     private Predicate<Person> subcommand(String searchType, List<String> keywords) throws ParseException {
         switch (searchType) {
         case "name":
-            return new NameContainsKeywordsPredicate(keywords); 
+            return new NameContainsKeywordsPredicate(keywords);
         default:
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
