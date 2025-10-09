@@ -3,10 +3,13 @@ package casetrack.app.logic.parser;
 import static casetrack.app.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.function.Predicate;
 
 import casetrack.app.logic.commands.FindCommand;
 import casetrack.app.logic.parser.exceptions.ParseException;
 import casetrack.app.model.person.NameContainsKeywordsPredicate;
+import casetrack.app.model.person.Person;
 
 /**
  * Parses input arguments and creates a new FindCommand object
@@ -25,9 +28,35 @@ public class FindCommandParser implements Parser<FindCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
-        String[] nameKeywords = trimmedArgs.split("\\s+");
+        String[] argParts = trimmedArgs.split("\\s+");
 
-        return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
+        if (argParts.length < 2) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
+
+        String searchType = argParts[0].toLowerCase();
+        List<String> keywords = Arrays.asList(Arrays.copyOfRange(argParts, 1, argParts.length));
+
+        Predicate<Person> predicate = subcommand(searchType, keywords);
+        return new FindCommand(predicate);
+    }
+
+    /**
+     * Creates the appropriate predicate based on the search subcommand type.
+     * @param searchType the type of search (name, email, phone, etc.)
+     * @param keywords the keywords to search for
+     * @return the appropriate predicate for the search type
+     * @throws ParseException if the search type is invalid
+     */
+    private Predicate<Person> subcommand(String searchType, List<String> keywords) throws ParseException {
+        switch (searchType) {
+        case "name":
+            return new NameContainsKeywordsPredicate(keywords);
+        default:
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
     }
 
 }
