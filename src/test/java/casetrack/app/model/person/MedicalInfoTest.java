@@ -3,6 +3,8 @@ package casetrack.app.model.person;
 import static casetrack.app.testutil.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import org.junit.jupiter.api.Test;
 
@@ -53,5 +55,26 @@ public class MedicalInfoTest {
 
         // different values -> returns false
         assertFalse(info.equals(new MedicalInfo("Diabetes")));
+    }
+
+    @Test
+    public void toString_returnsMedicalInfoString() {
+        MedicalInfo info = new MedicalInfo("Asthma");
+        assertEquals("Asthma", info.toString());
+    }
+
+    @Test
+    public void hashCode_equalValuesSameHash_differentValuesDifferentHash() {
+        MedicalInfo info1 = new MedicalInfo("Asthma");
+        MedicalInfo info2 = new MedicalInfo("Asthma");
+        MedicalInfo different = new MedicalInfo("Diabetes");
+
+        assertEquals(info1.hashCode(), info2.hashCode());
+
+        assertNotEquals(info1.hashCode(), different.hashCode());
+
+        int initialHash = info1.hashCode();
+        assertEquals(initialHash, info1.hashCode());
+        assertEquals(initialHash, info1.hashCode());
     }
 }
