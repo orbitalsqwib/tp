@@ -1,7 +1,9 @@
 package casetrack.app.model.person;
 
 import static casetrack.app.testutil.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -58,5 +60,26 @@ public class IncomeTest {
 
         // different values -> returns false
         assertFalse(income.equals(new Income("999")));
+    }
+
+    @Test
+    public void toString_returnsIncomeString() {
+        Income income = new Income("1000");
+        assertEquals("1000", income.toString());
+    }
+
+    @Test
+    public void hashCode_equalValuesSameHash_differentValuesDifferentHash() {
+        Income income1 = new Income("1000");
+        Income income2 = new Income("1000");
+        Income different = new Income("999");
+
+        assertEquals(income1.hashCode(), income2.hashCode());
+
+        assertNotEquals(income1.hashCode(), different.hashCode());
+
+        int initialHash = income1.hashCode();
+        assertEquals(initialHash, income1.hashCode());
+        assertEquals(initialHash, income1.hashCode());
     }
 }
