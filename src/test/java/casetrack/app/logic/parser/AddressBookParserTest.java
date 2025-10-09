@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import casetrack.app.logic.commands.AddCommand;
 import casetrack.app.logic.commands.ClearCommand;
-import casetrack.app.logic.commands.DeleteCommand;
+import casetrack.app.logic.commands.DeletePatientCommand;
 import casetrack.app.logic.commands.EditCommand;
 import casetrack.app.logic.commands.EditCommand.EditPersonDescriptor;
 import casetrack.app.logic.commands.ExitCommand;
@@ -48,9 +48,9 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_delete() throws Exception {
-        DeleteCommand command = (DeleteCommand) parser.parseCommand(
-                DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
+        DeletePatientCommand command = (DeletePatientCommand) parser.parseCommand(
+                DeletePatientCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new DeletePatientCommand(INDEX_FIRST_PERSON), command);
     }
 
     @Test
