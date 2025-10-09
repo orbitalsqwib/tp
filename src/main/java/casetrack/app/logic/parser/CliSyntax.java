@@ -11,7 +11,6 @@ public class CliSyntax {
     public static final Prefix PREFIX_EMAIL = new Prefix("e/");
     public static final Prefix PREFIX_ADDRESS = new Prefix("a/");
     public static final Prefix PREFIX_TAG = new Prefix("t/");
-    // Additional prefixes to support Developer Guide's Add Patient MSS
     public static final Prefix PREFIX_INCOME = new Prefix("i/");
     public static final Prefix PREFIX_MEDICAL_INFO = new Prefix("m/");
 
