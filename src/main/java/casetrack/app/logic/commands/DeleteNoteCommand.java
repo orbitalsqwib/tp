@@ -31,6 +31,12 @@ public class DeleteNoteCommand extends Command {
     private final Index personIndex;
     private final Index noteIndex;
 
+    /**
+     * Creates a DeleteNoteCommand to delete a note from a person.
+     *
+     * @param personIndex The index of the person in the filtered person list
+     * @param noteIndex The index of the note to delete from the person's notes
+     */
     public DeleteNoteCommand(Index personIndex, Index noteIndex) {
         this.personIndex = personIndex;
         this.noteIndex = noteIndex;

@@ -27,11 +27,13 @@ public class DeleteCommandParser implements Parser<Command> {
 
         // To determine the command type
         if (trimmedArgs.startsWith(ParserUtil.NOTE_STRING + " ")) {
-            String remainingArgs = trimmedArgs.substring(ParserUtil.NOTE_STRING.length() + 1).trim(); // remove "note "
+            // remove "note " prefix
+            String remainingArgs = trimmedArgs.substring(ParserUtil.NOTE_STRING.length() + 1).trim();
             String[] parts = remainingArgs.split("\\s+");
 
             if (parts.length != 2) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteNoteCommand.MESSAGE_USAGE));
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        DeleteNoteCommand.MESSAGE_USAGE));
             }
 
             Index personIndex = ParserUtil.parseIndex(parts[0]);
