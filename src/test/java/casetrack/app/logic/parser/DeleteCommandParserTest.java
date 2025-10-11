@@ -18,7 +18,7 @@ import casetrack.app.logic.commands.DeletePatientCommand;
  */
 public class DeleteCommandParserTest {
 
-    private DeletePatientCommandParser parser = new DeletePatientCommandParser();
+    private DeleteCommandParser parser = new DeleteCommandParser();
 
     @Test
     public void parse_validArgs_returnsDeleteCommand() {
@@ -28,6 +28,6 @@ public class DeleteCommandParserTest {
     @Test
     public void parse_invalidArgs_throwsParseException() {
         assertParseFailure(parser, "a",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeletePatientCommand.MESSAGE_USAGE));
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommandParser.MESSAGE_INVALID_DELETE_FORMAT));
     }
 }
