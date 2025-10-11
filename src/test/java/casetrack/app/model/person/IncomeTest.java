@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
+import java.math.BigDecimal;
 
 public class IncomeTest {
 
@@ -111,5 +112,24 @@ public class IncomeTest {
 
         assertEquals(new Income("000").hashCode(), new Income("0").hashCode());
         assertEquals(new Income("00123").hashCode(), new Income("123").hashCode());
+    }
+
+    @Test
+    public void getValue_returnsExpectedBigDecimal() {
+        // exact integer
+        assertEquals(new BigDecimal("0"), new Income("0").getValue());
+        assertEquals(new BigDecimal("123"), new Income("123").getValue());
+
+        // leading zeros are ignored in numeric value
+        assertEquals(new BigDecimal("123"), new Income("00123").getValue());
+
+        // decimals: trailing zeros removed in stored value
+        assertEquals(new BigDecimal("0.5"), new Income("000.5000").getValue());
+
+        // plus sign allowed, value parsed correctly
+        assertEquals(new BigDecimal("2.5"), new Income("+2.5").getValue());
+
+        // numeric equality: 1.0 is stored as 1
+        assertEquals(new BigDecimal("1"), new Income("1.0").getValue());
     }
 }
