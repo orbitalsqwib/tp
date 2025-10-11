@@ -12,6 +12,7 @@ import casetrack.app.model.person.EmailContainsKeywordsPredicate;
 import casetrack.app.model.person.NameContainsKeywordsPredicate;
 import casetrack.app.model.person.Person;
 import casetrack.app.model.person.PhoneContainsKeywordsPredicate;
+import casetrack.app.model.person.TagContainsKeywordsPredicate;
 
 /**
  * Parses input arguments and creates a new FindCommand object
@@ -59,6 +60,8 @@ public class FindCommandParser implements Parser<FindCommand> {
             return new PhoneContainsKeywordsPredicate(keywords);
         case "email":
             return new EmailContainsKeywordsPredicate(keywords);
+        case "tag":
+            return new TagContainsKeywordsPredicate(keywords);
         default:
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
