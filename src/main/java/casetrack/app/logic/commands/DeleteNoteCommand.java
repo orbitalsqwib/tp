@@ -58,9 +58,8 @@ public class DeleteNoteCommand extends Command {
 
         Note noteToDelete = notes.get(noteIndex.getZeroBased());
         Person updatedPerson = personToUpdate.removeNote(noteIndex.getZeroBased());
-        
         model.setPerson(personToUpdate, updatedPerson);
-        return new CommandResult(String.format(MESSAGE_DELETE_NOTE_SUCCESS, 
+        return new CommandResult(String.format(MESSAGE_DELETE_NOTE_SUCCESS,
                 personToUpdate.getName().fullName, noteToDelete.value));
     }
 
