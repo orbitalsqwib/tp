@@ -21,9 +21,10 @@ public class FindCommand extends Command {
             + ": Finds all persons whose specified field contains any of "
             + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
             + "Parameters: FIELD KEYWORD [MORE_KEYWORDS]...\n"
-            + "Supported fields: name, number\n"
+            + "Supported fields: name, number, email\n"
             + "Examples: " + COMMAND_WORD + " name alice charlie\n"
-            + "          " + COMMAND_WORD + " number 91234567";
+            + "          " + COMMAND_WORD + " number 91234567\n"
+            + "          " + COMMAND_WORD + " email alice@example.com";
 
     private final Predicate<Person> predicate;
 
