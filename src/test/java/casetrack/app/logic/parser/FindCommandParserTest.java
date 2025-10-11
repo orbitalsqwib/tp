@@ -9,6 +9,7 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
 import casetrack.app.logic.commands.FindCommand;
+import casetrack.app.model.person.EmailContainsKeywordsPredicate;
 import casetrack.app.model.person.NameContainsKeywordsPredicate;
 import casetrack.app.model.person.PhoneContainsKeywordsPredicate;
 
@@ -24,8 +25,6 @@ public class FindCommandParserTest {
     @Test
     public void parse_invalidSearchType_throwsParseException() {
         // invalid search type
-        assertParseFailure(parser, "email alice@example.com",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         assertParseFailure(parser, "tags diabetes",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         assertParseFailure(parser, "invalid alice bob",
@@ -81,6 +80,22 @@ public class FindCommandParserTest {
 
         assertParseSuccess(parser, "NUMBER 123 456", expectedFindCommand);
         assertParseSuccess(parser, "Number 123 456", expectedFindCommand);
+    }
+
+    @Test
+    public void parse_validEmailArgs_returnsFindCommand() {
+        FindCommand expectedFindCommand =
+                new FindCommand(new EmailContainsKeywordsPredicate(Arrays.asList("alice", "example")));
+        assertParseSuccess(parser, "email alice example", expectedFindCommand);
+
+        assertParseSuccess(parser, " \n email \n alice \n \t example  \t", expectedFindCommand);
+
+        FindCommand expectedSingleKeywordCommand =
+                new FindCommand(new EmailContainsKeywordsPredicate(Arrays.asList("alice")));
+        assertParseSuccess(parser, "email alice", expectedSingleKeywordCommand);
+
+        assertParseSuccess(parser, "EMAIL alice example", expectedFindCommand);
+        assertParseSuccess(parser, "Email alice example", expectedFindCommand);
     }
 
 }
