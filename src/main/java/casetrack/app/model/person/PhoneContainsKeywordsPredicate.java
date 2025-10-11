@@ -3,7 +3,6 @@ package casetrack.app.model.person;
 import java.util.List;
 import java.util.function.Predicate;
 
-import casetrack.app.commons.util.StringUtil;
 import casetrack.app.commons.util.ToStringBuilder;
 
 /**
