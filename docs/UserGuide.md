@@ -125,13 +125,14 @@ Format: `search FIELD KEYWORD [MORE_KEYWORDS]`
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-* Supported fields: `name`, `number`, `email`
+* Supported fields: `name`, `number`, `email`, `tag`
 
 Examples:
 * `search name John` returns `john` and `John Doe`
 * `search name alex david` returns `Alex Yeoh`, `David Li`
 * `search number 91234567` returns persons with phone number containing `91234567`
-* `search email alice@example.com` returns persons with email containing `alice@example.com`<br>
+* `search email alice@example.com` returns persons with email containing `alice@example.com`
+* `search tag friend colleague` returns persons with tags containing `friend` or `colleague`<br>
   ![result for 'search name alex david'](images/findAlexDavidResult.png)
 
 ### Deleting a person : `delete`
