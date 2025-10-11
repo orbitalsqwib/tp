@@ -20,14 +20,13 @@ public class DeleteCommandParser implements Parser<Command> {
     /**
      * Parses the given {@code String} of arguments and returns either a DeleteNoteCommand
      * or DeletePatientCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
+     * @throws ParseException if the user input does not follow the expected format
      */
     public Command parse(String args) throws ParseException {
         final String trimmedArgs = args.trim();
 
-        // Check if the arguments to determine the command type
+        // To determine the command type
         if (trimmedArgs.startsWith(ParserUtil.NOTE_STRING + " ")) {
-            // Parse as DeleteNoteCommand
             String remainingArgs = trimmedArgs.substring(ParserUtil.NOTE_STRING.length() + 1).trim(); // remove "note "
             String[] parts = remainingArgs.split("\\s+");
 
