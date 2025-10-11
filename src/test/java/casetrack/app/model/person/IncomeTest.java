@@ -19,6 +19,9 @@ public class IncomeTest {
     public void constructor_invalidIncome_throwsIllegalArgumentException() {
         String invalidIncome = "";
         assertThrows(IllegalArgumentException.class, () -> new Income(invalidIncome));
+        assertThrows(IllegalArgumentException.class, () -> new Income("-1"));
+        assertThrows(IllegalArgumentException.class, () -> new Income("$100"));
+        assertThrows(IllegalArgumentException.class, () -> new Income("1,000"));
     }
 
     @Test
@@ -29,9 +32,7 @@ public class IncomeTest {
         // invalid income
         assertFalse(Income.isValidIncome("")); // empty string
         assertFalse(Income.isValidIncome(" ")); // spaces only
-        assertFalse(Income.isValidIncome("-1")); // negative number sign
-        assertFalse(Income.isValidIncome("+1")); // plus sign not allowed
-        assertFalse(Income.isValidIncome("1.0")); // decimals not allowed
+        assertFalse(Income.isValidIncome("-1")); // negative number not allowed
         assertFalse(Income.isValidIncome("1,000")); // commas not allowed
         assertFalse(Income.isValidIncome("$1000")); // currency symbol not allowed
         assertFalse(Income.isValidIncome("abc")); // non-numeric
@@ -40,14 +41,17 @@ public class IncomeTest {
         assertTrue(Income.isValidIncome("0")); // zero allowed
         assertTrue(Income.isValidIncome("5")); // small integer
         assertTrue(Income.isValidIncome("1234567890")); // long integer
+        assertTrue(Income.isValidIncome("1.0")); // decimals allowed
+        assertTrue(Income.isValidIncome("3.1415")); // decimals allowed
+        assertTrue(Income.isValidIncome("+2.5")); // plus sign allowed
     }
 
     @Test
     public void equals() {
         Income income = new Income("1000");
 
-        // same values -> returns true
-        assertTrue(income.equals(new Income("1000")));
+        // same numeric values -> returns true
+        assertTrue(income.equals(new Income("1000.0")));
 
         // same object -> returns true
         assertTrue(income.equals(income));
@@ -63,15 +67,15 @@ public class IncomeTest {
     }
 
     @Test
-    public void toString_returnsIncomeString() {
-        Income income = new Income("1000");
-        assertEquals("1000", income.toString());
+    public void toString_returnsCanonicalIncomeString() {
+        Income income = new Income("1000.5000");
+        assertEquals("1000.5", income.toString());
     }
 
     @Test
     public void hashCode_equalValuesSameHash_differentValuesDifferentHash() {
         Income income1 = new Income("1000");
-        Income income2 = new Income("1000");
+        Income income2 = new Income("1000.0");
         Income different = new Income("999");
 
         assertEquals(income1.hashCode(), income2.hashCode());
@@ -81,5 +85,31 @@ public class IncomeTest {
         int initialHash = income1.hashCode();
         assertEquals(initialHash, income1.hashCode());
         assertEquals(initialHash, income1.hashCode());
+    }
+
+    @Test
+    public void leadingZeroes_inputsAreValid_andCanonicalized() {
+        // validation accepts leading zeros
+        assertTrue(Income.isValidIncome("000"));
+        assertTrue(Income.isValidIncome("000.00"));
+        assertTrue(Income.isValidIncome("00123"));
+        assertTrue(Income.isValidIncome("000.50"));
+        assertTrue(Income.isValidIncome("+0002.5"));
+
+        // constructor and toString canonicalization
+        assertEquals("0", new Income("000").toString());
+        assertEquals("0", new Income("000.00").toString());
+        assertEquals("123", new Income("00123").toString());
+        assertEquals("0.5", new Income("000.50").toString());
+        assertEquals("2.5", new Income("+0002.5").toString());
+
+        // equality and hashCode
+        assertEquals(new Income("000"), new Income("0"));
+        assertEquals(new Income("00123"), new Income("123"));
+        assertEquals(new Income("000.50"), new Income("0.5"));
+        assertEquals(new Income("+0002.5"), new Income("2.5"));
+
+        assertEquals(new Income("000").hashCode(), new Income("0").hashCode());
+        assertEquals(new Income("00123").hashCode(), new Income("123").hashCode());
     }
 }
