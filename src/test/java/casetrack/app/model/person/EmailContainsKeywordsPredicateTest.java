@@ -71,7 +71,7 @@ public class EmailContainsKeywordsPredicateTest {
     }
 
     @Test
-    public void test_emailContainsKeywords_caseInsensitive_returnsTrue() {
+    public void test_caseInsensitiveEmailSearch_returnsTrue() {
         EmailContainsKeywordsPredicate predicate =
                 new EmailContainsKeywordsPredicate(Collections.singletonList("ALICE"));
         assertTrue(predicate.test(new PersonBuilder().withEmail("alice@example.com").build()));
