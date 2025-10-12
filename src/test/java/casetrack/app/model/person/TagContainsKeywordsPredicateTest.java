@@ -1,5 +1,6 @@
 package casetrack.app.model.person;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -73,5 +74,14 @@ public class TagContainsKeywordsPredicateTest {
     public void test_personWithNoTags_returnsFalse() {
         TagContainsKeywordsPredicate predicate = new TagContainsKeywordsPredicate(Collections.singletonList("friend"));
         assertFalse(predicate.test(new PersonBuilder().build()));
+    }
+
+    @Test
+    public void toStringMethod() {
+        List<String> keywords = Arrays.asList("friend", "colleague");
+        TagContainsKeywordsPredicate predicate = new TagContainsKeywordsPredicate(keywords);
+
+        String expected = TagContainsKeywordsPredicate.class.getCanonicalName() + "{keywords=" + keywords + "}";
+        assertEquals(expected, predicate.toString());
     }
 }
