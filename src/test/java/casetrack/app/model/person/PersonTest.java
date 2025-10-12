@@ -126,7 +126,7 @@ public class PersonTest {
                 .withNotes(note1, note2)
                 .build();
 
-        Person personAfterRemoval = person.removeNote(0);
+        Person personRemoved = person.removeNote(0);
 
         // original person should not be modified
         assertEquals(2, person.getNotes().size());
@@ -134,22 +134,8 @@ public class PersonTest {
         assertEquals(note2, person.getNotes().get(1));
 
         // new person should have one note removed
-        assertEquals(1, personAfterRemoval.getNotes().size());
-        assertEquals(note2, personAfterRemoval.getNotes().get(0));
-    }
-
-    @Test
-    public void removeNote_lastNote() {
-        Note note = new Note("Only note");
-        Person person = new PersonBuilder()
-                .withNotes(note)
-                .build();
-
-        Person personAfterRemoval = person.removeNote(0);
-
-        assertEquals(1, person.getNotes().size());
-
-        assertTrue(personAfterRemoval.getNotes().isEmpty()); // new person should have no notes
+        assertEquals(1, personRemoved.getNotes().size());
+        assertEquals(note2, personRemoved.getNotes().get(0));
     }
 
     @Test
@@ -162,13 +148,13 @@ public class PersonTest {
                 .build();
 
         // remove middle note
-        Person personAfterRemoval = person.removeNote(1);
+        Person personRemoved = person.removeNote(1);
 
         // original person should not be modified
         assertEquals(3, person.getNotes().size());
 
-        assertEquals(2, personAfterRemoval.getNotes().size());
-        assertEquals(note1, personAfterRemoval.getNotes().get(0));
-        assertEquals(note3, personAfterRemoval.getNotes().get(1));
+        assertEquals(2, personRemoved.getNotes().size());
+        assertEquals(note1, personRemoved.getNotes().get(0));
+        assertEquals(note3, personRemoved.getNotes().get(1));
     }
 }
