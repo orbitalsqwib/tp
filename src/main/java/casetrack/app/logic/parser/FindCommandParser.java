@@ -8,6 +8,7 @@ import java.util.function.Predicate;
 
 import casetrack.app.logic.commands.FindCommand;
 import casetrack.app.logic.parser.exceptions.ParseException;
+import casetrack.app.model.person.EmailContainsKeywordsPredicate;
 import casetrack.app.model.person.NameContainsKeywordsPredicate;
 import casetrack.app.model.person.Person;
 import casetrack.app.model.person.PhoneContainsKeywordsPredicate;
@@ -56,6 +57,8 @@ public class FindCommandParser implements Parser<FindCommand> {
             return new NameContainsKeywordsPredicate(keywords);
         case "number":
             return new PhoneContainsKeywordsPredicate(keywords);
+        case "email":
+            return new EmailContainsKeywordsPredicate(keywords);
         default:
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
