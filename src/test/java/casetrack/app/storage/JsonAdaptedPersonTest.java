@@ -124,7 +124,8 @@ public class JsonAdaptedPersonTest {
     public void toModelType_nullIncome_throwsIllegalValueException() {
         JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL,
                 VALID_ADDRESS, null, VALID_TAGS, VALID_NOTES);
-        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, casetrack.app.model.person.Income.class.getSimpleName());
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                casetrack.app.model.person.Income.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
 
