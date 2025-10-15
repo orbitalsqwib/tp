@@ -494,7 +494,7 @@ Use case ends.
 #### Use case (UC05): Add Quick Note
 
 **Preconditions**
-* Patient record exists in the system (by ID or by Name + Phone).
+* Patient record exists in the system (by index or by Name + Phone).
 
 **Guarantees**
 * A new note will be stored only if a valid patient is identified.
@@ -504,7 +504,7 @@ Use case ends.
 **MSS**
 
 1.	User types the command to add a quick note with patient reference and text.
-2.	System validates the patient reference (ID or Name + Phone).
+2.	System validates the patient reference (index or Name + Phone).
 3.	System validates the note text is not empty.
 4.	System stores the note under the patient’s record.
 5.	System confirms success by displaying the created note.
@@ -514,7 +514,7 @@ Use case ends.
 **Extensions**
 *	2a. Missing patient reference.
 
-    * 2a1. System shows error: “Either ID or (Name and Phone) is required.”
+    * 2a1. System shows error: “Either index or (Name and Phone) is required.”
 
       Use case ends.
 
@@ -543,7 +543,7 @@ Use case ends.
 #### Use case: (UC06): Remove Quick Note
 
 **Preconditions**
-* Patient record exists in the system (by ID or by Name + Phone).
+* Patient record exists in the system (by index or by Name + Phone).
 
 **Guarantees**
 * A note will only be deleted if a valid patient is identified and the note index exists.
@@ -552,7 +552,7 @@ Use case ends.
 
 **MSS**
 1.	Actor types the command to remove a quick note with patient reference and note index.
-2.	System validates the patient reference (ID or Name + Phone).
+2.	System validates the patient reference (index or Name + Phone).
 3.	System validates the note index.
 4.	System deletes the specified note under the patient’s record.
 5.	System confirms success by displaying the deleted note.
@@ -562,7 +562,7 @@ Use case ends.
 **Extensions**
 *	2a. Missing patient reference.
 
-    * 2a1. System shows error: “Either ID or (Name and Phone) is required.”
+    * 2a1. System shows error: “Either index or (Name and Phone) is required.”
 
       Use case ends.
 
