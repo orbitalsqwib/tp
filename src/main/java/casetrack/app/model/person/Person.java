@@ -144,8 +144,8 @@ public class Person {
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
-                && income.equals(otherPerson.income)
                 && tags.equals(otherPerson.tags)
+                && income.equals(otherPerson.income)
                 && notes.equals(otherPerson.notes);
     }
 
