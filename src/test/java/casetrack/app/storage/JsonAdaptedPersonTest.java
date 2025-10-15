@@ -16,6 +16,7 @@ import casetrack.app.commons.exceptions.IllegalValueException;
 import casetrack.app.model.person.Address;
 import casetrack.app.model.person.Email;
 import casetrack.app.model.person.Name;
+import casetrack.app.model.person.Note;
 import casetrack.app.model.person.Person;
 import casetrack.app.model.person.Phone;
 import casetrack.app.testutil.PersonBuilder;
@@ -176,7 +177,7 @@ public class JsonAdaptedPersonTest {
     }
 
     @Test
-    public void toModelType_invalidNotes_skipsInvalidNotes() throws Exception {
+    public void toModelType_invalidNotes_throwsIllegalValueException() {
         List<String> notesWithInvalid = new ArrayList<>();
         notesWithInvalid.add("Valid note");
         notesWithInvalid.add("   "); // Invalid note (whitespace only)
@@ -186,12 +187,21 @@ public class JsonAdaptedPersonTest {
         JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL,
                 VALID_ADDRESS, VALID_INCOME, VALID_TAGS, notesWithInvalid);
 
-        Person modelPerson = person.toModelType();
+        String expectedMessage = Note.MESSAGE_CONSTRAINTS;
+        assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+    }
 
-        // Should only have the 2 valid notes
-        assertEquals(2, modelPerson.getNotes().size());
-        assertTrue(modelPerson.getNotes().stream().anyMatch(note -> note.value.equals("Valid note")));
-        assertTrue(modelPerson.getNotes().stream().anyMatch(note -> note.value.equals("Another valid note")));
+    @Test
+    public void toModelType_nullNoteInList_throwsIllegalValueException() {
+        List<String> notesWithNull = new ArrayList<>();
+        notesWithNull.add("Valid note");
+        notesWithNull.add(null); // Null note entry
+
+        JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL,
+                VALID_ADDRESS, VALID_TAGS, notesWithNull);
+
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Note.class.getSimpleName());
+        assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
 
     @Test

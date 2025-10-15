@@ -149,6 +149,24 @@ Examples:
 * `list` followed by `delete patient 2` deletes the 2nd person in the address book.
 * `search name Betsy` followed by `delete patient 1` deletes the 1st person in the results of the `search` command.
 
+### Adding a note : `note`
+
+Adds a note to a person using either their list index, or their name and phone number.
+
+Format (by index): `note INDEX t/TEXT`
+
+Format (by name and phone): `note n/NAME p/PHONE t/TEXT`
+
+* `INDEX` refers to the index shown in the displayed person list and **must be a positive integer** 1, 2, 3, ...
+* When using `n/NAME p/PHONE`, do not include an index before the prefixes.
+* `t/TEXT` must contain at least one non‑whitespace character.
+* Do not repeat single‑valued prefixes (`n/`, `p/`, `t/`).
+
+Examples:
+
+* `note 1 t/Follow-up in 2 weeks`
+* `note n/John Doe p/91234567 t/Mother mentioned financial difficulties`
+
 ### Deleting a note : `delete note`
 
 Deletes a specific note from a person.
