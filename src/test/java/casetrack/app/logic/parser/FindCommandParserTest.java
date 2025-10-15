@@ -12,6 +12,7 @@ import casetrack.app.logic.commands.FindCommand;
 import casetrack.app.model.person.EmailContainsKeywordsPredicate;
 import casetrack.app.model.person.NameContainsKeywordsPredicate;
 import casetrack.app.model.person.PhoneContainsKeywordsPredicate;
+import casetrack.app.model.person.TagContainsKeywordsPredicate;
 
 public class FindCommandParserTest {
 
@@ -96,6 +97,22 @@ public class FindCommandParserTest {
 
         assertParseSuccess(parser, "EMAIL alice example", expectedFindCommand);
         assertParseSuccess(parser, "Email alice example", expectedFindCommand);
+    }
+
+    @Test
+    public void parse_validTagArgs_returnsFindCommand() {
+        FindCommand expectedFindCommand =
+                new FindCommand(new TagContainsKeywordsPredicate(Arrays.asList("friend", "colleague")));
+        assertParseSuccess(parser, "tag friend colleague", expectedFindCommand);
+
+        assertParseSuccess(parser, " \n tag \n friend \n \t colleague  \t", expectedFindCommand);
+
+        FindCommand expectedSingleKeywordCommand =
+                new FindCommand(new TagContainsKeywordsPredicate(Arrays.asList("friend")));
+        assertParseSuccess(parser, "tag friend", expectedSingleKeywordCommand);
+
+        assertParseSuccess(parser, "TAG friend colleague", expectedFindCommand);
+        assertParseSuccess(parser, "Tag friend colleague", expectedFindCommand);
     }
 
 }
