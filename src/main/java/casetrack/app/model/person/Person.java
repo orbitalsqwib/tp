@@ -25,18 +25,20 @@ public class Person {
 
     // Data fields
     private final Address address;
+    private final Income income;
     private final Set<Tag> tags = new HashSet<>();
     private final List<Note> notes = new ArrayList<>();
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Name name, Phone phone, Email email, Address address, Income income, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, income, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.income = income;
         this.tags.addAll(tags);
     }
 
@@ -44,12 +46,13 @@ public class Person {
      * Constructor with notes.
      */
     public Person(Name name, Phone phone, Email email, Address address,
-            Set<Tag> tags, List<Note> notes) {
-        requireAllNonNull(name, phone, email, address, tags, notes);
+            Income income, Set<Tag> tags, List<Note> notes) {
+        requireAllNonNull(name, phone, email, address, income, tags, notes);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.income = income;
         this.tags.addAll(tags);
         this.notes.addAll(notes);
     }
@@ -68,6 +71,10 @@ public class Person {
 
     public Address getAddress() {
         return address;
+    }
+
+    public Income getIncome() {
+        return income;
     }
 
     /**
@@ -92,7 +99,7 @@ public class Person {
     public Person addNote(Note note) {
         List<Note> updatedNotes = new ArrayList<>(notes);
         updatedNotes.add(note);
-        return new Person(name, phone, email, address, new HashSet<>(tags), updatedNotes);
+        return new Person(name, phone, email, address, income, new HashSet<>(tags), updatedNotes);
     }
 
     /**
@@ -101,7 +108,7 @@ public class Person {
     public Person removeNote(int noteIndex) {
         List<Note> updatedNotes = new ArrayList<>(notes);
         updatedNotes.remove(noteIndex);
-        return new Person(name, phone, email, address, new HashSet<>(tags), updatedNotes);
+        return new Person(name, phone, email, address, income, new HashSet<>(tags), updatedNotes);
     }
 
     /**
@@ -137,6 +144,7 @@ public class Person {
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
+                && income.equals(otherPerson.income)
                 && tags.equals(otherPerson.tags)
                 && notes.equals(otherPerson.notes);
     }
@@ -144,7 +152,7 @@ public class Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags, notes);
+        return Objects.hash(name, phone, email, address, income, tags, notes);
     }
 
     @Override
@@ -154,6 +162,7 @@ public class Person {
                 .add("phone", phone)
                 .add("email", email)
                 .add("address", address)
+                .add("income", income)
                 .add("tags", tags)
                 .add("notes", notes)
                 .toString();
