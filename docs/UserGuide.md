@@ -33,7 +33,7 @@ CaseTrack is a **desktop app for managing contacts, optimized for use via a  Lin
 
    * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
 
-   * `delete 3` : Deletes the 3rd contact shown in the current list.
+   * `delete patient 3` : Deletes the 3rd contact shown in the current list.
 
    * `clear` : Deletes all contacts.
 
@@ -135,19 +135,34 @@ Examples:
 * `search tag friend colleague` returns persons with tags containing `friend` or `colleague`<br>
   ![result for 'search name alex david'](images/findAlexDavidResult.png)
 
-### Deleting a person : `delete`
+### Deleting a person : `delete patient`
 
 Deletes the specified person from the address book.
 
-Format: `delete INDEX`
+Format: `delete patient INDEX`
 
 * Deletes the person at the specified `INDEX`.
 * The index refers to the index number shown in the displayed person list.
 * The index **must be a positive integer** 1, 2, 3, …​
 
 Examples:
-* `list` followed by `delete 2` deletes the 2nd person in the address book.
-* `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
+* `list` followed by `delete patient 2` deletes the 2nd person in the address book.
+* `search name Betsy` followed by `delete patient 1` deletes the 1st person in the results of the `search` command.
+
+### Deleting a note : `delete note`
+
+Deletes a specific note from a person.
+
+Format: `delete note PERSON_INDEX NOTE_INDEX`
+
+* Deletes the note at the specified `NOTE_INDEX` from the person at `PERSON_INDEX`.
+* Both indices refer to the index numbers shown in the displayed lists.
+* Both indices **must be positive integers** 1, 2, 3, ...
+* The person must have notes to delete.
+
+Examples:
+* `delete note 1 2` deletes the 2nd note from the 1st person in the address book.
+* `search name John` followed by `delete note 1 1` deletes the 1st note from the 1st person in the results of the `search` command.
 
 ### Clearing all entries : `clear`
 
