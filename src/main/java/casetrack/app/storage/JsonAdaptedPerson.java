@@ -81,9 +81,14 @@ class JsonAdaptedPerson {
 
         final List<Note> personNotes = new ArrayList<>();
         for (String noteValue : notes) {
-            if (Note.isValidNote(noteValue)) {
-                personNotes.add(new Note(noteValue));
+            if (noteValue == null) {
+                throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                        Note.class.getSimpleName()));
             }
+            if (!Note.isValidNote(noteValue)) {
+                throw new IllegalValueException(Note.MESSAGE_CONSTRAINTS);
+            }
+            personNotes.add(new Note(noteValue));
         }
 
         if (name == null) {
