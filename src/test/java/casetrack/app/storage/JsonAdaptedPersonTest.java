@@ -198,7 +198,7 @@ public class JsonAdaptedPersonTest {
         notesWithNull.add(null); // Null note entry
 
         JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL,
-                VALID_ADDRESS, VALID_TAGS, notesWithNull);
+                VALID_ADDRESS, VALID_INCOME, VALID_TAGS, notesWithNull);
 
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Note.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
