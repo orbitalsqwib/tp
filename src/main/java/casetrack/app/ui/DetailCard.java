@@ -1,12 +1,12 @@
 package casetrack.app.ui;
 
+import casetrack.app.model.person.PersonAttribute;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
-import casetrack.app.model.person.PersonAttribute;
 
 /**
- * An UI component that displays information of a {@code Person}.
+ * An UI component that displays information of an {@code Attribute}.
  */
 public class DetailCard extends UiPart<Region> {
 
@@ -20,7 +20,8 @@ public class DetailCard extends UiPart<Region> {
     private Label value;
 
     /**
-     * Creates a {@code PersonCode} with the given {@code Person} and index to display.
+     * Creates a {@code DetailCard} with the given {@code Attribute} and index to
+     * display.
      */
     public DetailCard(PersonAttribute attribute, int displayedIndex) {
         super(FXML);

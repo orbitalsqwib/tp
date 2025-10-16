@@ -6,16 +6,16 @@ import java.util.logging.Logger;
 import casetrack.app.commons.core.LogsCenter;
 import casetrack.app.model.person.Note;
 import casetrack.app.model.person.Person;
+import casetrack.app.model.person.PersonAttribute;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
-import casetrack.app.model.person.PersonAttribute;
 
 /**
- * Panel containing the list of persons.
+ * Panel containing a list of details.
  */
 public class DetailListPanel extends UiPart<Region> {
     private static final String FXML = "DetailListPanel.fxml";
@@ -25,7 +25,7 @@ public class DetailListPanel extends UiPart<Region> {
     private ListView<PersonAttribute> detailListView;
 
     /**
-     * Creates a {@code PersonListPanel} with the given {@code ObservableList}.
+     * Creates a {@code DetailListPanel}.
      */
     public DetailListPanel() {
         super(FXML);
@@ -58,7 +58,8 @@ public class DetailListPanel extends UiPart<Region> {
     }
 
     /**
-     * Custom {@code ListCell} that displays the graphics of a {@code Person} using a {@code PersonCard}.
+     * Custom {@code ListCell} that displays the details of a {@code Person} using a
+     * {@code DetailCard}.
      */
     class DetailListViewCell extends ListCell<PersonAttribute> {
         @Override
