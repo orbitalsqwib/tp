@@ -10,6 +10,13 @@
     -fx-opacity: 0.9;
 }
 
+.label-bold {
+	-fx-font-family: "Segoe UI Semibold";
+	-fx-font-size: 11px;
+	-fx-font-weight: bold;
+	-fx-text-fill: white;
+}
+
 .label-bright {
     -fx-font-size: 11pt;
     -fx-font-family: "Segoe UI Semibold";
@@ -130,6 +137,13 @@
     -fx-font-family: "Segoe UI";
     -fx-font-size: 13px;
     -fx-text-fill: #010504;
+}
+
+.cell_bold_label {
+	-fx-font-family: "Segoe UI";
+	-fx-font-size: 13px;
+	-fx-font-weight: bold;
+	-fx-text-fill: #010504;
 }
 
 .stack-pane {

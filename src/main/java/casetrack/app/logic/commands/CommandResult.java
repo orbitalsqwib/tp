@@ -1,10 +1,9 @@
 package casetrack.app.logic.commands;
 
-import static java.util.Objects.requireNonNull;
-
 import java.util.Objects;
 
 import casetrack.app.commons.util.ToStringBuilder;
+import casetrack.app.model.person.Person;
 
 /**
  * Represents the result of a command execution.
@@ -19,21 +18,28 @@ public class CommandResult {
     /** The application should exit. */
     private final boolean exit;
 
+    /** The application should display details for a patient. */
+    private final Person detailTarget;
+
     /**
      * Constructs a {@code CommandResult} with the specified fields.
      */
-    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit) {
-        this.feedbackToUser = requireNonNull(feedbackToUser);
+    public CommandResult(String feedbackToUser, Person detailTarget, boolean showHelp, boolean exit) {
+        this.feedbackToUser = feedbackToUser;
+        this.detailTarget = detailTarget;
         this.showHelp = showHelp;
         this.exit = exit;
     }
-
     /**
      * Constructs a {@code CommandResult} with the specified {@code feedbackToUser},
      * and other fields set to their default value.
      */
     public CommandResult(String feedbackToUser) {
-        this(feedbackToUser, false, false);
+        this(feedbackToUser, null, false, false);
+    }
+
+    public Person getDetailTarget() {
+        return detailTarget;
     }
 
     public String getFeedbackToUser() {
@@ -60,20 +66,24 @@ public class CommandResult {
         }
 
         CommandResult otherCommandResult = (CommandResult) other;
+        boolean isDetailTargetEqual = (detailTarget == null && otherCommandResult.detailTarget == null
+                || detailTarget != null && detailTarget.equals(otherCommandResult.detailTarget));
         return feedbackToUser.equals(otherCommandResult.feedbackToUser)
+                && isDetailTargetEqual
                 && showHelp == otherCommandResult.showHelp
                 && exit == otherCommandResult.exit;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(feedbackToUser, showHelp, exit);
+        return Objects.hash(feedbackToUser, detailTarget, showHelp, exit);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .add("feedbackToUser", feedbackToUser)
+                .add("detailTarget", detailTarget)
                 .add("showHelp", showHelp)
                 .add("exit", exit)
                 .toString();

@@ -81,7 +81,7 @@ public class NoteCommand extends Command {
         return new CommandResult(String.format(MESSAGE_SUCCESS,
                 updatedPerson.getName().fullName,
                 updatedPerson.getPhone().value,
-                note.value));
+                note.value), updatedPerson, false, false);
     }
 
     /**

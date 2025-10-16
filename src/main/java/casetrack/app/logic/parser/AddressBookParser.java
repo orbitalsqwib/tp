@@ -18,6 +18,7 @@ import casetrack.app.logic.commands.FindCommand;
 import casetrack.app.logic.commands.HelpCommand;
 import casetrack.app.logic.commands.ListCommand;
 import casetrack.app.logic.commands.NoteCommand;
+import casetrack.app.logic.commands.ViewDetailsCommand;
 import casetrack.app.logic.parser.exceptions.ParseException;
 
 /**
@@ -71,6 +72,9 @@ public class AddressBookParser {
 
         case FindCommand.COMMAND_WORD:
             return new FindCommandParser().parse(arguments);
+
+        case ViewDetailsCommand.COMMAND_WORD:
+            return new ViewDetailsCommandParser().parse(arguments);
 
         case ListCommand.COMMAND_WORD:
             return new ListCommand();
