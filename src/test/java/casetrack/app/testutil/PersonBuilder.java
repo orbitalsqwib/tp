@@ -7,6 +7,7 @@ import java.util.Set;
 
 import casetrack.app.model.person.Address;
 import casetrack.app.model.person.Email;
+import casetrack.app.model.person.Income;
 import casetrack.app.model.person.Name;
 import casetrack.app.model.person.Note;
 import casetrack.app.model.person.Person;
@@ -23,11 +24,13 @@ public class PersonBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+    public static final String DEFAULT_INCOME = "1000";
 
     private Name name;
     private Phone phone;
     private Email email;
     private Address address;
+    private Income income;
     private Set<Tag> tags;
     private List<Note> notes;
 
@@ -39,6 +42,7 @@ public class PersonBuilder {
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
+        income = new Income(DEFAULT_INCOME);
         tags = new HashSet<>();
         notes = new ArrayList<>();
     }
@@ -51,6 +55,7 @@ public class PersonBuilder {
         phone = personToCopy.getPhone();
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
+        income = personToCopy.getIncome();
         tags = new HashSet<>(personToCopy.getTags());
         notes = new ArrayList<>(personToCopy.getNotes());
     }
@@ -96,6 +101,14 @@ public class PersonBuilder {
     }
 
     /**
+     * Sets the {@code Income} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withIncome(String income) {
+        this.income = new Income(income);
+        return this;
+    }
+
+    /**
      * Sets the {@code Notes} of the {@code Person} that we are building.
      */
     public PersonBuilder withNotes(Note... notes) {
@@ -112,9 +125,9 @@ public class PersonBuilder {
      */
     public Person build() {
         if (notes.isEmpty()) {
-            return new Person(name, phone, email, address, tags);
+            return new Person(name, phone, email, address, income, tags);
         } else {
-            return new Person(name, phone, email, address, tags, notes);
+            return new Person(name, phone, email, address, income, tags, notes);
         }
     }
 
