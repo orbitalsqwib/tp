@@ -66,8 +66,10 @@ public class CommandResult {
         }
 
         CommandResult otherCommandResult = (CommandResult) other;
+        boolean isDetailTargetEqual = (detailTarget == null && otherCommandResult.detailTarget == null
+                || detailTarget != null && detailTarget.equals(otherCommandResult.detailTarget));
         return feedbackToUser.equals(otherCommandResult.feedbackToUser)
-                && detailTarget == otherCommandResult.detailTarget
+                && isDetailTargetEqual
                 && showHelp == otherCommandResult.showHelp
                 && exit == otherCommandResult.exit;
     }

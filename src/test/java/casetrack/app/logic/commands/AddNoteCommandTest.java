@@ -79,7 +79,8 @@ public class AddNoteCommandTest {
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.setPerson(personToAddNoteTo, expectedPerson);
 
-        assertCommandSuccess(noteCommand, model, expectedMessage, expectedModel);
+        CommandResult expectedResult = new CommandResult(expectedMessage, expectedPerson, false, false);
+        assertCommandSuccess(noteCommand, model, expectedResult, expectedModel);
     }
 
     @Test
@@ -98,7 +99,8 @@ public class AddNoteCommandTest {
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.setPerson(personToAddNoteTo, expectedPerson);
 
-        assertCommandSuccess(noteCommand, model, expectedMessage, expectedModel);
+        CommandResult expectedResult = new CommandResult(expectedMessage, expectedPerson, false, false);
+        assertCommandSuccess(noteCommand, model, expectedResult, expectedModel);
     }
 
     @Test

@@ -54,7 +54,8 @@ public class DeleteNoteCommandTest {
         Person expectedPerson = personWithTwoNotes.removeNote(0);
         expectedModel.setPerson(personWithTwoNotes, expectedPerson);
 
-        assertCommandSuccess(deleteNoteCommand, model, expectedMessage, expectedModel);
+        CommandResult expectedResult = new CommandResult(expectedMessage, expectedPerson, false, false);
+        assertCommandSuccess(deleteNoteCommand, model, expectedResult, expectedModel);
     }
 
     @Test
@@ -142,7 +143,8 @@ public class DeleteNoteCommandTest {
         expectedModel.setPerson(personWithTwoNotes, expectedPerson);
         showPersonAtIndex(expectedModel, INDEX_FIRST_PERSON);
 
-        assertCommandSuccess(deleteNoteCommand, model, expectedMessage, expectedModel);
+        CommandResult expectedResult = new CommandResult(expectedMessage, expectedPerson, false, false);
+        assertCommandSuccess(deleteNoteCommand, model, expectedResult, expectedModel);
     }
 
     @Test
