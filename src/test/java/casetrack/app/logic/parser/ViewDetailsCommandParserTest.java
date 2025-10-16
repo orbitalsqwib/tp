@@ -1,0 +1,40 @@
+package casetrack.app.logic.parser;
+
+import static casetrack.app.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static casetrack.app.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static casetrack.app.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static casetrack.app.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+
+import org.junit.jupiter.api.Test;
+
+import casetrack.app.logic.commands.ViewDetailsCommand;
+
+/**
+ * As we are only doing white-box testing, our test cases do not cover path variations
+ * outside of the DeletePatientCommand code. For example, inputs "1" and "1 abc" take the
+ * same path through the DeletePatientCommand, and therefore we test only one of them.
+ * The path variation for those two cases occur inside the ParserUtil, and
+ * therefore should be covered by the ParserUtilTest.
+ */
+public class ViewDetailsCommandParserTest {
+
+    private ViewDetailsCommandParser parser = new ViewDetailsCommandParser();
+
+    @Test
+    public void parse_validPatientArgs_returnsViewDetailsCommand() {
+        assertParseSuccess(parser, "1", new ViewDetailsCommand(INDEX_FIRST_PERSON));
+    }
+
+    @Test
+    public void parse_patientWithInvalidFormat_throwsParseException() {
+        assertParseFailure(parser, "-1",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewDetailsCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_emptyArgs_throwsParseException() {
+        assertParseFailure(parser, "",
+                String.format(
+                    MESSAGE_INVALID_COMMAND_FORMAT, ViewDetailsCommand.MESSAGE_USAGE));
+    }
+}

@@ -23,6 +23,7 @@ import casetrack.app.logic.commands.FindCommand;
 import casetrack.app.logic.commands.HelpCommand;
 import casetrack.app.logic.commands.ListCommand;
 import casetrack.app.logic.commands.NoteCommand;
+import casetrack.app.logic.commands.ViewDetailsCommand;
 import casetrack.app.logic.parser.exceptions.ParseException;
 import casetrack.app.model.person.NameContainsKeywordsPredicate;
 import casetrack.app.model.person.Note;
@@ -82,6 +83,11 @@ public class AddressBookParserTest {
     public void parseCommand_help() throws Exception {
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD) instanceof HelpCommand);
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD + " 3") instanceof HelpCommand);
+    }
+
+    @Test
+    public void parseCommand_viewDetails() throws Exception {
+        assertTrue(parser.parseCommand(ViewDetailsCommand.COMMAND_WORD + " 3") instanceof ViewDetailsCommand);
     }
 
     @Test

@@ -13,7 +13,7 @@ import casetrack.app.logic.parser.exceptions.ParseException;
  */
 public class ViewDetailsCommandParser implements Parser<Command> {
 
-    public static final String MESSAGE_INVALID_DELETE_FORMAT =
+    public static final String MESSAGE_INVALID_VIEW_DETAILS_FORMAT =
         "Expected 'view <PERSON_INDEX>'";
 
     /**
