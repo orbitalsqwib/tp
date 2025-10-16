@@ -1,5 +1,6 @@
 package casetrack.app.ui;
 
+import java.util.function.Consumer;
 import java.util.logging.Logger;
 
 import casetrack.app.commons.core.GuiSettings;
@@ -8,9 +9,11 @@ import casetrack.app.logic.Logic;
 import casetrack.app.logic.commands.CommandResult;
 import casetrack.app.logic.commands.exceptions.CommandException;
 import casetrack.app.logic.parser.exceptions.ParseException;
+import casetrack.app.model.person.Person;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -32,6 +35,7 @@ public class MainWindow extends UiPart<Stage> {
 
     // Independent Ui parts residing in this Ui container
     private PersonListPanel personListPanel;
+    private DetailListPanel detailListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
 
@@ -43,6 +47,12 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane personListPanelPlaceholder;
+
+    @FXML
+    private StackPane detailListPanelPlaceholder;
+
+    @FXML
+    private SplitPane listPane;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -110,7 +120,22 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
+        detailListPanel = new DetailListPanel();
+        detailListPanelPlaceholder.getChildren().add(detailListPanel.getRoot());
+        Consumer<Person> selectPersonCallback = new Consumer<Person>() {
+            @Override
+            public void accept(Person t) {
+                detailListPanel.showDetails(t);
+
+                // unhide panel if hidden
+                if (listPane.getDividerPositions()[0] > 0.9) {
+                    listPane.setDividerPosition(0, 0.5);
+                }
+            }
+        };
+
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        personListPanel.setPersonSelectCallback(selectPersonCallback);
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
         resultDisplay = new ResultDisplay();

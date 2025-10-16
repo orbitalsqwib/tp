@@ -1,16 +1,13 @@
 package casetrack.app.ui;
 
 import java.util.Comparator;
-import java.util.List;
 
-import casetrack.app.model.person.Note;
 import casetrack.app.model.person.Person;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -40,11 +37,7 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label address;
     @FXML
-    private Label email;
-    @FXML
     private FlowPane tags;
-    @FXML
-    private VBox notes;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
@@ -56,24 +49,8 @@ public class PersonCard extends UiPart<Region> {
         name.setText(person.getName().fullName);
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
-        email.setText(person.getEmail().value);
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
-
-        // Display notes as numbered list
-        List<Note> personNotes = person.getNotes();
-        if (!personNotes.isEmpty()) {
-            Label notesHeader = new Label("Notes:");
-            notesHeader.getStyleClass().add("cell_small_label");
-            notes.getChildren().add(notesHeader);
-
-            for (int i = 0; i < personNotes.size(); i++) {
-                Label noteLabel = new Label((i + 1) + ". " + personNotes.get(i).value);
-                noteLabel.getStyleClass().add("cell_small_label");
-                noteLabel.setWrapText(true);
-                notes.getChildren().add(noteLabel);
-            }
-        }
     }
 }
