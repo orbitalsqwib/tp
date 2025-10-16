@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import casetrack.app.model.person.Person;
 import casetrack.app.testutil.PersonBuilder;
 
 public class CommandResultTest {
