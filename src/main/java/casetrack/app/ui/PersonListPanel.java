@@ -44,6 +44,10 @@ public class PersonListPanel extends UiPart<Region> {
         });
     }
 
+    public void setSelectedPerson(Person persion) {
+        personListView.getSelectionModel().select(persion);
+    }
+
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code Person} using a {@code PersonCard}.
      */

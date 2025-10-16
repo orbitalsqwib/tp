@@ -60,6 +60,18 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private StackPane statusbarPlaceholder;
 
+    private Consumer<Person> selectPersonCallback = new Consumer<Person>() {
+        @Override
+        public void accept(Person t) {
+            detailListPanel.showDetails(t);
+
+            // unhide panel if hidden
+            if (listPane.getDividerPositions()[0] > 0.9) {
+                listPane.setDividerPosition(0, 0.5);
+            }
+        }
+    };
+
     /**
      * Creates a {@code MainWindow} with the given {@code Stage} and {@code Logic}.
      */
@@ -122,17 +134,6 @@ public class MainWindow extends UiPart<Stage> {
     void fillInnerParts() {
         detailListPanel = new DetailListPanel();
         detailListPanelPlaceholder.getChildren().add(detailListPanel.getRoot());
-        Consumer<Person> selectPersonCallback = new Consumer<Person>() {
-            @Override
-            public void accept(Person t) {
-                detailListPanel.showDetails(t);
-
-                // unhide panel if hidden
-                if (listPane.getDividerPositions()[0] > 0.9) {
-                    listPane.setDividerPosition(0, 0.5);
-                }
-            }
-        };
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanel.setPersonSelectCallback(selectPersonCallback);
@@ -158,6 +159,16 @@ public class MainWindow extends UiPart<Stage> {
             primaryStage.setX(guiSettings.getWindowCoordinates().getX());
             primaryStage.setY(guiSettings.getWindowCoordinates().getY());
         }
+    }
+
+    /**
+     * Updates the detail panel for the currently viewed patient
+     *
+     * @param patient The patient to display details for.
+     */
+    @FXML
+    public void handleViewPatient(Person patient) {
+        selectPersonCallback.accept(patient);
     }
 
     /**
@@ -209,6 +220,12 @@ public class MainWindow extends UiPart<Stage> {
 
             if (commandResult.isExit()) {
                 handleExit();
+            }
+
+            if (commandResult.getDetailTarget() != null) {
+                Person detailTarget = commandResult.getDetailTarget();
+                selectPersonCallback.accept(detailTarget);
+                personListPanel.setSelectedPerson(detailTarget);
             }
 
             return commandResult;
