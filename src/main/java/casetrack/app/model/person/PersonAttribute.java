@@ -1,4 +1,6 @@
-package main.java.casetrack.app.model.person;
+package casetrack.app.model.person;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * Represents an attribute for a Person.
@@ -13,7 +15,9 @@ public class PersonAttribute {
      * @param value The value of the attribute
      */
     public PersonAttribute(String name, String value) {
+        requireNonNull(name);
         this.name = name;
+        requireNonNull(value);
         this.value = value;
     }
 }
