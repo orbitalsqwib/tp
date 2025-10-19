@@ -15,11 +15,11 @@ import org.junit.jupiter.api.Test;
 import casetrack.app.commons.exceptions.IllegalValueException;
 import casetrack.app.model.person.Address;
 import casetrack.app.model.person.Email;
+import casetrack.app.model.person.MedicalInfo;
 import casetrack.app.model.person.Name;
 import casetrack.app.model.person.Note;
 import casetrack.app.model.person.Person;
 import casetrack.app.model.person.Phone;
-import casetrack.app.model.person.MedicalInfo;
 import casetrack.app.testutil.PersonBuilder;
 
 public class JsonAdaptedPersonTest {
