@@ -19,6 +19,7 @@ import casetrack.app.model.person.Name;
 import casetrack.app.model.person.Note;
 import casetrack.app.model.person.Person;
 import casetrack.app.model.person.Phone;
+import casetrack.app.model.person.MedicalInfo;
 import casetrack.app.testutil.PersonBuilder;
 
 public class JsonAdaptedPersonTest {
@@ -28,6 +29,7 @@ public class JsonAdaptedPersonTest {
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_TAG = "#friend";
     private static final String INVALID_INCOME = "-5";
+    private static final String INVALID_MEDICAL_INFO = " ";
 
     private static final String VALID_NAME = BENSON.getName().toString();
     private static final String VALID_PHONE = BENSON.getPhone().toString();
@@ -238,4 +240,27 @@ public class JsonAdaptedPersonTest {
             note.value.equals("Contact: john.doe@email.com or +65-1234-5678")));
     }
 
+    @Test
+    public void toModelType_nullMedicalInfo_defaultsToDash() throws Exception {
+        JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL,
+                VALID_ADDRESS, VALID_INCOME, null, VALID_TAGS, VALID_NOTES);
+        Person modelPerson = person.toModelType();
+        assertEquals("-", modelPerson.getMedicalInfo().toString());
+    }
+
+    @Test
+    public void toModelType_invalidMedicalInfo_throwsIllegalValueException() {
+        JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL,
+                VALID_ADDRESS, VALID_INCOME, INVALID_MEDICAL_INFO, VALID_TAGS, VALID_NOTES);
+        String expectedMessage = MedicalInfo.MESSAGE_CONSTRAINTS;
+        assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+    }
+
+    @Test
+    public void toModelType_nullTags_returnsPersonWithNoTags() throws Exception {
+        JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL,
+                VALID_ADDRESS, VALID_INCOME, VALID_MEDICAL_INFO, null, VALID_NOTES);
+        Person modelPerson = person.toModelType();
+        assertTrue(modelPerson.getTags().isEmpty());
+    }
 }
