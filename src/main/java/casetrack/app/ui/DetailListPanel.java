@@ -1,9 +1,11 @@
 package casetrack.app.ui;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Logger;
 
 import casetrack.app.commons.core.LogsCenter;
+import casetrack.app.model.person.Income;
 import casetrack.app.model.person.Note;
 import casetrack.app.model.person.Person;
 import casetrack.app.model.person.PersonAttribute;
@@ -52,9 +54,17 @@ public class DetailListPanel extends UiPart<Region> {
             new PersonAttribute(person.getPhone().getClass().getSimpleName(), person.getPhone().value),
             new PersonAttribute(person.getAddress().getClass().getSimpleName(), person.getAddress().value),
             new PersonAttribute(person.getEmail().getClass().getSimpleName(), person.getEmail().value),
+            new PersonAttribute(person.getIncome().getClass().getSimpleName(), formatIncome(person.getIncome())),
             new PersonAttribute("Notes", noteValue)
         );
         detailListView.setItems(detailList);
+    }
+
+    private String formatIncome(Income income) {
+        java.util.Currency sgd = java.util.Currency.getInstance("SGD");
+        java.text.NumberFormat format = java.text.NumberFormat.getCurrencyInstance(Locale.US);
+        format.setCurrency(sgd);
+        return format.format(income.getValue());
     }
 
     /**
