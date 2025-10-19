@@ -60,12 +60,16 @@ public class DetailListPanel extends UiPart<Region> {
         detailListView.setItems(detailList);
     }
 
+    //@@author niyniy123-reused
+    //Reused from https://stackoverflow.com/questions/7828364/formatting-currencies-in-foreign-locales-in-java
+    // with modifications
     private String formatIncome(Income income) {
         java.util.Currency sgd = java.util.Currency.getInstance("SGD");
         java.text.NumberFormat format = java.text.NumberFormat.getCurrencyInstance(Locale.US);
         format.setCurrency(sgd);
         return format.format(income.getValue());
     }
+    //@@author
 
     /**
      * Custom {@code ListCell} that displays the details of a {@code Person} using a
