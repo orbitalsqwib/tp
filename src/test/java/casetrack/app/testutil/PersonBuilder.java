@@ -8,6 +8,7 @@ import java.util.Set;
 import casetrack.app.model.person.Address;
 import casetrack.app.model.person.Email;
 import casetrack.app.model.person.Income;
+import casetrack.app.model.person.MedicalInfo;
 import casetrack.app.model.person.Name;
 import casetrack.app.model.person.Note;
 import casetrack.app.model.person.Person;
@@ -25,12 +26,14 @@ public class PersonBuilder {
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_INCOME = "1000";
+    public static final String DEFAULT_MEDICAL_INFO = "-";
 
     private Name name;
     private Phone phone;
     private Email email;
     private Address address;
     private Income income;
+    private MedicalInfo medicalInfo;
     private Set<Tag> tags;
     private List<Note> notes;
 
@@ -43,6 +46,7 @@ public class PersonBuilder {
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
         income = new Income(DEFAULT_INCOME);
+        medicalInfo = new MedicalInfo(DEFAULT_MEDICAL_INFO);
         tags = new HashSet<>();
         notes = new ArrayList<>();
     }
@@ -56,6 +60,7 @@ public class PersonBuilder {
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
         income = personToCopy.getIncome();
+        medicalInfo = personToCopy.getMedicalInfo();
         tags = new HashSet<>(personToCopy.getTags());
         notes = new ArrayList<>(personToCopy.getNotes());
     }
@@ -109,6 +114,14 @@ public class PersonBuilder {
     }
 
     /**
+     * Sets the {@code MedicalInfo} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withMedicalInfo(String medicalInfo) {
+        this.medicalInfo = new MedicalInfo(medicalInfo);
+        return this;
+    }
+
+    /**
      * Sets the {@code Notes} of the {@code Person} that we are building.
      */
     public PersonBuilder withNotes(Note... notes) {
@@ -125,9 +138,9 @@ public class PersonBuilder {
      */
     public Person build() {
         if (notes.isEmpty()) {
-            return new Person(name, phone, email, address, income, tags);
+            return new Person(name, phone, email, address, income, medicalInfo, tags);
         } else {
-            return new Person(name, phone, email, address, income, tags, notes);
+            return new Person(name, phone, email, address, income, medicalInfo, tags, notes);
         }
     }
 
