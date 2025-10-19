@@ -3,6 +3,7 @@ package casetrack.app.model.person;
 import static casetrack.app.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static casetrack.app.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static casetrack.app.logic.commands.CommandTestUtil.VALID_INCOME_BOB;
+import static casetrack.app.logic.commands.CommandTestUtil.VALID_MEDICAL_INFO_BOB;
 import static casetrack.app.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static casetrack.app.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static casetrack.app.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
@@ -188,5 +189,12 @@ public class PersonTest {
 
         // hash codes should differ when only notes differ
         assertNotEquals(withoutNotes.hashCode(), withNotes.hashCode());
+    }
+
+    @Test
+    public void equals_differentMedicalInfo_returnsFalse() {
+        // Only medical info differs
+        Person editedAlice = new PersonBuilder(ALICE).withMedicalInfo(VALID_MEDICAL_INFO_BOB).build();
+        assertFalse(ALICE.equals(editedAlice));
     }
 }
