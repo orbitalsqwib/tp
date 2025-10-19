@@ -10,9 +10,12 @@ import static casetrack.app.logic.commands.CommandTestUtil.INCOME_DESC_BOB;
 import static casetrack.app.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
 import static casetrack.app.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
 import static casetrack.app.logic.commands.CommandTestUtil.INVALID_INCOME_DESC;
+import static casetrack.app.logic.commands.CommandTestUtil.INVALID_MEDICAL_INFO_DESC;
 import static casetrack.app.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static casetrack.app.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
 import static casetrack.app.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
+import static casetrack.app.logic.commands.CommandTestUtil.MEDICAL_INFO_DESC_AMY;
+import static casetrack.app.logic.commands.CommandTestUtil.MEDICAL_INFO_DESC_BOB;
 import static casetrack.app.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static casetrack.app.logic.commands.CommandTestUtil.NAME_DESC_BOB;
 import static casetrack.app.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
@@ -25,6 +28,7 @@ import static casetrack.app.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static casetrack.app.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static casetrack.app.logic.commands.CommandTestUtil.VALID_INCOME_AMY;
 import static casetrack.app.logic.commands.CommandTestUtil.VALID_INCOME_BOB;
+import static casetrack.app.logic.commands.CommandTestUtil.VALID_MEDICAL_INFO_AMY;
 import static casetrack.app.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static casetrack.app.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static casetrack.app.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
@@ -32,6 +36,7 @@ import static casetrack.app.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static casetrack.app.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static casetrack.app.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static casetrack.app.logic.parser.CliSyntax.PREFIX_INCOME;
+import static casetrack.app.logic.parser.CliSyntax.PREFIX_MEDICAL_INFO;
 import static casetrack.app.logic.parser.CliSyntax.PREFIX_NAME;
 import static casetrack.app.logic.parser.CliSyntax.PREFIX_PHONE;
 import static casetrack.app.logic.parser.CommandParserTestUtil.assertParseFailure;
@@ -45,6 +50,7 @@ import casetrack.app.logic.Messages;
 import casetrack.app.logic.commands.AddCommand;
 import casetrack.app.model.person.Address;
 import casetrack.app.model.person.Email;
+import casetrack.app.model.person.MedicalInfo;
 import casetrack.app.model.person.Name;
 import casetrack.app.model.person.Person;
 import casetrack.app.model.person.Phone;
@@ -233,7 +239,45 @@ public class AddCommandParserTest {
 
         // non-empty preamble
         assertParseFailure(parser, PREAMBLE_NON_EMPTY + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + INCOME_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
+                        + ADDRESS_DESC_BOB + INCOME_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_optionalMedicalInfoMissing_success() {
+        // Medical info not specified - should default to "-"
+        Person expectedPerson = new PersonBuilder(AMY).withIncome(VALID_INCOME_AMY)
+                .withMedicalInfo("-").withTags(VALID_TAG_FRIEND).build();
+        assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
+                        + ADDRESS_DESC_AMY + INCOME_DESC_AMY + TAG_DESC_FRIEND,
+                new AddCommand(expectedPerson));
+    }
+
+    @Test
+    public void parse_medicalInfoPresent_success() {
+        // Medical info specified
+        Person expectedPerson = new PersonBuilder(AMY).withIncome(VALID_INCOME_AMY)
+                .withMedicalInfo(VALID_MEDICAL_INFO_AMY).withTags(VALID_TAG_FRIEND).build();
+        assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
+                        + ADDRESS_DESC_AMY + INCOME_DESC_AMY + MEDICAL_INFO_DESC_AMY + TAG_DESC_FRIEND,
+                new AddCommand(expectedPerson));
+    }
+
+    @Test
+    public void parse_invalidMedicalInfo_failure() {
+        // Invalid medical info (whitespace only)
+        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
+                + ADDRESS_DESC_BOB + INCOME_DESC_BOB + INVALID_MEDICAL_INFO_DESC
+                + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, MedicalInfo.MESSAGE_CONSTRAINTS);
+    }
+
+    @Test
+    public void parse_duplicateMedicalInfo_failure() {
+        String validExpectedPersonString = NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
+                + ADDRESS_DESC_BOB + INCOME_DESC_BOB + MEDICAL_INFO_DESC_BOB + TAG_DESC_FRIEND;
+
+        // Multiple medical info fields
+        assertParseFailure(parser, MEDICAL_INFO_DESC_AMY + validExpectedPersonString,
+                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_MEDICAL_INFO));
     }
 }

@@ -23,7 +23,6 @@ import casetrack.app.logic.commands.exceptions.CommandException;
 import casetrack.app.model.Model;
 import casetrack.app.model.person.Address;
 import casetrack.app.model.person.Email;
-import casetrack.app.model.person.MedicalInfo;
 import casetrack.app.model.person.Name;
 import casetrack.app.model.person.Person;
 import casetrack.app.model.person.Phone;
@@ -104,7 +103,8 @@ public class EditCommand extends Command {
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
         return new Person(updatedName, updatedPhone, updatedEmail,
-                updatedAddress, personToEdit.getIncome(), personToEdit.getMedicalInfo(), updatedTags, personToEdit.getNotes());
+                updatedAddress, personToEdit.getIncome(),
+                personToEdit.getMedicalInfo(), updatedTags, personToEdit.getNotes());
     }
 
     @Override

@@ -3,6 +3,7 @@ package casetrack.app.logic.commands;
 import static casetrack.app.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static casetrack.app.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static casetrack.app.logic.parser.CliSyntax.PREFIX_INCOME;
+import static casetrack.app.logic.parser.CliSyntax.PREFIX_MEDICAL_INFO;
 import static casetrack.app.logic.parser.CliSyntax.PREFIX_NAME;
 import static casetrack.app.logic.parser.CliSyntax.PREFIX_PHONE;
 import static casetrack.app.logic.parser.CliSyntax.PREFIX_TAG;
@@ -37,6 +38,8 @@ public class CommandTestUtil {
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
     public static final String VALID_INCOME_AMY = "1200";
     public static final String VALID_INCOME_BOB = "2300.50";
+    public static final String VALID_MEDICAL_INFO_AMY = "Asthma";
+    public static final String VALID_MEDICAL_INFO_BOB = "Diabetes";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
 
@@ -50,6 +53,8 @@ public class CommandTestUtil {
     public static final String ADDRESS_DESC_BOB = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB;
     public static final String INCOME_DESC_AMY = " " + PREFIX_INCOME + VALID_INCOME_AMY;
     public static final String INCOME_DESC_BOB = " " + PREFIX_INCOME + VALID_INCOME_BOB;
+    public static final String MEDICAL_INFO_DESC_AMY = " " + PREFIX_MEDICAL_INFO + VALID_MEDICAL_INFO_AMY;
+    public static final String MEDICAL_INFO_DESC_BOB = " " + PREFIX_MEDICAL_INFO + VALID_MEDICAL_INFO_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
 
@@ -58,6 +63,8 @@ public class CommandTestUtil {
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_INCOME_DESC = " " + PREFIX_INCOME + "-5"; // negative not allowed
+    public static final String INVALID_MEDICAL_INFO_DESC =
+            " " + PREFIX_MEDICAL_INFO + " "; // whitespace only not allowed
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
