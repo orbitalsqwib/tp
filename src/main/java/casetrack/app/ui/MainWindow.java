@@ -231,7 +231,7 @@ public class MainWindow extends UiPart<Stage> {
 
             if (commandResult.getDetailPanelInstruction() != null) {
                 DetailPanelInstruction instruction = commandResult.getDetailPanelInstruction();
-                if (instruction.shouldDisplayNothing()) {
+                if (instruction.shouldClearDisplay()) {
                     detailListPanel.clearDetails();
                 } else {
                     detailListPanel.showDetails(instruction.getDisplayPerson());

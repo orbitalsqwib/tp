@@ -29,11 +29,11 @@ public class DetailPanelInstruction {
     }
 
     /**
-     * Checks if the detail panel should display nothing.
+     * Checks if the detail panel should clear its display.
      *
      * @return true if displayPerson is null, false otherwise.
      */
-    public boolean shouldDisplayNothing() {
+    public boolean shouldClearDisplay() {
         return displayPerson == null;
     }
 
