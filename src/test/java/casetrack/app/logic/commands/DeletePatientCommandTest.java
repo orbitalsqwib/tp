@@ -38,7 +38,9 @@ public class DeletePatientCommandTest {
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.deletePerson(personToDelete);
 
-        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+        DetailPanelInstruction clearInstruction = new DetailPanelInstruction(null);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage, clearInstruction);
+        assertCommandSuccess(deleteCommand, model, expectedCommandResult, expectedModel);
     }
 
     @Test
@@ -63,7 +65,9 @@ public class DeletePatientCommandTest {
         expectedModel.deletePerson(personToDelete);
         showNoPerson(expectedModel);
 
-        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+        DetailPanelInstruction clearInstruction = new DetailPanelInstruction(null);
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage, clearInstruction);
+        assertCommandSuccess(deleteCommand, model, expectedCommandResult, expectedModel);
     }
 
     @Test

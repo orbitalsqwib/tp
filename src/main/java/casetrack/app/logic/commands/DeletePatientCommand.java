@@ -42,7 +42,10 @@ public class DeletePatientCommand extends Command {
 
         Person personToDelete = lastShownList.get(targetIndex.getZeroBased());
         model.deletePerson(personToDelete);
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, Messages.format(personToDelete)));
+
+        DetailPanelInstruction clearInstruction = new DetailPanelInstruction(null);
+        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS,
+                Messages.format(personToDelete)), clearInstruction);
     }
 
     @Override

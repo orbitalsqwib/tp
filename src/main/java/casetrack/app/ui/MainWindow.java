@@ -7,6 +7,7 @@ import casetrack.app.commons.core.GuiSettings;
 import casetrack.app.commons.core.LogsCenter;
 import casetrack.app.logic.Logic;
 import casetrack.app.logic.commands.CommandResult;
+import casetrack.app.logic.commands.DetailPanelInstruction;
 import casetrack.app.logic.commands.exceptions.CommandException;
 import casetrack.app.logic.parser.exceptions.ParseException;
 import casetrack.app.model.person.Person;
@@ -226,6 +227,15 @@ public class MainWindow extends UiPart<Stage> {
                 Person detailTarget = commandResult.getDetailTarget();
                 selectPersonCallback.accept(detailTarget);
                 personListPanel.setSelectedPerson(detailTarget);
+            }
+
+            if (commandResult.getDetailPanelInstruction() != null) {
+                DetailPanelInstruction instruction = commandResult.getDetailPanelInstruction();
+                if (instruction.shouldDisplayNothing()) {
+                    detailListPanel.clearDetails();
+                } else {
+                    detailListPanel.showDetails(instruction.getDisplayPerson());
+                }
             }
 
             return commandResult;

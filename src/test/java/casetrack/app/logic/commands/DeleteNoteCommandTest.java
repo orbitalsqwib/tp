@@ -54,7 +54,8 @@ public class DeleteNoteCommandTest {
         Person expectedPerson = personWithTwoNotes.removeNote(0);
         expectedModel.setPerson(personWithTwoNotes, expectedPerson);
 
-        CommandResult expectedResult = new CommandResult(expectedMessage, expectedPerson, false, false);
+        DetailPanelInstruction updateInstruction = new DetailPanelInstruction(expectedPerson);
+        CommandResult expectedResult = new CommandResult(expectedMessage, updateInstruction);
         assertCommandSuccess(deleteNoteCommand, model, expectedResult, expectedModel);
     }
 
@@ -143,7 +144,8 @@ public class DeleteNoteCommandTest {
         expectedModel.setPerson(personWithTwoNotes, expectedPerson);
         showPersonAtIndex(expectedModel, INDEX_FIRST_PERSON);
 
-        CommandResult expectedResult = new CommandResult(expectedMessage, expectedPerson, false, false);
+        DetailPanelInstruction updateInstruction = new DetailPanelInstruction(expectedPerson);
+        CommandResult expectedResult = new CommandResult(expectedMessage, updateInstruction);
         assertCommandSuccess(deleteNoteCommand, model, expectedResult, expectedModel);
     }
 

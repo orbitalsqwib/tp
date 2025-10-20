@@ -21,6 +21,9 @@ public class CommandResult {
     /** The application should display details for a patient. */
     private final Person detailTarget;
 
+    /** Instruction for the detail panel on how to display information. */
+    private final DetailPanelInstruction detailPanelInstruction;
+
     /**
      * Constructs a {@code CommandResult} with the specified fields.
      */
@@ -29,17 +32,38 @@ public class CommandResult {
         this.detailTarget = detailTarget;
         this.showHelp = showHelp;
         this.exit = exit;
+        this.detailPanelInstruction = null;
     }
+
     /**
      * Constructs a {@code CommandResult} with the specified {@code feedbackToUser},
      * and other fields set to their default value.
      */
     public CommandResult(String feedbackToUser) {
-        this(feedbackToUser, null, false, false);
+        this.feedbackToUser = feedbackToUser;
+        this.detailTarget = null;
+        this.detailPanelInstruction = null;
+        this.showHelp = false;
+        this.exit = false;
+    }
+
+    /**
+     * Constructs a {@code CommandResult} with the specified {@code feedbackToUser} and detail panel instruction.
+     */
+    public CommandResult(String feedbackToUser, DetailPanelInstruction detailPanelInstruction) {
+        this.feedbackToUser = feedbackToUser;
+        this.detailTarget = null;
+        this.detailPanelInstruction = detailPanelInstruction;
+        this.showHelp = false;
+        this.exit = false;
     }
 
     public Person getDetailTarget() {
         return detailTarget;
+    }
+
+    public DetailPanelInstruction getDetailPanelInstruction() {
+        return detailPanelInstruction;
     }
 
     public String getFeedbackToUser() {
@@ -68,15 +92,20 @@ public class CommandResult {
         CommandResult otherCommandResult = (CommandResult) other;
         boolean isDetailTargetEqual = (detailTarget == null && otherCommandResult.detailTarget == null
                 || detailTarget != null && detailTarget.equals(otherCommandResult.detailTarget));
+        boolean isDetailPanelInstructionEqual = (detailPanelInstruction == null
+                && otherCommandResult.detailPanelInstruction == null
+                || detailPanelInstruction != null
+                && detailPanelInstruction.equals(otherCommandResult.detailPanelInstruction));
         return feedbackToUser.equals(otherCommandResult.feedbackToUser)
                 && isDetailTargetEqual
+                && isDetailPanelInstructionEqual
                 && showHelp == otherCommandResult.showHelp
                 && exit == otherCommandResult.exit;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(feedbackToUser, detailTarget, showHelp, exit);
+        return Objects.hash(feedbackToUser, detailTarget, detailPanelInstruction, showHelp, exit);
     }
 
     @Override
@@ -84,6 +113,7 @@ public class CommandResult {
         return new ToStringBuilder(this)
                 .add("feedbackToUser", feedbackToUser)
                 .add("detailTarget", detailTarget)
+                .add("detailPanelInstruction", detailPanelInstruction)
                 .add("showHelp", showHelp)
                 .add("exit", exit)
                 .toString();

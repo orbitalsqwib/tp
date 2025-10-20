@@ -1,9 +1,7 @@
 package casetrack.app.ui;
 
 import java.util.List;
-import java.util.logging.Logger;
 
-import casetrack.app.commons.core.LogsCenter;
 import casetrack.app.model.person.Note;
 import casetrack.app.model.person.Person;
 import casetrack.app.model.person.PersonAttribute;
@@ -19,7 +17,6 @@ import javafx.scene.layout.Region;
  */
 public class DetailListPanel extends UiPart<Region> {
     private static final String FXML = "DetailListPanel.fxml";
-    private final Logger logger = LogsCenter.getLogger(DetailListPanel.class);
 
     @FXML
     private ListView<PersonAttribute> detailListView;
@@ -30,6 +27,13 @@ public class DetailListPanel extends UiPart<Region> {
     public DetailListPanel() {
         super(FXML);
         detailListView.setCellFactory(listView -> new DetailListViewCell());
+    }
+
+    /**
+     * Clears the detail panel.
+     */
+    public void clearDetails() {
+        detailListView.setItems(FXCollections.emptyObservableList());
     }
 
     /**
