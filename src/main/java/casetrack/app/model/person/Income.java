@@ -48,12 +48,18 @@ public class Income {
         return value;
     }
 
+    //@@author niyniy123-reused
+    //Reused from https://stackoverflow.com/questions/7828364/formatting-currencies-in-foreign-locales-in-java
+    // with modifications
     @Override
     public String toString() {
-        // Use a canonical plain string without scientific notation
-        BigDecimal normalized = value.stripTrailingZeros();
-        return normalized.toPlainString();
+        // Format income as currency in SGD, consistent across UI and elsewhere
+        java.util.Currency sgd = java.util.Currency.getInstance("SGD");
+        java.text.NumberFormat format = java.text.NumberFormat.getCurrencyInstance(java.util.Locale.US);
+        format.setCurrency(sgd);
+        return format.format(this.value);
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

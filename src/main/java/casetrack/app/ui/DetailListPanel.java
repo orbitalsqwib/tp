@@ -1,11 +1,9 @@
 package casetrack.app.ui;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.logging.Logger;
 
 import casetrack.app.commons.core.LogsCenter;
-import casetrack.app.model.person.Income;
 import casetrack.app.model.person.Note;
 import casetrack.app.model.person.Person;
 import casetrack.app.model.person.PersonAttribute;
@@ -54,22 +52,11 @@ public class DetailListPanel extends UiPart<Region> {
             new PersonAttribute(person.getPhone().getClass().getSimpleName(), person.getPhone().value),
             new PersonAttribute(person.getAddress().getClass().getSimpleName(), person.getAddress().value),
             new PersonAttribute(person.getEmail().getClass().getSimpleName(), person.getEmail().value),
-            new PersonAttribute(person.getIncome().getClass().getSimpleName(), formatIncome(person.getIncome())),
+            new PersonAttribute(person.getIncome().getClass().getSimpleName(), person.getIncome().toString()),
             new PersonAttribute("Notes", noteValue)
         );
         detailListView.setItems(detailList);
     }
-
-    //@@author niyniy123-reused
-    //Reused from https://stackoverflow.com/questions/7828364/formatting-currencies-in-foreign-locales-in-java
-    // with modifications
-    private String formatIncome(Income income) {
-        java.util.Currency sgd = java.util.Currency.getInstance("SGD");
-        java.text.NumberFormat format = java.text.NumberFormat.getCurrencyInstance(Locale.US);
-        format.setCurrency(sgd);
-        return format.format(income.getValue());
-    }
-    //@@author
 
     /**
      * Custom {@code ListCell} that displays the details of a {@code Person} using a

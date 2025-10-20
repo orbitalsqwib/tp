@@ -69,9 +69,9 @@ public class IncomeTest {
     }
 
     @Test
-    public void toString_returnsCanonicalIncomeString() {
+    public void toString_returnsFormattedCurrencyString() {
         Income income = new Income("1000.5000");
-        assertEquals("1000.5", income.toString());
+        assertEquals("SGD1,000.50", income.toString());
     }
 
     @Test
@@ -98,12 +98,12 @@ public class IncomeTest {
         assertTrue(Income.isValidIncome("000.50"));
         assertTrue(Income.isValidIncome("+0002.5"));
 
-        // constructor and toString canonicalization
-        assertEquals("0", new Income("000").toString());
-        assertEquals("0", new Income("000.00").toString());
-        assertEquals("123", new Income("00123").toString());
-        assertEquals("0.5", new Income("000.50").toString());
-        assertEquals("2.5", new Income("+0002.5").toString());
+        // constructor and toString formatting
+        assertEquals("SGD0.00", new Income("000").toString());
+        assertEquals("SGD0.00", new Income("000.00").toString());
+        assertEquals("SGD123.00", new Income("00123").toString());
+        assertEquals("SGD0.50", new Income("000.50").toString());
+        assertEquals("SGD2.50", new Income("+0002.5").toString());
 
         // equality and hashCode
         assertEquals(new Income("000"), new Income("0"));
