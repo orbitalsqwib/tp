@@ -40,11 +40,7 @@ public class CommandResult {
      * and other fields set to their default value.
      */
     public CommandResult(String feedbackToUser) {
-        this.feedbackToUser = feedbackToUser;
-        this.detailTarget = null;
-        this.detailPanelInstruction = null;
-        this.showHelp = false;
-        this.exit = false;
+        this(feedbackToUser, null, false, false);
     }
 
     /**
