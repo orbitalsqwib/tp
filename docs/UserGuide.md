@@ -167,6 +167,23 @@ Examples:
 * `note 1 t/Follow-up in 2 weeks`
 * `note n/John Doe p/91234567 t/Mother mentioned financial difficulties`
 
+### Editing a note : `edit note`
+
+Edits a specific note for a person.
+
+Format: `edit note PERSON_INDEX NOTE_INDEX t/NEW_TEXT`
+
+- Edits the note at the specified `NOTE_INDEX` from the person at `PERSON_INDEX`.
+- Both indices refer to the index numbers shown in the displayed lists.
+- Both indices **must be positive integers** 1, 2, 3, ...
+- The person must have notes to edit.
+- `t/NEW_TEXT` must contain at least one non-whitespace character.
+
+Examples:
+
+- `edit note 1 2 t/Updated note content` edits the 2nd note from the 1st person in the address book.
+- `search name John` followed by `edit note 1 1 t/Follow-up completed` edits the 1st note from the 1st person in the results of the `search` command.
+
 ### Deleting a note : `delete note`
 
 Deletes a specific note from a person.
