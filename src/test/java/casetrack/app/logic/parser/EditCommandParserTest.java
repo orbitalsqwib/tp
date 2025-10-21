@@ -325,13 +325,13 @@ public class EditCommandParserTest {
     public void parse_multipleValidEditPersonCommands_success() {
         // Test multiple person edit commands to ensure both branches are covered
         Index targetIndex = INDEX_SECOND_PERSON;
-        
+
         // Test with just name
         String userInput = targetIndex.getOneBased() + NAME_DESC_AMY;
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
-        
+
         // Test with phone and email
         userInput = targetIndex.getOneBased() + PHONE_DESC_BOB + EMAIL_DESC_AMY;
         descriptor = new EditPersonDescriptorBuilder()
