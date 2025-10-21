@@ -73,9 +73,19 @@ public class EditCommandParser implements Parser<Command> {
                     EditNoteCommand.MESSAGE_USAGE));
         }
 
-        Index personIndex = ParserUtil.parseIndex(parts[0]);
-        Index noteIndex = ParserUtil.parseIndex(parts[1]);
-        Note newNote = ParserUtil.parseNote(argMultimap.getValue(PREFIX_NOTE_TEXT).get());
+        Index personIndex;
+        Index noteIndex;
+        Note newNote;
+
+        try {
+            personIndex = ParserUtil.parseIndex(parts[0]);
+            noteIndex = ParserUtil.parseIndex(parts[1]);
+        } catch (ParseException pe) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    EditNoteCommand.MESSAGE_USAGE), pe);
+        }
+
+        newNote = ParserUtil.parseNote(argMultimap.getValue(PREFIX_NOTE_TEXT).get());
 
         return new EditNoteCommand(personIndex, noteIndex, newNote);
     }

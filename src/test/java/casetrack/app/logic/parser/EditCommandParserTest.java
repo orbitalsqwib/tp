@@ -255,16 +255,20 @@ public class EditCommandParserTest {
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditNoteCommand.MESSAGE_USAGE));
 
         // negative person index
-        assertParseFailure(parser, "note -1 2 t/Updated note", ParserUtil.MESSAGE_INVALID_INDEX);
+        assertParseFailure(parser, "note -1 2 t/Updated note",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditNoteCommand.MESSAGE_USAGE));
 
         // zero person index
-        assertParseFailure(parser, "note 0 2 t/Updated note", ParserUtil.MESSAGE_INVALID_INDEX);
+        assertParseFailure(parser, "note 0 2 t/Updated note",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditNoteCommand.MESSAGE_USAGE));
 
         // negative note index
-        assertParseFailure(parser, "note 1 -2 t/Updated note", ParserUtil.MESSAGE_INVALID_INDEX);
+        assertParseFailure(parser, "note 1 -2 t/Updated note",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditNoteCommand.MESSAGE_USAGE));
 
         // zero note index
-        assertParseFailure(parser, "note 1 0 t/Updated note", ParserUtil.MESSAGE_INVALID_INDEX);
+        assertParseFailure(parser, "note 1 0 t/Updated note",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditNoteCommand.MESSAGE_USAGE));
     }
 
     @Test
