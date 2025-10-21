@@ -65,6 +65,10 @@ public class Income {
         return df.format(this.value);
     }
 
+    public String toPlainString() {
+        return this.value.toString();
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {

@@ -69,7 +69,7 @@ class JsonAdaptedPerson {
         email = source.getEmail().value;
         address = source.getAddress().value;
         // Store income as raw numeric string to keep JSON parseable by Income.isValidIncome
-        income = source.getIncome().getValue().toPlainString();
+        income = source.getIncome().toPlainString();
         medicalInfo = source.getMedicalInfo().toString();
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
