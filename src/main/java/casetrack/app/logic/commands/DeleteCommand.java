@@ -9,14 +9,14 @@ import casetrack.app.model.Model;
 import casetrack.app.model.person.Person;
 
 /**
- * Base class for all delete-related commands.
+ * Abstract class for delete note and patient command.
  */
 public abstract class DeleteCommand extends Command {
 
     public static final String COMMAND_WORD = "delete";
 
     /**
-     * Returns the person at the given index in the filtered list, or throws if out of bounds.
+     * Returns the patient at the index in the filtered list, or raise exception if invalid.
      */
     protected Person getPersonByIndex(Model model, Index index) throws CommandException {
         List<Person> lastShownList = model.getFilteredPersonList();
