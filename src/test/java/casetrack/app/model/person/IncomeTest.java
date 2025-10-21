@@ -71,7 +71,7 @@ public class IncomeTest {
     @Test
     public void toString_returnsFormattedCurrencyString() {
         Income income = new Income("1000.5000");
-        assertEquals("SGD1,000.50", income.toString());
+        assertEquals("SGD 1,000.50", income.toString());
     }
 
     @Test
@@ -99,11 +99,11 @@ public class IncomeTest {
         assertTrue(Income.isValidIncome("+0002.5"));
 
         // constructor and toString formatting
-        assertEquals("SGD0.00", new Income("000").toString());
-        assertEquals("SGD0.00", new Income("000.00").toString());
-        assertEquals("SGD123.00", new Income("00123").toString());
-        assertEquals("SGD0.50", new Income("000.50").toString());
-        assertEquals("SGD2.50", new Income("+0002.5").toString());
+        assertEquals("SGD 0.00", new Income("000").toString());
+        assertEquals("SGD 0.00", new Income("000.00").toString());
+        assertEquals("SGD 123.00", new Income("00123").toString());
+        assertEquals("SGD 0.50", new Income("000.50").toString());
+        assertEquals("SGD 2.50", new Income("+0002.5").toString());
 
         // equality and hashCode
         assertEquals(new Income("000"), new Income("0"));

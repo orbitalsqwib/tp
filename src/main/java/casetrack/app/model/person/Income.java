@@ -4,6 +4,11 @@ import static casetrack.app.commons.util.AppUtil.checkArgument;
 import static java.util.Objects.requireNonNull;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
+import java.util.Currency;
+import java.util.Locale;
 
 /**
  * Represents a Person's income in the address book.
@@ -48,18 +53,17 @@ public class Income {
         return value;
     }
 
-    //@@author niyniy123-reused
-    //Reused from https://stackoverflow.com/questions/7828364/formatting-currencies-in-foreign-locales-in-java
-    // with modifications
     @Override
     public String toString() {
-        // Format income as currency in SGD, consistent across UI and elsewhere
-        java.util.Currency sgd = java.util.Currency.getInstance("SGD");
-        java.text.NumberFormat format = java.text.NumberFormat.getCurrencyInstance(java.util.Locale.US);
-        format.setCurrency(sgd);
-        return format.format(this.value);
+        Currency sgd = Currency.getInstance("SGD");
+        NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("en", "SG"));
+        DecimalFormat df = (DecimalFormat) format;
+        DecimalFormatSymbols symbols = df.getDecimalFormatSymbols();
+        symbols.setCurrencySymbol(sgd.getCurrencyCode() + " ");
+        df.setDecimalFormatSymbols(symbols);
+        df.setCurrency(sgd);
+        return df.format(this.value);
     }
-    //@@author
 
     @Override
     public boolean equals(Object other) {
