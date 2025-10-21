@@ -294,4 +294,51 @@ public class EditCommandParserTest {
         EditNoteCommand expectedCommand = new EditNoteCommand(INDEX_SECOND_PERSON, INDEX_FIRST_PERSON, newNote);
         assertParseSuccess(parser, "note 2 1 t/" + noteWithSpecialChars, expectedCommand);
     }
+
+    @Test
+    public void parse_noteWithExtraSpaces_success() {
+        // extra spaces between indices
+        Note newNote = new Note("Updated note");
+        EditNoteCommand expectedCommand = new EditNoteCommand(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON, newNote);
+        assertParseSuccess(parser, "note   1    2   t/Updated note", expectedCommand);
+    }
+
+    @Test
+    public void parse_noteWithSingleIndex_throwsParseException() {
+        // "note " with only one index instead of two
+        assertParseFailure(parser, "note 1",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditNoteCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_editPersonWithNoteKeywordInMiddle_success() {
+        // ensure "note" in the middle of person edit command doesn't trigger note parsing
+        // this tests the branch where trimmedArgs.startsWith(ParserUtil.NOTE_STRING + " ") is false
+        Index targetIndex = INDEX_FIRST_PERSON;
+        String userInput = targetIndex.getOneBased() + PHONE_DESC_AMY;
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withPhone(VALID_PHONE_AMY).build();
+        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
+        assertParseSuccess(parser, userInput, expectedCommand);
+    }
+
+    @Test
+    public void parse_multipleValidEditPersonCommands_success() {
+        // Test multiple person edit commands to ensure both branches are covered
+        Index targetIndex = INDEX_SECOND_PERSON;
+        
+        // Test with just name
+        String userInput = targetIndex.getOneBased() + NAME_DESC_AMY;
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY).build();
+        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
+        assertParseSuccess(parser, userInput, expectedCommand);
+        
+        // Test with phone and email
+        userInput = targetIndex.getOneBased() + PHONE_DESC_BOB + EMAIL_DESC_AMY;
+        descriptor = new EditPersonDescriptorBuilder()
+                .withPhone(VALID_PHONE_BOB)
+                .withEmail(VALID_EMAIL_AMY)
+                .build();
+        expectedCommand = new EditCommand(targetIndex, descriptor);
+        assertParseSuccess(parser, userInput, expectedCommand);
+    }
 }
