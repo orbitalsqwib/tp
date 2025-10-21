@@ -38,9 +38,11 @@ import casetrack.app.commons.core.index.Index;
 import casetrack.app.logic.Messages;
 import casetrack.app.logic.commands.EditCommand;
 import casetrack.app.logic.commands.EditCommand.EditPersonDescriptor;
+import casetrack.app.logic.commands.EditNoteCommand;
 import casetrack.app.model.person.Address;
 import casetrack.app.model.person.Email;
 import casetrack.app.model.person.Name;
+import casetrack.app.model.person.Note;
 import casetrack.app.model.person.Phone;
 import casetrack.app.model.tag.Tag;
 import casetrack.app.testutil.EditPersonDescriptorBuilder;
@@ -204,5 +206,88 @@ public class EditCommandParserTest {
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
+    }
+
+    // ==================== Edit Note Tests ====================
+
+    @Test
+    public void parse_validNoteArgs_returnsEditNoteCommand() {
+        Note newNote = new Note("Updated note content");
+        EditNoteCommand expectedCommand = new EditNoteCommand(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON, newNote);
+        assertParseSuccess(parser, "note 1 2 t/Updated note content", expectedCommand);
+    }
+
+    @Test
+    public void parse_noteWithInvalidFormat_throwsParseException() {
+        // only one index
+        assertParseFailure(parser, "note 1 t/Updated note",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditNoteCommand.MESSAGE_USAGE));
+
+        // no indices
+        assertParseFailure(parser, "note t/Updated note",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditNoteCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_noteWithMissingNoteText_throwsParseException() {
+        // missing t/ prefix
+        assertParseFailure(parser, "note 1 2",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditNoteCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_noteWithEmptyNoteText_throwsParseException() {
+        // empty note text
+        assertParseFailure(parser, "note 1 2 t/", Note.MESSAGE_CONSTRAINTS);
+
+        // whitespace only note text
+        assertParseFailure(parser, "note 1 2 t/   ", Note.MESSAGE_CONSTRAINTS);
+    }
+
+    @Test
+    public void parse_noteWithInvalidIndices_throwsParseException() {
+        // invalid person index (not a number)
+        assertParseFailure(parser, "note abc 2 t/Updated note",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditNoteCommand.MESSAGE_USAGE));
+
+        // invalid note index (not a number)
+        assertParseFailure(parser, "note 1 xyz t/Updated note",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditNoteCommand.MESSAGE_USAGE));
+
+        // negative person index
+        assertParseFailure(parser, "note -1 2 t/Updated note", ParserUtil.MESSAGE_INVALID_INDEX);
+
+        // zero person index
+        assertParseFailure(parser, "note 0 2 t/Updated note", ParserUtil.MESSAGE_INVALID_INDEX);
+
+        // negative note index
+        assertParseFailure(parser, "note 1 -2 t/Updated note", ParserUtil.MESSAGE_INVALID_INDEX);
+
+        // zero note index
+        assertParseFailure(parser, "note 1 0 t/Updated note", ParserUtil.MESSAGE_INVALID_INDEX);
+    }
+
+    @Test
+    public void parse_noteWithTooManyIndices_throwsParseException() {
+        // three indices instead of two
+        assertParseFailure(parser, "note 1 2 3 t/Updated note",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditNoteCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_noteWithValidLongText_success() {
+        String longNoteText = "This is a very long note that contains a lot of information "
+                + "about the patient's condition and treatment plan.";
+        Note newNote = new Note(longNoteText);
+        EditNoteCommand expectedCommand = new EditNoteCommand(INDEX_FIRST_PERSON, INDEX_FIRST_PERSON, newNote);
+        assertParseSuccess(parser, "note 1 1 t/" + longNoteText, expectedCommand);
+    }
+
+    @Test
+    public void parse_noteWithSpecialCharacters_success() {
+        String noteWithSpecialChars = "Patient mentioned: 50% improvement, $100 payment, & follow-up needed!";
+        Note newNote = new Note(noteWithSpecialChars);
+        EditNoteCommand expectedCommand = new EditNoteCommand(INDEX_SECOND_PERSON, INDEX_FIRST_PERSON, newNote);
+        assertParseSuccess(parser, "note 2 1 t/" + noteWithSpecialChars, expectedCommand);
     }
 }
