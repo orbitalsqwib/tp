@@ -206,7 +206,6 @@ public class EditNoteCommandTest {
     public void equals() {
         Note firstNote = new Note("First updated note");
         Note secondNote = new Note("Second updated note");
-        
         EditNoteCommand editFirstNoteCommand = new EditNoteCommand(INDEX_FIRST_PERSON, INDEX_FIRST_PERSON, firstNote);
         EditNoteCommand editSecondNoteCommand = new EditNoteCommand(INDEX_SECOND_PERSON, INDEX_FIRST_PERSON,
                 firstNote);
