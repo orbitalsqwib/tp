@@ -36,6 +36,9 @@ public class PhoneTest {
         assertTrue(Phone.isValidPhone("911")); // exactly 3 numbers
         assertTrue(Phone.isValidPhone("93121534"));
         assertTrue(Phone.isValidPhone("124293842033123")); // long phone numbers
+        assertTrue(Phone.isValidPhone("999 124293842033123")); // long phone numbers with country code
+        assertTrue(Phone.isValidPhone("+999 124293842033123")); // long phone numbers with country code and +
+        assertTrue(Phone.isValidPhone("+999124293842033123")); // phone numbers with no space before country code
     }
 
     @Test
