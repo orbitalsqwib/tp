@@ -594,6 +594,63 @@ Use case ends.
 
     Use case ends.
 
+#### Use case: (UC07): Edit Quick Note
+
+**Preconditions**
+* Patient record exists in the system (by index or by Name + Phone).
+
+**Guarantees**
+
+* A note will only be edited if a valid patient is identified and the note index exists.
+* Only notes from the linked patient will be edited.
+* Invalid inputs will not modify notes.
+
+**MSS**
+
+1. Actor types the command to edit a quick note with patient index, note index, and new note text.
+2. System validates the patient index.
+3. System validates the note index.
+4. System validates the new note text.
+5. System replaces the specified note under the patient's record with the new note text.
+6. System confirms success by displaying the updated note.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. Patient index is invalid (not a number, less than 1, or more than the number of total patients).
+
+    * 2a1. System shows error: "The person index provided is invalid."
+
+    Use case ends.
+
+* 3a. Note index is empty.
+
+    * 3a1. System shows an error: "Note index is required."
+
+    Use case ends.
+
+* 3b. Note index is invalid (not a number, less than 1, or more than the number of total notes the patient currently has).
+
+    * 3b1. System shows an error: "The note index provided is invalid."
+
+    Use case ends.
+
+* 3c. Person has no notes.
+
+    * 3c1. System shows an error: "This person has no notes to edit."
+
+    Use case ends.
+
+* 4a. Note text is empty or contains only whitespace.
+
+  * 4a1. System shows an error: "Note cannot be empty."
+
+  Use case ends.
+
+- \*a. At any time, Actor cancels the action.
+
+  Use case ends.
 
 *{More to be added}*
 
