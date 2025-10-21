@@ -13,6 +13,7 @@ import casetrack.app.commons.exceptions.IllegalValueException;
 import casetrack.app.model.person.Address;
 import casetrack.app.model.person.Email;
 import casetrack.app.model.person.Income;
+import casetrack.app.model.person.MedicalInfo;
 import casetrack.app.model.person.Name;
 import casetrack.app.model.person.Note;
 import casetrack.app.model.person.Person;
@@ -31,6 +32,7 @@ class JsonAdaptedPerson {
     private final String email;
     private final String address;
     private final String income;
+    private final String medicalInfo;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
     private final List<String> notes = new ArrayList<>();
 
@@ -41,6 +43,7 @@ class JsonAdaptedPerson {
     public JsonAdaptedPerson(@JsonProperty("name") String name,
             @JsonProperty("phone") String phone, @JsonProperty("email") String email,
             @JsonProperty("address") String address, @JsonProperty("income") String income,
+            @JsonProperty("medicalInfo") String medicalInfo,
             @JsonProperty("tags") List<JsonAdaptedTag> tags,
             @JsonProperty("notes") List<String> notes) {
         this.name = name;
@@ -48,6 +51,7 @@ class JsonAdaptedPerson {
         this.email = email;
         this.address = address;
         this.income = income;
+        this.medicalInfo = medicalInfo;
         if (tags != null) {
             this.tags.addAll(tags);
         }
@@ -66,6 +70,7 @@ class JsonAdaptedPerson {
         address = source.getAddress().value;
         // Store income as raw numeric string to keep JSON parseable by Income.isValidIncome
         income = source.getIncome().getValue().toPlainString();
+        medicalInfo = source.getMedicalInfo().toString();
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
@@ -137,8 +142,16 @@ class JsonAdaptedPerson {
         }
         final Income modelIncome = new Income(income);
 
+        // Use "-" as default if medicalInfo is null (for backward compatibility)
+        String medicalInfoValue = (medicalInfo == null) ? "-" : medicalInfo;
+        if (!MedicalInfo.isValidMedicalInfo(medicalInfoValue)) {
+            throw new IllegalValueException(MedicalInfo.MESSAGE_CONSTRAINTS);
+        }
+        final MedicalInfo modelMedicalInfo = new MedicalInfo(medicalInfoValue);
+
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelIncome, modelTags, personNotes);
+        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelIncome,
+                modelMedicalInfo, modelTags, personNotes);
     }
 
 }

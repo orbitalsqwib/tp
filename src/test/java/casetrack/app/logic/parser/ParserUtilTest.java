@@ -16,6 +16,8 @@ import org.junit.jupiter.api.Test;
 import casetrack.app.logic.parser.exceptions.ParseException;
 import casetrack.app.model.person.Address;
 import casetrack.app.model.person.Email;
+import casetrack.app.model.person.Income;
+import casetrack.app.model.person.MedicalInfo;
 import casetrack.app.model.person.Name;
 import casetrack.app.model.person.Phone;
 import casetrack.app.model.tag.Tag;
@@ -26,6 +28,8 @@ public class ParserUtilTest {
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_TAG = "#friend";
+    private static final String INVALID_INCOME = "-100";
+    private static final String INVALID_MEDICAL_INFO = "";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
@@ -33,6 +37,8 @@ public class ParserUtilTest {
     private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
+    private static final String VALID_INCOME = "1000";
+    private static final String VALID_MEDICAL_INFO = "Asthma";
 
     private static final String WHITESPACE = " \t\r\n";
 
@@ -192,5 +198,51 @@ public class ParserUtilTest {
         Set<Tag> expectedTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
 
         assertEquals(expectedTagSet, actualTagSet);
+    }
+
+    @Test
+    public void parseIncome_null_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> ParserUtil.parseIncome(null));
+    }
+
+    @Test
+    public void parseIncome_invalidValue_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseIncome(INVALID_INCOME));
+    }
+
+    @Test
+    public void parseIncome_validValueWithoutWhitespace_returnsIncome() throws Exception {
+        Income expectedIncome = new Income(VALID_INCOME);
+        assertEquals(expectedIncome, ParserUtil.parseIncome(VALID_INCOME));
+    }
+
+    @Test
+    public void parseIncome_validValueWithWhitespace_returnsTrimmedIncome() throws Exception {
+        String incomeWithWhitespace = WHITESPACE + VALID_INCOME + WHITESPACE;
+        Income expectedIncome = new Income(VALID_INCOME);
+        assertEquals(expectedIncome, ParserUtil.parseIncome(incomeWithWhitespace));
+    }
+
+    @Test
+    public void parseMedicalInfo_null_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> ParserUtil.parseMedicalInfo(null));
+    }
+
+    @Test
+    public void parseMedicalInfo_invalidValue_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseMedicalInfo(INVALID_MEDICAL_INFO));
+    }
+
+    @Test
+    public void parseMedicalInfo_validValueWithoutWhitespace_returnsMedicalInfo() throws Exception {
+        MedicalInfo expectedMedicalInfo = new MedicalInfo(VALID_MEDICAL_INFO);
+        assertEquals(expectedMedicalInfo, ParserUtil.parseMedicalInfo(VALID_MEDICAL_INFO));
+    }
+
+    @Test
+    public void parseMedicalInfo_validValueWithWhitespace_returnsTrimmedMedicalInfo() throws Exception {
+        String medicalInfoWithWhitespace = WHITESPACE + VALID_MEDICAL_INFO + WHITESPACE;
+        MedicalInfo expectedMedicalInfo = new MedicalInfo(VALID_MEDICAL_INFO);
+        assertEquals(expectedMedicalInfo, ParserUtil.parseMedicalInfo(medicalInfoWithWhitespace));
     }
 }
