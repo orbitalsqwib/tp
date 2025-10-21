@@ -164,8 +164,8 @@ public class UniquePatientListTest {
 
     @Test
     public void asUnmodifiableObservableList_modifyList_throwsUnsupportedOperationException() {
-        assertThrows(UnsupportedOperationException.class, ()
-        -> uniquePatientList.asUnmodifiableObservableList().remove(0));
+        assertThrows(UnsupportedOperationException.class, () ->
+            uniquePatientList.asUnmodifiableObservableList().remove(0));
     }
 
     @Test
