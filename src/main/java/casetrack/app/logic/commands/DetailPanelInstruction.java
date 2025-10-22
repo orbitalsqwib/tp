@@ -13,7 +13,7 @@ public class DetailPanelInstruction {
     /**
      * Creates a DetailPanelInstruction with the specified person information to display.
      *
-     * @param displayPerson The person information to display in the detail panel. If null, the detail panel should display nothing.
+     * @param displayPerson The person information to display in the detail panel. If null, display nothing.
      */
     public DetailPanelInstruction(Person displayPerson) {
         this.displayPerson = displayPerson;
