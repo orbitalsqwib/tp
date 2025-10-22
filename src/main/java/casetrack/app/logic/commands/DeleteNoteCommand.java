@@ -6,7 +6,6 @@ import java.util.List;
 
 import casetrack.app.commons.core.index.Index;
 import casetrack.app.commons.util.ToStringBuilder;
-import casetrack.app.logic.Messages;
 import casetrack.app.logic.commands.exceptions.CommandException;
 import casetrack.app.model.Model;
 import casetrack.app.model.person.Note;
@@ -15,9 +14,7 @@ import casetrack.app.model.person.Person;
 /**
  * Deletes a note from a person identified using its displayed index from the address book.
  */
-public class DeleteNoteCommand extends Command {
-
-    public static final String COMMAND_WORD = "delete";
+public class DeleteNoteCommand extends DeleteCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes a note from a person identified by the index number used in the displayed person list.\n"
@@ -45,13 +42,7 @@ public class DeleteNoteCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        List<Person> lastShownList = model.getFilteredPersonList();
-
-        if (personIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-
-        Person personToUpdate = lastShownList.get(personIndex.getZeroBased());
+        Person personToUpdate = getPersonByIndex(model, personIndex);
         List<Note> notes = personToUpdate.getNotes();
 
         if (notes.isEmpty()) {

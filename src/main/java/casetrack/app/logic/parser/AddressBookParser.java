@@ -11,7 +11,7 @@ import casetrack.app.commons.core.LogsCenter;
 import casetrack.app.logic.commands.AddCommand;
 import casetrack.app.logic.commands.ClearCommand;
 import casetrack.app.logic.commands.Command;
-import casetrack.app.logic.commands.DeletePatientCommand;
+import casetrack.app.logic.commands.DeleteCommand;
 import casetrack.app.logic.commands.EditCommand;
 import casetrack.app.logic.commands.ExitCommand;
 import casetrack.app.logic.commands.FindCommand;
@@ -61,7 +61,7 @@ public class AddressBookParser {
         case EditCommand.COMMAND_WORD:
             return new EditCommandParser().parse(arguments);
 
-        case DeletePatientCommand.COMMAND_WORD:
+        case DeleteCommand.COMMAND_WORD:
             return new DeleteCommandParser().parse(arguments);
 
         case NoteCommand.COMMAND_WORD:

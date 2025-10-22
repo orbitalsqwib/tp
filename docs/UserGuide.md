@@ -31,7 +31,7 @@ CaseTrack is a **desktop app for managing contacts, optimized for use via a  Lin
 
    * `list` : Lists all contacts.
 
-   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
+   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 i/1200` : Adds a contact named `John Doe` to the Address Book.
 
    * `delete patient 3` : Deletes the 3rd contact shown in the current list.
 
@@ -80,7 +80,7 @@ Format: `help`
 
 Adds a person to the address book.
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS i/INCOME [m/MEDICAL_INFO] [t/TAG]…​`
 
 <box type="tip" seamless>
 
@@ -88,8 +88,8 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
 </box>
 
 Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 i/1200`
+* `add n/Betsy Crowe p/1234567 e/betsycrowe@example.com a/Newgate Prison i/0 m/Asthma t/criminal`
 
 ### Listing all persons : `list`
 
@@ -167,6 +167,23 @@ Examples:
 * `note 1 t/Follow-up in 2 weeks`
 * `note n/John Doe p/91234567 t/Mother mentioned financial difficulties`
 
+### Editing a note : `edit note`
+
+Edits a specific note for a person.
+
+Format: `edit note PERSON_INDEX NOTE_INDEX t/NEW_TEXT`
+
+- Edits the note at the specified `NOTE_INDEX` from the person at `PERSON_INDEX`.
+- Both indices refer to the index numbers shown in the displayed lists.
+- Both indices **must be positive integers** 1, 2, 3, ...
+- The person must have notes to edit.
+- `t/NEW_TEXT` must contain at least one non-whitespace character.
+
+Examples:
+
+- `edit note 1 2 t/Updated note content` edits the 2nd note from the 1st person in the address book.
+- `search name John` followed by `edit note 1 1 t/Follow-up completed` edits the 1st note from the 1st person in the results of the `search` command.
+
 ### Deleting a note : `delete note`
 
 Deletes a specific note from a person.
@@ -233,7 +250,7 @@ _Details coming soon ..._
 
 Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+**Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS i/INCOME [m/MEDICAL_INFO] [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 i/2500 m/Diabetes t/friend t/colleague`
 **Clear**  | `clear`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
 **Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`

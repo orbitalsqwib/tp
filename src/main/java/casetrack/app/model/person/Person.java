@@ -26,19 +26,22 @@ public class Person {
     // Data fields
     private final Address address;
     private final Income income;
+    private final MedicalInfo medicalInfo;
     private final Set<Tag> tags = new HashSet<>();
     private final List<Note> notes = new ArrayList<>();
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Income income, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, income, tags);
+    public Person(Name name, Phone phone, Email email, Address address, Income income,
+            MedicalInfo medicalInfo, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, income, medicalInfo, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.income = income;
+        this.medicalInfo = medicalInfo;
         this.tags.addAll(tags);
     }
 
@@ -46,13 +49,14 @@ public class Person {
      * Constructor with notes.
      */
     public Person(Name name, Phone phone, Email email, Address address,
-            Income income, Set<Tag> tags, List<Note> notes) {
-        requireAllNonNull(name, phone, email, address, income, tags, notes);
+            Income income, MedicalInfo medicalInfo, Set<Tag> tags, List<Note> notes) {
+        requireAllNonNull(name, phone, email, address, income, medicalInfo, tags, notes);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.income = income;
+        this.medicalInfo = medicalInfo;
         this.tags.addAll(tags);
         this.notes.addAll(notes);
     }
@@ -77,6 +81,10 @@ public class Person {
         return income;
     }
 
+    public MedicalInfo getMedicalInfo() {
+        return medicalInfo;
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -99,7 +107,7 @@ public class Person {
     public Person addNote(Note note) {
         List<Note> updatedNotes = new ArrayList<>(notes);
         updatedNotes.add(note);
-        return new Person(name, phone, email, address, income, new HashSet<>(tags), updatedNotes);
+        return new Person(name, phone, email, address, income, medicalInfo, new HashSet<>(tags), updatedNotes);
     }
 
     /**
@@ -108,7 +116,16 @@ public class Person {
     public Person removeNote(int noteIndex) {
         List<Note> updatedNotes = new ArrayList<>(notes);
         updatedNotes.remove(noteIndex);
-        return new Person(name, phone, email, address, income, new HashSet<>(tags), updatedNotes);
+        return new Person(name, phone, email, address, income, medicalInfo, new HashSet<>(tags), updatedNotes);
+    }
+
+    /**
+     * Returns a new Person with the note at the specified index replaced with the new note.
+     */
+    public Person editNote(int noteIndex, Note newNote) {
+        List<Note> updatedNotes = new ArrayList<>(notes);
+        updatedNotes.set(noteIndex, newNote);
+        return new Person(name, phone, email, address, income, medicalInfo, new HashSet<>(tags), updatedNotes);
     }
 
     /**
@@ -146,13 +163,14 @@ public class Person {
                 && address.equals(otherPerson.address)
                 && tags.equals(otherPerson.tags)
                 && income.equals(otherPerson.income)
+                && medicalInfo.equals(otherPerson.medicalInfo)
                 && notes.equals(otherPerson.notes);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, income, tags, notes);
+        return Objects.hash(name, phone, email, address, income, medicalInfo, tags, notes);
     }
 
     @Override
@@ -163,6 +181,7 @@ public class Person {
                 .add("email", email)
                 .add("address", address)
                 .add("income", income)
+                .add("medicalInfo", medicalInfo)
                 .add("tags", tags)
                 .add("notes", notes)
                 .toString();
