@@ -127,7 +127,8 @@ Format: `search FIELD KEYWORD [MORE_KEYWORDS]`
 * Supported fields: `name`, `number`, `email`, `tag`
 
 **Matching behavior varies by field:**
-* **Name search**: Only full words will be matched. e.g. `Han` will not match `Hans`, but `Hans` will match `Hans Gruber`
+* **Name search**: Only full words will be matched. Each word in multi-word names is matched independently.
+  e.g. `Han` will not match `Hans`, but `Hans` will match `Hans Gruber`
 * **Number search**: Partial matches are supported. e.g. `9123` will match `91234567`
 * **Email search**: Partial matches are supported. e.g. `alice` will match `alice@example.com`
 * **Tag search**: Partial matches are supported. e.g. `friend` will match tags like `friendly` or `best-friend`
