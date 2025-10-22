@@ -122,16 +122,22 @@ Format: `search FIELD KEYWORD [MORE_KEYWORDS]`
 
 * The search is case-insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only full words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 * Supported fields: `name`, `number`, `email`, `tag`
 
+**Matching behavior varies by field:**
+* **Name search**: Only full words will be matched. Each word in multi-word names is matched independently.
+  e.g. `Han` will not match `Hans`, but `Hans` will match `Hans Gruber`
+* **Number search**: Partial matches are supported. e.g. `9123` will match `91234567`
+* **Email search**: Partial matches are supported. e.g. `alice` will match `alice@example.com`
+* **Tag search**: Partial matches are supported. e.g. `friend` will match tags like `friendly` or `best-friend`
+
 Examples:
-* `search name John` returns `john` and `John Doe`
+* `search name John` returns `john` and `John Doe` (full word match)
 * `search name alex david` returns `Alex Yeoh`, `David Li`
-* `search number 91234567` returns persons with phone number containing `91234567`
-* `search email alice@example.com` returns persons with email containing `alice@example.com`
+* `search number 9123` returns persons with phone number containing `9123` (e.g. `91234567`)
+* `search email alice` returns persons with email containing `alice` (e.g. `alice@example.com`)
 * `search tag friend colleague` returns persons with tags containing `friend` or `colleague`<br>
   ![result for 'search name alex david'](images/findAlexDavidResult.png)
 
