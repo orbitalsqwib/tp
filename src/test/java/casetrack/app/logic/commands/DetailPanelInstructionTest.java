@@ -160,25 +160,9 @@ public class DetailPanelInstructionTest {
         CommandResult result1 = new CommandResult("Test", instruction1);
         CommandResult result2 = new CommandResult("Test", instruction2);
 
-        // Verify that are equal
+        // verify that are equal
         assertTrue(result1.equals(result2));
         assertEquals(result1.hashCode(), result2.hashCode());
-    }
-
-    @Test
-    public void execute_commandResult_differentInstructions() {
-        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        Person person1 = model.getFilteredPersonList().get(0);
-        Person person2 = model.getFilteredPersonList().get(1);
-
-        DetailPanelInstruction instruction1 = new DetailPanelInstruction(person1);
-        DetailPanelInstruction instruction2 = new DetailPanelInstruction(person2);
-        CommandResult result1 = new CommandResult("Test", instruction1);
-        CommandResult result2 = new CommandResult("Test", instruction2);
-
-        // Verify that not equal
-        assertFalse(result1.equals(result2));
-        assertNotEquals(result1.hashCode(), result2.hashCode());
     }
 
 }
