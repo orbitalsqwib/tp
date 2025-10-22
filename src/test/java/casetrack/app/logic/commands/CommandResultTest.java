@@ -57,48 +57,7 @@ public class CommandResultTest {
     }
 
     @Test
-    public void equals_withDetailPanelInstruction() {
-        Person person1 = new PersonBuilder().withName("Mary").build();
-        Person person2 = new PersonBuilder().withName("Bob").build();
-
-        DetailPanelInstruction instruction1 = new DetailPanelInstruction(person1);
-        DetailPanelInstruction instruction2 = new DetailPanelInstruction(person2);
-        DetailPanelInstruction clearInstruction = new DetailPanelInstruction(null);
-
-        CommandResult resultWithInstruction = new CommandResult("feedback", instruction1);
-        CommandResult resultWithClearInstruction = new CommandResult("feedback", clearInstruction);
-        CommandResult resultWithNullInstruction = new CommandResult("feedback");
-
-        // same detailPanelInstruction -> returns true
-        assertTrue(resultWithInstruction.equals(new CommandResult("feedback", instruction1)));
-
-        // different detailPanelInstruction -> returns false
-        assertFalse(resultWithInstruction.equals(new CommandResult("feedback", instruction2)));
-
-        // one has instruction, other has null -> returns false
-        assertFalse(resultWithInstruction.equals(resultWithNullInstruction));
-        assertFalse(resultWithNullInstruction.equals(resultWithInstruction));
-
-        // both have null detailPanelInstruction -> returns true
-        assertTrue(resultWithNullInstruction.equals(new CommandResult("feedback")));
-
-        // clear instruction vs null instruction -> returns false (different types)
-        assertFalse(resultWithClearInstruction.equals(resultWithNullInstruction));
-        assertFalse(resultWithNullInstruction.equals(resultWithClearInstruction));
-
-        // clear instruction vs clear instruction -> returns true
-        assertTrue(resultWithClearInstruction.equals(new CommandResult("feedback", clearInstruction)));
-
-        // both have same non-null instruction -> returns true
-        DetailPanelInstruction sameInstruction = new DetailPanelInstruction(person1);
-        assertTrue(resultWithInstruction.equals(new CommandResult("feedback", sameInstruction)));
-
-        // different feedback but same instruction -> returns false
-        assertFalse(resultWithInstruction.equals(new CommandResult("different feedback", instruction1)));
-    }
-
-    @Test
-    public void equals_detailPanelInstruction_comprehensive() {
+    public void equals_detailPanelInstruction() {
         Person person1 = new PersonBuilder().withName("Mary").build();
         Person person2 = new PersonBuilder().withName("Bob").build();
 
