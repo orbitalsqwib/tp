@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import casetrack.app.model.person.Person;
 import casetrack.app.testutil.PersonBuilder;
 
 public class CommandResultTest {
@@ -56,6 +57,40 @@ public class CommandResultTest {
     }
 
     @Test
+    public void equals_withDetailPanelInstruction() {
+        Person person1 = new PersonBuilder().withName("Mary").build();
+        Person person2 = new PersonBuilder().withName("Bob").build();
+        
+        DetailPanelInstruction instruction1 = new DetailPanelInstruction(person1);
+        DetailPanelInstruction instruction2 = new DetailPanelInstruction(person2);
+        DetailPanelInstruction clearInstruction = new DetailPanelInstruction(null);
+        
+        CommandResult resultWithInstruction = new CommandResult("feedback", instruction1);
+        CommandResult resultWithClearInstruction = new CommandResult("feedback", clearInstruction);
+        CommandResult resultWithNullInstruction = new CommandResult("feedback");
+
+        // same detailPanelInstruction -> returns true
+        assertTrue(resultWithInstruction.equals(new CommandResult("feedback", instruction1)));
+        
+        // different detailPanelInstruction -> returns false
+        assertFalse(resultWithInstruction.equals(new CommandResult("feedback", instruction2)));
+        
+        // one has instruction, other has null -> returns false
+        assertFalse(resultWithInstruction.equals(resultWithNullInstruction));
+        assertFalse(resultWithNullInstruction.equals(resultWithInstruction));
+        
+        // both have null detailPanelInstruction -> returns true
+        assertTrue(resultWithNullInstruction.equals(new CommandResult("feedback")));
+        
+        // clear instruction vs null instruction -> returns false (different types)
+        assertFalse(resultWithClearInstruction.equals(resultWithNullInstruction));
+        assertFalse(resultWithNullInstruction.equals(resultWithClearInstruction));
+        
+        // clear instruction vs clear instruction -> returns true
+        assertTrue(resultWithClearInstruction.equals(new CommandResult("feedback", clearInstruction)));
+    }
+
+    @Test
     public void hashcode() {
         CommandResult commandResult = new CommandResult("feedback");
 
@@ -70,6 +105,35 @@ public class CommandResultTest {
 
         // different exit value -> returns different hashcode
         assertNotEquals(commandResult.hashCode(), new CommandResult("feedback", null, false, true).hashCode());
+    }
+
+    @Test
+    public void hashcode_withDetailPanelInstruction() {
+        Person person1 = new PersonBuilder().withName("Mary").build();
+        Person person2 = new PersonBuilder().withName("Bob").build();
+        
+        DetailPanelInstruction instruction1 = new DetailPanelInstruction(person1);
+        DetailPanelInstruction instruction2 = new DetailPanelInstruction(person2);
+        DetailPanelInstruction clearInstruction = new DetailPanelInstruction(null);
+        
+        CommandResult resultWithInstruction = new CommandResult("feedback", instruction1);
+        CommandResult resultWithClearInstruction = new CommandResult("feedback", clearInstruction);
+        CommandResult resultWithNullInstruction = new CommandResult("feedback");
+
+        // same detailPanelInstruction -> returns same hashcode
+        assertEquals(resultWithInstruction.hashCode(), new CommandResult("feedback", instruction1).hashCode());
+        
+        // different detailPanelInstruction -> returns different hashcode
+        assertNotEquals(resultWithInstruction.hashCode(), new CommandResult("feedback", instruction2).hashCode());
+        
+        // one has instruction, other has null -> returns different hashcode
+        assertNotEquals(resultWithInstruction.hashCode(), resultWithNullInstruction.hashCode());
+        
+        // clear instruction vs null instruction -> returns different hashcode (different types)
+        assertNotEquals(resultWithClearInstruction.hashCode(), resultWithNullInstruction.hashCode());
+        
+        // clear instruction vs clear instruction -> returns same hashcode
+        assertEquals(resultWithClearInstruction.hashCode(), new CommandResult("feedback", clearInstruction).hashCode());
     }
 
     @Test
