@@ -58,6 +58,7 @@ public class Income {
      *
      * Solution below adapted
      * from https://stackoverflow.com/questions/7828364/formatting-currencies-in-foreign-locales-in-java
+     * @return SGD currency string (en-SG) with grouping and exactly two decimal places.
      */
     @Override
     public String toString() {
@@ -74,6 +75,7 @@ public class Income {
     /**
      * Returns the numeric value as a plain string without currency symbol or grouping.
      * Trailing zeros are not preserved.
+     * @return numeric string without currency/grouping; trailing zeros not preserved.
      */
     public String toPlainString() {
         return this.value.toString();
