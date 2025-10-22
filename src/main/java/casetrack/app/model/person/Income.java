@@ -12,7 +12,7 @@ import java.util.Locale;
 
 /**
  * Represents a Person's income in the address book.
- * Guarantees: immutable; numeric and non-negative (>= 0); decimals allowed.
+ * Guarantees: immutable; is valid as declared in {@link #isValidIncome(String)}
  */
 public class Income {
 
@@ -32,8 +32,7 @@ public class Income {
     }
 
     /**
-     * Returns true if a given string is a valid income value: numeric and >= 0.
-     * Decimals are allowed. Commas or currency symbols are not allowed.
+     * Returns true if a given string is a valid income.
      */
     public static boolean isValidIncome(String test) {
         requireNonNull(test);
@@ -53,6 +52,13 @@ public class Income {
         return value;
     }
 
+    /**
+     * Returns this income formatted as a Singapore Dollar (SGD) currency string using the en-SG locale.
+     * Always shows two decimal places with grouping separators where applicable.
+     *
+     * Solution below adapted
+     * from https://stackoverflow.com/questions/7828364/formatting-currencies-in-foreign-locales-in-java
+     */
     @Override
     public String toString() {
         Currency sgd = Currency.getInstance("SGD");
@@ -65,6 +71,10 @@ public class Income {
         return df.format(this.value);
     }
 
+    /**
+     * Returns the numeric value as a plain string without currency symbol or grouping.
+     * Trailing zeros are not preserved.
+     */
     public String toPlainString() {
         return this.value.toString();
     }
