@@ -133,4 +133,16 @@ public class IncomeTest {
         // numeric equality: 1.0 is stored as 1
         assertEquals(new BigDecimal("1"), new Income("1.0").getValue());
     }
+
+    @Test
+    public void toString_capsDecimalsToTwo() {
+        assertEquals("SGD 2.35", new Income("2.345623984723984723894").toString());
+        assertEquals("SGD 2.30", new Income("2.3").toString());
+    }
+
+    @Test
+    public void toPlainString_showsAllDecimals_withoutRounding() {
+        assertEquals("2.3456", new Income("2.3456").toPlainString());
+        assertEquals("1000.5", new Income("1000.50000000").toPlainString());
+    }
 }
