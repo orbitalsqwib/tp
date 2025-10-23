@@ -3,7 +3,9 @@ package casetrack.app.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import java.util.function.Predicate;
+import java.util.logging.Logger;
 
+import casetrack.app.commons.core.LogsCenter;
 import casetrack.app.commons.util.ToStringBuilder;
 import casetrack.app.logic.Messages;
 import casetrack.app.model.Model;
@@ -27,6 +29,7 @@ public class FindCommand extends Command {
             + "          " + COMMAND_WORD + " email alice@example.com\n"
             + "          " + COMMAND_WORD + " tag friend colleague";
 
+    private static final Logger logger = LogsCenter.getLogger(FindCommand.class);
     private final Predicate<Person> predicate;
 
     public FindCommand(Predicate<Person> predicate) {
@@ -36,9 +39,15 @@ public class FindCommand extends Command {
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
+        logger.info("Executing search command with predicate: " + predicate);
+
         model.updateFilteredPersonList(predicate);
+        int resultCount = model.getFilteredPersonList().size();
+
+        logger.info("Search completed. Found " + resultCount + " person(s) matching the criteria");
+
         return new CommandResult(
-                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size()));
+                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, resultCount));
     }
 
     @Override
