@@ -35,7 +35,7 @@ activate NoteCommandParser
 NoteCommandParser -> NoteCommandParser : tokenize arguments
 activate NoteCommandParser
 note right
-  Extracts index (1) and 
+  Extracts index (1) and
   note text ("Follow-up needed")
 end note
 
