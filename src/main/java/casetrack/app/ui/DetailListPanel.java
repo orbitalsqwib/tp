@@ -33,6 +33,14 @@ public class DetailListPanel extends UiPart<Region> {
     }
 
     /**
+     * Clears the detail panel.
+     */
+    public void clearDetails() {
+        logger.info("Clearing detail panel");
+        detailListView.setItems(FXCollections.emptyObservableList());
+    }
+
+    /**
      * Displays details for a specific person
      * @param person A {@code Person} whose details are to be displayed.
      */

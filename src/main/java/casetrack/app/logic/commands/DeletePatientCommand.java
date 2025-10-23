@@ -32,7 +32,10 @@ public class DeletePatientCommand extends DeleteCommand {
         requireNonNull(model);
         Person personToDelete = getPersonByIndex(model, targetIndex);
         model.deletePerson(personToDelete);
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, Messages.format(personToDelete)));
+
+        DetailPanelInstruction clearInstruction = new DetailPanelInstruction(null);
+        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS,
+                Messages.format(personToDelete)), clearInstruction);
     }
 
     @Override
