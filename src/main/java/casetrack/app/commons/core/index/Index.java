@@ -23,14 +23,19 @@ public class Index {
         }
 
         this.zeroBasedIndex = zeroBasedIndex;
+        assert this.zeroBasedIndex >= 0 : "Post-condition: zeroBasedIndex must be non-negative";
     }
 
     public int getZeroBased() {
+        assert zeroBasedIndex >= 0 : "Invariant: zeroBasedIndex must remain non-negative";
         return zeroBasedIndex;
     }
 
     public int getOneBased() {
-        return zeroBasedIndex + 1;
+        assert zeroBasedIndex >= 0 : "Invariant: zeroBasedIndex must remain non-negative";
+        int oneBased = zeroBasedIndex + 1;
+        assert oneBased > 0 : "Post-condition: one-based index must be positive";
+        return oneBased;
     }
 
     /**
