@@ -69,9 +69,9 @@ public class IncomeTest {
     }
 
     @Test
-    public void toString_returnsCanonicalIncomeString() {
+    public void toString_returnsFormattedCurrencyString() {
         Income income = new Income("1000.5000");
-        assertEquals("1000.5", income.toString());
+        assertEquals("SGD 1,000.50", income.toString());
     }
 
     @Test
@@ -98,12 +98,12 @@ public class IncomeTest {
         assertTrue(Income.isValidIncome("000.50"));
         assertTrue(Income.isValidIncome("+0002.5"));
 
-        // constructor and toString canonicalization
-        assertEquals("0", new Income("000").toString());
-        assertEquals("0", new Income("000.00").toString());
-        assertEquals("123", new Income("00123").toString());
-        assertEquals("0.5", new Income("000.50").toString());
-        assertEquals("2.5", new Income("+0002.5").toString());
+        // constructor and toString formatting
+        assertEquals("SGD 0.00", new Income("000").toString());
+        assertEquals("SGD 0.00", new Income("000.00").toString());
+        assertEquals("SGD 123.00", new Income("00123").toString());
+        assertEquals("SGD 0.50", new Income("000.50").toString());
+        assertEquals("SGD 2.50", new Income("+0002.5").toString());
 
         // equality and hashCode
         assertEquals(new Income("000"), new Income("0"));
@@ -132,5 +132,17 @@ public class IncomeTest {
 
         // numeric equality: 1.0 is stored as 1
         assertEquals(new BigDecimal("1"), new Income("1.0").getValue());
+    }
+
+    @Test
+    public void toString_capsDecimalsToTwo() {
+        assertEquals("SGD 2.35", new Income("2.345623984723984723894").toString());
+        assertEquals("SGD 2.30", new Income("2.3").toString());
+    }
+
+    @Test
+    public void toPlainString_showsAllDecimals_withoutRounding() {
+        assertEquals("2.3456", new Income("2.3456").toPlainString());
+        assertEquals("1000.5", new Income("1000.50000000").toPlainString());
     }
 }
