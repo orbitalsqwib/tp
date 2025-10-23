@@ -251,6 +251,22 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 _{more aspects and alternatives to be added}_
 
+### Search feature
+
+#### Implementation
+
+The search feature finds patients by name, phone number, email, or tags using specialized predicate classes.
+
+<puml src="diagrams/SearchSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `search number +6591234567` Command" />
+
+How the search works:
+
+1. `AddressBookParser` creates a `FindCommandParser` to parse the search command.
+2. `FindCommandParser` extracts the search type and keywords.
+3. An appropriate predicate is created (e.g., `PhoneContainsKeywordsPredicate` for phone searches).
+4. `FindCommand` updates the filtered person list using the predicate.
+5. The predicate validates keywords and matches against person's phone (including country codes).
+
 ### \[Proposed\] Data archiving
 
 _{Explain here how the data archiving feature will be implemented}_
