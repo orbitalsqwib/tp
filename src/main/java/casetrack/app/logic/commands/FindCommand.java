@@ -47,7 +47,8 @@ public class FindCommand extends Command {
         logger.info("Search completed. Found " + resultCount + " person(s) matching the criteria");
 
         return new CommandResult(
-                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, resultCount));
+                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, resultCount),
+                new DetailPanelInstruction(null));
     }
 
     @Override
