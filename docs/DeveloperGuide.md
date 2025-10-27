@@ -674,48 +674,42 @@ Use case ends.
 * At least one patient is listed in the current view.
 
 **Guarantees**
-* Income is updated only when a valid person index and a valid income value are provided.
+* Income is updated only when a valid patient selection and a valid income value are provided.
 * Invalid inputs do not modify any patient data.
 
 **MSS**
 1. User requests to list patients.
 2. System shows a list of patients. (See [UC02](#use-case-uc02-view-all-patients))
-3. User enters the command `edit INDEX i/INCOME` to update a patient's income.
-4. System validates the provided `INDEX` (must refer to an entry in the current list).
-5. System validates `INCOME` (must be a numeric value greater than or equal to 0; no currency symbols or commas).
+3. User initiates an update to a patient's income, identifying the target patient and providing the new income value.
+4. System validates the patient selection.
+5. System validates the income value.
 6. System updates the patient's income.
-7. System shows a success message and the updated patient details.
+7. System confirms that the update was successful.
 
    Use case ends.
 
 **Extensions**
 * 2a. The list is empty.
 
-    * 2a1. System informs the user that there are no patients available.
+    * 2a1. System indicates that there are no patients available.
 
       Use case ends.
 
-* 3a. No income value provided (e.g., `edit INDEX` or `edit INDEX i/`).
+* 3a. No income value is provided.
 
-    * 3a1. System shows an error: "Income must be a numeric value greater than or equal to 0.".
+    * 3a1. System indicates that an income value is required.
 
       Use case ends.
 
-* 4a. The given index is invalid (not a number, less than 1, or out of range).
+* 4a. The patient selection is invalid.
 
-    * 4a1. System shows an error message: "The person index provided is invalid."
+    * 4a1. System indicates that the selection is invalid. (not a number, less than 1, or out of range).
 
       Use case resumes at step 2.
 
-* 5a. Invalid income value (non-numeric, negative, contains currency symbols/commas).
+* 5a. The income value does not satisfy validation rules (e.g., non-numeric, negative, contains currency symbols or commas).
 
-    * 5a1. System shows an error: "Income must be a numeric value greater than or equal to 0."
-
-      Use case ends.
-
-* 5b. Duplicate single-valued prefixes provided (e.g., `i/1200 i/1300`).
-
-    * 5b1. System shows an error indicating duplicate prefixes.
+    * 5a1. System indicates the validation error.
 
       Use case ends.
 
@@ -730,48 +724,42 @@ Use case ends.
 * At least one patient is listed in the current view.
 
 **Guarantees**
-* Medical info is updated only when a valid person index and a valid medical info value are provided.
+* Medical information is updated only when a valid patient selection and a valid medical information value are provided.
 * Invalid inputs do not modify any patient data.
 
 **MSS**
 1. User requests to list patients.
 2. System shows a list of patients. (See [UC02](#use-case-uc02-view-all-patients))
-3. User enters the command `edit INDEX m/MEDICAL_INFO` to update a patient's medical information.
-4. System validates the provided `INDEX` (must refer to an entry in the current list).
-5. System validates `MEDICAL_INFO` (must contain at least one non‑whitespace character).
+3. User initiates an update to a patient's medical information, identifying the target patient and providing the new medical information.
+4. System validates the patient selection.
+5. System validates the medical information.
 6. System updates the patient's medical information.
-7. System shows a success message and the updated patient details.
+7. System confirms that the update was successful.
 
    Use case ends.
 
 **Extensions**
 * 2a. The list is empty.
 
-    * 2a1. System informs the user that there are no patients available.
+    * 2a1. System indicates that there are no patients available.
 
       Use case ends.
 
-* 3a. No medical info value provided (e.g., `edit INDEX` or `edit INDEX m/`).
+* 3a. No medical information is provided.
 
-    * 3a1. System shows an error: "Medical info must not be empty.".
+    * 3a1. System indicates that medical information is required.
 
       Use case ends.
 
-* 4a. The given index is invalid (not a number, less than 1, or out of range).
+* 4a. The patient selection is invalid.
 
-    * 4a1. System shows an error message: "The person index provided is invalid."
+    * 4a1. System indicates that the selection is invalid. (not a number, less than 1, or out of range).
 
       Use case resumes at step 2.
 
-* 5a. Invalid medical info value (whitespace only).
+* 5a. The medical information does not satisfy validation rules (e.g., only whitespace).
 
-    * 5a1. System shows an error: "Medical info must not be empty."
-
-      Use case ends.
-
-* 5b. Duplicate single-valued prefixes provided (e.g., `m/Asthma m/Diabetes`).
-
-    * 5b1. System shows an error indicating duplicate prefixes.
+    * 5a1. System indicates the validation error.
 
       Use case ends.
 
