@@ -101,7 +101,6 @@ public class EditCommandParser implements Parser<Command> {
                         PREFIX_INCOME, PREFIX_MEDICAL_INFO, PREFIX_TAG);
 
         Index index;
-
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (ParseException pe) {
@@ -111,34 +110,39 @@ public class EditCommandParser implements Parser<Command> {
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
                 PREFIX_INCOME, PREFIX_MEDICAL_INFO);
 
-        EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
+        EditPersonDescriptor descriptor = new EditPersonDescriptor();
+        fillEditPersonDescriptor(descriptor, argMultimap);
 
-        if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
-            editPersonDescriptor.setName(ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get()));
-        }
-        if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
-            editPersonDescriptor.setPhone(ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get()));
-        }
-        if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
-            editPersonDescriptor.setEmail(ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get()));
-        }
-        if (argMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
-            editPersonDescriptor.setAddress(ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get()));
-        }
-        if (argMultimap.getValue(PREFIX_INCOME).isPresent()) {
-            editPersonDescriptor.setIncome(ParserUtil.parseIncome(argMultimap.getValue(PREFIX_INCOME).get()));
-        }
-        if (argMultimap.getValue(PREFIX_MEDICAL_INFO).isPresent()) {
-            editPersonDescriptor.setMedicalInfo(ParserUtil.parseMedicalInfo(
-                    argMultimap.getValue(PREFIX_MEDICAL_INFO).get()));
-        }
-        parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
-
-        if (!editPersonDescriptor.isAnyFieldEdited()) {
+        if (!descriptor.isAnyFieldEdited()) {
             throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
         }
+        return new EditCommand(index, descriptor);
+    }
 
-        return new EditCommand(index, editPersonDescriptor);
+    /**
+     * Populates the given {@code EditPersonDescriptor} from {@code ArgumentMultimap} if values are present.
+     */
+    private void fillEditPersonDescriptor(EditPersonDescriptor descriptor, ArgumentMultimap argMultimap)
+            throws ParseException {
+        if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
+            descriptor.setName(ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get()));
+        }
+        if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
+            descriptor.setPhone(ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get()));
+        }
+        if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
+            descriptor.setEmail(ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get()));
+        }
+        if (argMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
+            descriptor.setAddress(ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get()));
+        }
+        if (argMultimap.getValue(PREFIX_INCOME).isPresent()) {
+            descriptor.setIncome(ParserUtil.parseIncome(argMultimap.getValue(PREFIX_INCOME).get()));
+        }
+        if (argMultimap.getValue(PREFIX_MEDICAL_INFO).isPresent()) {
+            descriptor.setMedicalInfo(ParserUtil.parseMedicalInfo(argMultimap.getValue(PREFIX_MEDICAL_INFO).get()));
+        }
+        parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(descriptor::setTags);
     }
 
     /**
