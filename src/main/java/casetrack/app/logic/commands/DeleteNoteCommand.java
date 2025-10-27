@@ -33,7 +33,7 @@ public class DeleteNoteCommand extends DeleteCommand {
     /**
      * Creates a DeleteNoteCommand to delete a note from a person.
      *
-     * @param targetIndex The index of the person in the filtered person list
+     * @param targetIndex The index of the target in the filtered person list
      * @param noteIndex The index of the note to delete from the person's notes
      */
     public DeleteNoteCommand(Index targetIndex, Index noteIndex) {

@@ -30,12 +30,9 @@ public abstract class DeleteCommand extends Command {
     }
 
     /**
-     * Returns the patient at the index in the filtered list, or raise exception if invalid.
+     * Returns the patient at the index in the filtered list, or throws an exception if invalid.
      */
     protected Person getPersonByIndex(Model model, Index index) throws CommandException {
-        assert model != null : "Model should exist";
-        assert index != null : "Index should exist";
-
         List<Person> lastShownList = model.getFilteredPersonList();
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
