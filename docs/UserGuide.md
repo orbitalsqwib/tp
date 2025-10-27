@@ -259,7 +259,7 @@ Action     | Format, Examples
 **Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS i/INCOME [m/MEDICAL_INFO] [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 i/2500 m/Diabetes t/friend t/colleague`
 **Clear**  | `clear`
 **Delete Patient** | `delete patient INDEX`<br> e.g., `delete patient 3`
-**Delete Note** | `delete note PERSON_INDEX NOTE_INDEX`<br> e.g., `delete note 1 2`
+**Delete Note** | `delete note PATIENT_INDEX NOTE_INDEX`<br> e.g., `delete note 1 2`
 **Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
 **Search** | `search FIELD KEYWORD [MORE_KEYWORDS]`<br> e.g., `search name James Jake`<br> e.g., `search number 91234567`
 **List**   | `list`
