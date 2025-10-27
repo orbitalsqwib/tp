@@ -5,6 +5,8 @@ import static casetrack.app.logic.commands.CommandTestUtil.DESC_BOB;
 import static casetrack.app.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static casetrack.app.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static casetrack.app.logic.commands.CommandTestUtil.VALID_INCOME_BOB;
+import static casetrack.app.logic.commands.CommandTestUtil.VALID_MEDICAL_INFO_AMY;
+import static casetrack.app.logic.commands.CommandTestUtil.VALID_MEDICAL_INFO_BOB;
 import static casetrack.app.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static casetrack.app.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static casetrack.app.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
@@ -60,6 +62,26 @@ public class EditPersonDescriptorTest {
         // different tags -> returns false
         editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withTags(VALID_TAG_HUSBAND).build();
         assertFalse(DESC_AMY.equals(editedAmy));
+    }
+
+    @Test
+    public void equals_medicalInfo() {
+        // both descriptors with same medical info -> returns true
+        EditPersonDescriptor amyWithMed1 = new EditPersonDescriptorBuilder(DESC_AMY)
+                .withMedicalInfo(VALID_MEDICAL_INFO_AMY).build();
+        EditPersonDescriptor amyWithMed2 = new EditPersonDescriptorBuilder(DESC_AMY)
+                .withMedicalInfo(VALID_MEDICAL_INFO_AMY).build();
+        assertTrue(amyWithMed1.equals(amyWithMed2));
+
+        // descriptors with different medical info -> returns false
+        EditPersonDescriptor amyWithMedBob = new EditPersonDescriptorBuilder(DESC_AMY)
+                .withMedicalInfo(VALID_MEDICAL_INFO_BOB).build();
+        assertFalse(amyWithMed1.equals(amyWithMedBob));
+
+        // one descriptor has medical info set, the other does not -> returns false
+        EditPersonDescriptor amyWithoutMed = new EditPersonDescriptor(DESC_AMY);
+        assertFalse(amyWithoutMed.equals(amyWithMed1));
+        assertFalse(amyWithMed1.equals(amyWithoutMed));
     }
 
     @Test
