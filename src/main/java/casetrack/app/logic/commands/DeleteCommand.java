@@ -1,5 +1,7 @@
 package casetrack.app.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.List;
 
 import casetrack.app.commons.core.index.Index;
@@ -14,6 +16,18 @@ import casetrack.app.model.person.Person;
 public abstract class DeleteCommand extends Command {
 
     public static final String COMMAND_WORD = "delete";
+
+    protected final Index targetIndex;
+
+    /**
+     * Creates a DeleteCommand with the target index.
+     *
+     * @param targetIndex The index of the target in the filtered person list
+     */
+    public DeleteCommand(Index targetIndex) {
+        requireNonNull(targetIndex);
+        this.targetIndex = targetIndex;
+    }
 
     /**
      * Returns the patient at the index in the filtered list, or raise exception if invalid.

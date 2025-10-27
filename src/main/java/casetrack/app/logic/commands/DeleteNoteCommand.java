@@ -14,7 +14,7 @@ import casetrack.app.model.person.Note;
 import casetrack.app.model.person.Person;
 
 /**
- * Deletes a note from a person identified using its displayed index from the address book.
+ * Deletes a note from a person based on its displayed index in the address book.
  */
 public class DeleteNoteCommand extends DeleteCommand {
 
@@ -28,24 +28,24 @@ public class DeleteNoteCommand extends DeleteCommand {
     public static final String MESSAGE_NO_NOTES = "This person has no notes to delete.";
 
     private static final Logger logger = LogsCenter.getLogger(DeleteNoteCommand.class);
-    private final Index personIndex;
     private final Index noteIndex;
 
     /**
      * Creates a DeleteNoteCommand to delete a note from a person.
      *
-     * @param personIndex The index of the person in the filtered person list
+     * @param targetIndex The index of the person in the filtered person list
      * @param noteIndex The index of the note to delete from the person's notes
      */
-    public DeleteNoteCommand(Index personIndex, Index noteIndex) {
-        this.personIndex = personIndex;
+    public DeleteNoteCommand(Index targetIndex, Index noteIndex) {
+        super(targetIndex);
+        requireNonNull(noteIndex);
         this.noteIndex = noteIndex;
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        Person personToUpdate = getPersonByIndex(model, personIndex);
+        Person personToUpdate = getPersonByIndex(model, targetIndex);
         List<Note> notes = personToUpdate.getNotes();
 
         if (notes.isEmpty()) {
@@ -80,14 +80,14 @@ public class DeleteNoteCommand extends DeleteCommand {
         }
 
         DeleteNoteCommand otherDeleteNoteCommand = (DeleteNoteCommand) other;
-        return personIndex.equals(otherDeleteNoteCommand.personIndex)
+        return targetIndex.equals(otherDeleteNoteCommand.targetIndex)
                 && noteIndex.equals(otherDeleteNoteCommand.noteIndex);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .add("personIndex", personIndex)
+                .add("targetIndex", targetIndex)
                 .add("noteIndex", noteIndex)
                 .toString();
     }
