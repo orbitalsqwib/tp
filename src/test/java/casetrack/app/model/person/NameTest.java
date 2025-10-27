@@ -39,6 +39,12 @@ public class NameTest {
         assertTrue(Name.isValidName("Capital Tan")); // with capital letters
         assertTrue(Name.isValidName("David Roger Jackson Ray Jr 2nd")); // long names
         assertTrue(Name.isValidName("Ravichandran S/O Tharumalinga")); // indian names
+        assertTrue(Name.isValidName("Dr. Lim")); // names with periods
+        assertTrue(Name.isValidName("John Jr.")); // names ending with period
+        assertTrue(Name.isValidName("Hubert Blaine Wolfeschlegelsteinhausenbergerd Sr.")); // long name with period
+        assertTrue(Name.isValidName("o'Connor")); // names with apostrophes
+        assertTrue(Name.isValidName("d'Angelo")); // names with apostrophes
+        assertTrue(Name.isValidName("Mary O'Brien")); // names with apostrophes in middle
     }
 
     @Test
