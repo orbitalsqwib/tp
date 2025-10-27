@@ -3,6 +3,7 @@ package casetrack.app.logic.commands;
 import static casetrack.app.logic.commands.CommandTestUtil.DESC_AMY;
 import static casetrack.app.logic.commands.CommandTestUtil.DESC_BOB;
 import static casetrack.app.logic.commands.CommandTestUtil.VALID_MEDICAL_INFO_BOB;
+import static casetrack.app.logic.commands.CommandTestUtil.VALID_INCOME_BOB;
 import static casetrack.app.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static casetrack.app.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static casetrack.app.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
@@ -68,6 +69,24 @@ public class EditCommandTest {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(lastPerson, editedPerson);
+
+        CommandResult expectedResult = new CommandResult(expectedMessage, editedPerson, false, false);
+        assertCommandSuccess(editCommand, model, expectedResult, expectedModel);
+    }
+
+    @Test
+    public void execute_changeIncomeOnly_success() {
+        Index targetIndex = INDEX_FIRST_PERSON;
+        Person personToEdit = model.getFilteredPersonList().get(targetIndex.getZeroBased());
+        Person editedPerson = new PersonBuilder(personToEdit).withIncome(VALID_INCOME_BOB).build();
+
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withIncome(VALID_INCOME_BOB).build();
+        EditCommand editCommand = new EditCommand(targetIndex, descriptor);
+
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson));
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setPerson(personToEdit, editedPerson);
 
         CommandResult expectedResult = new CommandResult(expectedMessage, editedPerson, false, false);
         assertCommandSuccess(editCommand, model, expectedResult, expectedModel);

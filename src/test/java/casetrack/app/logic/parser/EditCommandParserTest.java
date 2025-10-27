@@ -5,9 +5,12 @@ import static casetrack.app.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static casetrack.app.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
 import static casetrack.app.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static casetrack.app.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
+import static casetrack.app.logic.commands.CommandTestUtil.INCOME_DESC_AMY;
+import static casetrack.app.logic.commands.CommandTestUtil.INCOME_DESC_BOB;
 import static casetrack.app.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
 import static casetrack.app.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
 import static casetrack.app.logic.commands.CommandTestUtil.INVALID_MEDICAL_INFO_DESC;
+import static casetrack.app.logic.commands.CommandTestUtil.INVALID_INCOME_DESC;
 import static casetrack.app.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static casetrack.app.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
 import static casetrack.app.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
@@ -20,6 +23,7 @@ import static casetrack.app.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static casetrack.app.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static casetrack.app.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static casetrack.app.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
+import static casetrack.app.logic.commands.CommandTestUtil.VALID_INCOME_AMY;
 import static casetrack.app.logic.commands.CommandTestUtil.VALID_MEDICAL_INFO_AMY;
 import static casetrack.app.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static casetrack.app.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
@@ -29,6 +33,7 @@ import static casetrack.app.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static casetrack.app.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static casetrack.app.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static casetrack.app.logic.parser.CliSyntax.PREFIX_MEDICAL_INFO;
+import static casetrack.app.logic.parser.CliSyntax.PREFIX_INCOME;
 import static casetrack.app.logic.parser.CliSyntax.PREFIX_PHONE;
 import static casetrack.app.logic.parser.CliSyntax.PREFIX_TAG;
 import static casetrack.app.logic.parser.CommandParserTestUtil.assertParseFailure;
@@ -46,6 +51,7 @@ import casetrack.app.logic.commands.EditCommand.EditPersonDescriptor;
 import casetrack.app.logic.commands.EditNoteCommand;
 import casetrack.app.model.person.Address;
 import casetrack.app.model.person.Email;
+import casetrack.app.model.person.Income;
 import casetrack.app.model.person.MedicalInfo;
 import casetrack.app.model.person.Name;
 import casetrack.app.model.person.Note;
@@ -84,9 +90,6 @@ public class EditCommandParserTest {
 
         // invalid arguments being parsed as preamble
         assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_FORMAT);
-
-        // invalid prefix being parsed as preamble
-        assertParseFailure(parser, "1 i/ string", MESSAGE_INVALID_FORMAT);
     }
 
     @Test
@@ -95,6 +98,7 @@ public class EditCommandParserTest {
         assertParseFailure(parser, "1" + INVALID_PHONE_DESC, Phone.MESSAGE_CONSTRAINTS); // invalid phone
         assertParseFailure(parser, "1" + INVALID_EMAIL_DESC, Email.MESSAGE_CONSTRAINTS); // invalid email
         assertParseFailure(parser, "1" + INVALID_ADDRESS_DESC, Address.MESSAGE_CONSTRAINTS); // invalid address
+        assertParseFailure(parser, "1" + INVALID_INCOME_DESC, Income.MESSAGE_CONSTRAINTS); // invalid income
         assertParseFailure(parser, "1" + INVALID_TAG_DESC, Tag.MESSAGE_CONSTRAINTS); // invalid tag
 
         // invalid phone followed by valid email
@@ -161,6 +165,12 @@ public class EditCommandParserTest {
         // address
         userInput = targetIndex.getOneBased() + ADDRESS_DESC_AMY;
         descriptor = new EditPersonDescriptorBuilder().withAddress(VALID_ADDRESS_AMY).build();
+        expectedCommand = new EditCommand(targetIndex, descriptor);
+        assertParseSuccess(parser, userInput, expectedCommand);
+
+        // income
+        userInput = targetIndex.getOneBased() + INCOME_DESC_AMY;
+        descriptor = new EditPersonDescriptorBuilder().withIncome(VALID_INCOME_AMY).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
@@ -250,6 +260,13 @@ public class EditCommandParserTest {
                 .withPhone(VALID_PHONE_AMY).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
+    }
+
+    @Test
+    public void parse_duplicateIncome_failure() {
+        Index targetIndex = INDEX_FIRST_PERSON;
+        String userInput = targetIndex.getOneBased() + INCOME_DESC_AMY + INCOME_DESC_BOB;
+        assertParseFailure(parser, userInput, Messages.getErrorMessageForDuplicatePrefixes(PREFIX_INCOME));
     }
 
     // ==================== Edit Note Tests ====================

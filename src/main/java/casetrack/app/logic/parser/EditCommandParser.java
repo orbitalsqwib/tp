@@ -3,6 +3,7 @@ package casetrack.app.logic.parser;
 import static casetrack.app.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static casetrack.app.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static casetrack.app.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static casetrack.app.logic.parser.CliSyntax.PREFIX_INCOME;
 import static casetrack.app.logic.parser.CliSyntax.PREFIX_MEDICAL_INFO;
 import static casetrack.app.logic.parser.CliSyntax.PREFIX_NAME;
 import static casetrack.app.logic.parser.CliSyntax.PREFIX_NOTE_TEXT;
@@ -97,7 +98,7 @@ public class EditCommandParser implements Parser<Command> {
     private EditCommand parseEditPersonCommand(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-                        PREFIX_MEDICAL_INFO, PREFIX_TAG);
+                        PREFIX_INCOME, PREFIX_MEDICAL_INFO, PREFIX_TAG);
 
         Index index;
 
@@ -108,7 +109,7 @@ public class EditCommandParser implements Parser<Command> {
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-                PREFIX_MEDICAL_INFO);
+                PREFIX_INCOME, PREFIX_MEDICAL_INFO);
 
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
 
@@ -123,6 +124,9 @@ public class EditCommandParser implements Parser<Command> {
         }
         if (argMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
             editPersonDescriptor.setAddress(ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get()));
+        }
+        if (argMultimap.getValue(PREFIX_INCOME).isPresent()) {
+            editPersonDescriptor.setIncome(ParserUtil.parseIncome(argMultimap.getValue(PREFIX_INCOME).get()));
         }
         if (argMultimap.getValue(PREFIX_MEDICAL_INFO).isPresent()) {
             editPersonDescriptor.setMedicalInfo(ParserUtil.parseMedicalInfo(

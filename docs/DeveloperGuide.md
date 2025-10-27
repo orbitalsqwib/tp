@@ -668,6 +668,62 @@ Use case ends.
 
   Use case ends.
 
+#### Use case (UC08): Edit patient income
+
+**Preconditions**
+* At least one patient is listed in the current view.
+
+**Guarantees**
+* Income is updated only when a valid person index and a valid income value are provided.
+* Invalid inputs do not modify any patient data.
+
+**MSS**
+1. User requests to list patients.
+2. System shows a list of patients. (See [UC02](#use-case-uc02-view-all-patients))
+3. User enters the command `edit INDEX i/INCOME` to update a patient's income.
+4. System validates the provided `INDEX` (must refer to an entry in the current list).
+5. System validates `INCOME` (must be a numeric value greater than or equal to 0; no currency symbols or commas).
+6. System updates the patient's income.
+7. System shows a success message and the updated patient details.
+
+   Use case ends.
+
+**Extensions**
+* 2a. The list is empty.
+
+    * 2a1. System informs the user that there are no patients available.
+
+      Use case ends.
+
+* 3a. No income value provided (e.g., `edit INDEX` or `edit INDEX i/`).
+
+    * 3a1. System shows an error: "Income must be a numeric value greater than or equal to 0.".
+
+      Use case ends.
+
+* 4a. The given index is invalid (not a number, less than 1, or out of range).
+
+    * 4a1. System shows an error message: "The person index provided is invalid."
+
+      Use case resumes at step 2.
+
+* 5a. Invalid income value (non-numeric, negative, contains currency symbols/commas).
+
+    * 5a1. System shows an error: "Income must be a numeric value greater than or equal to 0."
+
+      Use case ends.
+
+* 5b. Duplicate single-valued prefixes provided (e.g., `i/1200 i/1300`).
+
+    * 5b1. System shows an error indicating duplicate prefixes.
+
+      Use case ends.
+
+* *a. At any time, User cancels the action.
+
+  Use case ends.
+
+
 *{More to be added}*
 
 ### Non-Functional Requirements
