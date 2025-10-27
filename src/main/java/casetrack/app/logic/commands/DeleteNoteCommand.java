@@ -3,7 +3,9 @@ package casetrack.app.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
+import java.util.logging.Logger;
 
+import casetrack.app.commons.core.LogsCenter;
 import casetrack.app.commons.core.index.Index;
 import casetrack.app.commons.util.ToStringBuilder;
 import casetrack.app.logic.commands.exceptions.CommandException;
@@ -25,6 +27,7 @@ public class DeleteNoteCommand extends DeleteCommand {
     public static final String MESSAGE_INVALID_NOTE_INDEX = "The note index provided is invalid.";
     public static final String MESSAGE_NO_NOTES = "This person has no notes to delete.";
 
+    private static final Logger logger = LogsCenter.getLogger(DeleteNoteCommand.class);
     private final Index personIndex;
     private final Index noteIndex;
 
@@ -46,10 +49,13 @@ public class DeleteNoteCommand extends DeleteCommand {
         List<Note> notes = personToUpdate.getNotes();
 
         if (notes.isEmpty()) {
+            logger.warning("Attempt to delete note from person with empty notes: " + personToUpdate.getName().fullName);
             throw new CommandException(MESSAGE_NO_NOTES);
         }
 
         if (noteIndex.getZeroBased() >= notes.size()) {
+            logger.warning("Invalid note index " + noteIndex + " for person with " + notes.size()
+                    + " notes: " + personToUpdate.getName().fullName);
             throw new CommandException(MESSAGE_INVALID_NOTE_INDEX);
         }
 
