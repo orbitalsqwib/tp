@@ -2,6 +2,7 @@ package casetrack.app.logic.commands;
 
 import static casetrack.app.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static casetrack.app.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static casetrack.app.logic.parser.CliSyntax.PREFIX_MEDICAL_INFO;
 import static casetrack.app.logic.parser.CliSyntax.PREFIX_NAME;
 import static casetrack.app.logic.parser.CliSyntax.PREFIX_PHONE;
 import static casetrack.app.logic.parser.CliSyntax.PREFIX_TAG;
@@ -23,6 +24,7 @@ import casetrack.app.logic.commands.exceptions.CommandException;
 import casetrack.app.model.Model;
 import casetrack.app.model.person.Address;
 import casetrack.app.model.person.Email;
+import casetrack.app.model.person.MedicalInfo;
 import casetrack.app.model.person.Name;
 import casetrack.app.model.person.Person;
 import casetrack.app.model.person.Phone;
@@ -43,6 +45,7 @@ public class EditCommand extends Command {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
+            + "[" + PREFIX_MEDICAL_INFO + "MEDICAL_INFO] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
@@ -101,10 +104,11 @@ public class EditCommand extends Command {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        MedicalInfo updatedMedicalInfo = editPersonDescriptor.getMedicalInfo().orElse(personToEdit.getMedicalInfo());
 
         return new Person(updatedName, updatedPhone, updatedEmail,
                 updatedAddress, personToEdit.getIncome(),
-                personToEdit.getMedicalInfo(), updatedTags, personToEdit.getNotes());
+                updatedMedicalInfo, updatedTags, personToEdit.getNotes());
     }
 
     @Override
@@ -140,6 +144,7 @@ public class EditCommand extends Command {
         private Phone phone;
         private Email email;
         private Address address;
+        private MedicalInfo medicalInfo;
         private Set<Tag> tags;
 
         public EditPersonDescriptor() {}
@@ -153,6 +158,7 @@ public class EditCommand extends Command {
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
             setAddress(toCopy.address);
+            setMedicalInfo(toCopy.medicalInfo);
             setTags(toCopy.tags);
         }
 
@@ -160,7 +166,7 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, medicalInfo, tags);
         }
 
         public void setName(Name name) {
@@ -193,6 +199,14 @@ public class EditCommand extends Command {
 
         public Optional<Address> getAddress() {
             return Optional.ofNullable(address);
+        }
+
+        public void setMedicalInfo(MedicalInfo medicalInfo) {
+            this.medicalInfo = medicalInfo;
+        }
+
+        public Optional<MedicalInfo> getMedicalInfo() {
+            return Optional.ofNullable(medicalInfo);
         }
 
         /**
@@ -228,6 +242,7 @@ public class EditCommand extends Command {
                     && Objects.equals(phone, otherEditPersonDescriptor.phone)
                     && Objects.equals(email, otherEditPersonDescriptor.email)
                     && Objects.equals(address, otherEditPersonDescriptor.address)
+                    && Objects.equals(medicalInfo, otherEditPersonDescriptor.medicalInfo)
                     && Objects.equals(tags, otherEditPersonDescriptor.tags);
         }
 
@@ -238,6 +253,7 @@ public class EditCommand extends Command {
                     .add("phone", phone)
                     .add("email", email)
                     .add("address", address)
+                    .add("medicalInfo", medicalInfo)
                     .add("tags", tags)
                     .toString();
         }

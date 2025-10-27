@@ -7,9 +7,12 @@ import static casetrack.app.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static casetrack.app.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
 import static casetrack.app.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
 import static casetrack.app.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
+import static casetrack.app.logic.commands.CommandTestUtil.INVALID_MEDICAL_INFO_DESC;
 import static casetrack.app.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static casetrack.app.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
 import static casetrack.app.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
+import static casetrack.app.logic.commands.CommandTestUtil.MEDICAL_INFO_DESC_AMY;
+import static casetrack.app.logic.commands.CommandTestUtil.MEDICAL_INFO_DESC_BOB;
 import static casetrack.app.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static casetrack.app.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static casetrack.app.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
@@ -17,6 +20,7 @@ import static casetrack.app.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static casetrack.app.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static casetrack.app.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static casetrack.app.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
+import static casetrack.app.logic.commands.CommandTestUtil.VALID_MEDICAL_INFO_AMY;
 import static casetrack.app.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static casetrack.app.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static casetrack.app.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
@@ -24,6 +28,7 @@ import static casetrack.app.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static casetrack.app.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static casetrack.app.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static casetrack.app.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static casetrack.app.logic.parser.CliSyntax.PREFIX_MEDICAL_INFO;
 import static casetrack.app.logic.parser.CliSyntax.PREFIX_PHONE;
 import static casetrack.app.logic.parser.CliSyntax.PREFIX_TAG;
 import static casetrack.app.logic.parser.CommandParserTestUtil.assertParseFailure;
@@ -41,6 +46,7 @@ import casetrack.app.logic.commands.EditCommand.EditPersonDescriptor;
 import casetrack.app.logic.commands.EditNoteCommand;
 import casetrack.app.model.person.Address;
 import casetrack.app.model.person.Email;
+import casetrack.app.model.person.MedicalInfo;
 import casetrack.app.model.person.Name;
 import casetrack.app.model.person.Note;
 import casetrack.app.model.person.Phone;
@@ -161,6 +167,12 @@ public class EditCommandParserTest {
         // tags
         userInput = targetIndex.getOneBased() + TAG_DESC_FRIEND;
         descriptor = new EditPersonDescriptorBuilder().withTags(VALID_TAG_FRIEND).build();
+        expectedCommand = new EditCommand(targetIndex, descriptor);
+        assertParseSuccess(parser, userInput, expectedCommand);
+
+        // medical info
+        userInput = targetIndex.getOneBased() + MEDICAL_INFO_DESC_AMY;
+        descriptor = new EditPersonDescriptorBuilder().withMedicalInfo(VALID_MEDICAL_INFO_AMY).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
     }
@@ -372,5 +384,17 @@ public class EditCommandParserTest {
                 .build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
+    }
+
+    @Test
+    public void parse_invalidMedicalInfo_failure() {
+        assertParseFailure(parser, "1" + INVALID_MEDICAL_INFO_DESC, MedicalInfo.MESSAGE_CONSTRAINTS);
+    }
+
+    @Test
+    public void parse_multipleRepeatedMedicalInfo_failure() {
+        Index targetIndex = INDEX_FIRST_PERSON;
+        String userInput = targetIndex.getOneBased() + MEDICAL_INFO_DESC_AMY + MEDICAL_INFO_DESC_BOB;
+        assertParseFailure(parser, userInput, Messages.getErrorMessageForDuplicatePrefixes(PREFIX_MEDICAL_INFO));
     }
 }
