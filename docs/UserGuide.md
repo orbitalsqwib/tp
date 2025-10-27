@@ -260,7 +260,7 @@ Action     | Format, Examples
 **Clear**  | `clear`
 **Delete Patient** | `delete patient INDEX`<br> e.g., `delete patient 3`
 **Delete Note** | `delete note PATIENT_INDEX NOTE_INDEX`<br> e.g., `delete note 1 2`
-**Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
+**Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [i/INCOME] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`<br> e.g., `edit 3 i/2500`
 **Search** | `search FIELD KEYWORD [MORE_KEYWORDS]`<br> e.g., `search name James Jake`<br> e.g., `search number 91234567`
 **List**   | `list`
 **Help**   | `help`
