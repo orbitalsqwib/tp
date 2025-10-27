@@ -2,8 +2,8 @@ package casetrack.app.logic.commands;
 
 import static casetrack.app.logic.commands.CommandTestUtil.DESC_AMY;
 import static casetrack.app.logic.commands.CommandTestUtil.DESC_BOB;
-import static casetrack.app.logic.commands.CommandTestUtil.VALID_MEDICAL_INFO_BOB;
 import static casetrack.app.logic.commands.CommandTestUtil.VALID_INCOME_BOB;
+import static casetrack.app.logic.commands.CommandTestUtil.VALID_MEDICAL_INFO_BOB;
 import static casetrack.app.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static casetrack.app.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static casetrack.app.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
