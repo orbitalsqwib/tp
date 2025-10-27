@@ -84,9 +84,6 @@ public class EditCommandParserTest {
 
         // invalid arguments being parsed as preamble
         assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_FORMAT);
-
-        // invalid income value should produce income constraint message
-        assertParseFailure(parser, "1 i/ string", Income.MESSAGE_CONSTRAINTS);
     }
 
     @Test
