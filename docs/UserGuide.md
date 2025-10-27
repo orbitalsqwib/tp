@@ -101,7 +101,7 @@ Format: `list`
 
 Edits an existing person in the address book.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [i/INCOME] [t/TAG]…​`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [i/INCOME] [m/MEDICAL_INFO] [t/TAG]…​`
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
@@ -114,6 +114,7 @@ Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 *  `edit 3 i/2500.50` Updates only the income of the 3rd person.
+*  `edit 4 m/Diabetes` Updates only the medical info of the 4th person.
 
 ### Locating persons: `search`
 
@@ -261,7 +262,7 @@ Action     | Format, Examples
 **Clear**  | `clear`
 **Delete Patient** | `delete patient INDEX`<br> e.g., `delete patient 3`
 **Delete Note** | `delete note PATIENT_INDEX NOTE_INDEX`<br> e.g., `delete note 1 2`
-**Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [i/INCOME] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`<br> e.g., `edit 3 i/2500`
+**Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [i/INCOME] [m/MEDICAL_INFO] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`<br> e.g., `edit 3 i/2500`
 **Search** | `search FIELD KEYWORD [MORE_KEYWORDS]`<br> e.g., `search name James Jake`<br> e.g., `search number 91234567`
 **List**   | `list`
 **Help**   | `help`

@@ -8,6 +8,7 @@ import casetrack.app.logic.commands.EditCommand.EditPersonDescriptor;
 import casetrack.app.model.person.Address;
 import casetrack.app.model.person.Email;
 import casetrack.app.model.person.Income;
+import casetrack.app.model.person.MedicalInfo;
 import casetrack.app.model.person.Name;
 import casetrack.app.model.person.Person;
 import casetrack.app.model.person.Phone;
@@ -38,6 +39,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
         descriptor.setIncome(person.getIncome());
+        descriptor.setMedicalInfo(person.getMedicalInfo());
         descriptor.setTags(person.getTags());
     }
 
@@ -78,6 +80,14 @@ public class EditPersonDescriptorBuilder {
      */
     public EditPersonDescriptorBuilder withIncome(String income) {
         descriptor.setIncome(new Income(income));
+        return this;
+    }
+
+    /**
+     * Sets the {@code MedicalInfo} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withMedicalInfo(String medicalInfo) {
+        descriptor.setMedicalInfo(new MedicalInfo(medicalInfo));
         return this;
     }
 

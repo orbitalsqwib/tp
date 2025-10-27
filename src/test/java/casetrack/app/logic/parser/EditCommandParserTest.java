@@ -10,9 +10,11 @@ import static casetrack.app.logic.commands.CommandTestUtil.INCOME_DESC_BOB;
 import static casetrack.app.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
 import static casetrack.app.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
 import static casetrack.app.logic.commands.CommandTestUtil.INVALID_INCOME_DESC;
+import static casetrack.app.logic.commands.CommandTestUtil.INVALID_MEDICAL_INFO_DESC;
 import static casetrack.app.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static casetrack.app.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
 import static casetrack.app.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
+import static casetrack.app.logic.commands.CommandTestUtil.MEDICAL_INFO_DESC_AMY;
 import static casetrack.app.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static casetrack.app.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static casetrack.app.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
@@ -21,6 +23,7 @@ import static casetrack.app.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static casetrack.app.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static casetrack.app.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static casetrack.app.logic.commands.CommandTestUtil.VALID_INCOME_AMY;
+import static casetrack.app.logic.commands.CommandTestUtil.VALID_MEDICAL_INFO_AMY;
 import static casetrack.app.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static casetrack.app.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static casetrack.app.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
@@ -47,6 +50,7 @@ import casetrack.app.logic.commands.EditNoteCommand;
 import casetrack.app.model.person.Address;
 import casetrack.app.model.person.Email;
 import casetrack.app.model.person.Income;
+import casetrack.app.model.person.MedicalInfo;
 import casetrack.app.model.person.Name;
 import casetrack.app.model.person.Note;
 import casetrack.app.model.person.Phone;
@@ -93,6 +97,8 @@ public class EditCommandParserTest {
         assertParseFailure(parser, "1" + INVALID_EMAIL_DESC, Email.MESSAGE_CONSTRAINTS); // invalid email
         assertParseFailure(parser, "1" + INVALID_ADDRESS_DESC, Address.MESSAGE_CONSTRAINTS); // invalid address
         assertParseFailure(parser, "1" + INVALID_INCOME_DESC, Income.MESSAGE_CONSTRAINTS); // invalid income
+        assertParseFailure(parser, "1" + INVALID_MEDICAL_INFO_DESC,
+                MedicalInfo.MESSAGE_CONSTRAINTS); // invalid medical info
         assertParseFailure(parser, "1" + INVALID_TAG_DESC, Tag.MESSAGE_CONSTRAINTS); // invalid tag
 
         // invalid phone followed by valid email
@@ -171,6 +177,12 @@ public class EditCommandParserTest {
         // tags
         userInput = targetIndex.getOneBased() + TAG_DESC_FRIEND;
         descriptor = new EditPersonDescriptorBuilder().withTags(VALID_TAG_FRIEND).build();
+        expectedCommand = new EditCommand(targetIndex, descriptor);
+        assertParseSuccess(parser, userInput, expectedCommand);
+
+        // medical info
+        userInput = targetIndex.getOneBased() + MEDICAL_INFO_DESC_AMY;
+        descriptor = new EditPersonDescriptorBuilder().withMedicalInfo(VALID_MEDICAL_INFO_AMY).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
     }
