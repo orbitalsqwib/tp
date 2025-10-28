@@ -67,7 +67,7 @@ public class MainWindow extends UiPart<Stage> {
             detailListPanel.showDetails(t);
 
             // unhide panel if hidden
-            if (listPane.getDividerPositions()[0] > 0.9) {
+            if (listPane.getDividerPositions()[0] > 0.6) {
                 listPane.setDividerPosition(0, 0.5);
             }
         }
