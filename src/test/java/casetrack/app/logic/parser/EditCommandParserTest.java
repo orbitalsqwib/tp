@@ -63,7 +63,7 @@ public class EditCommandParserTest {
 
     private static final String MESSAGE_INVALID_FORMAT =
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditPatientCommand.MESSAGE_USAGE);
-    
+
     private static final String MESSAGE_INVALID_EDIT_FORMAT =
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommandParser.MESSAGE_INVALID_EDIT_FORMAT);
 
@@ -79,7 +79,7 @@ public class EditCommandParserTest {
 
         // no index and no field specified
         assertParseFailure(parser, "", MESSAGE_INVALID_EDIT_FORMAT);
-        
+
         // missing patient/note keyword
         assertParseFailure(parser, "1" + NAME_DESC_AMY, MESSAGE_INVALID_EDIT_FORMAT);
     }
@@ -112,12 +112,16 @@ public class EditCommandParserTest {
 
         // while parsing {@code PREFIX_TAG} alone will reset the tags of the {@code Person} being edited,
         // parsing it together with a valid tag results in error
-        assertParseFailure(parser, "patient 1" + TAG_DESC_FRIEND + TAG_DESC_HUSBAND + TAG_EMPTY, Tag.MESSAGE_CONSTRAINTS);
-        assertParseFailure(parser, "patient 1" + TAG_DESC_FRIEND + TAG_EMPTY + TAG_DESC_HUSBAND, Tag.MESSAGE_CONSTRAINTS);
-        assertParseFailure(parser, "patient 1" + TAG_EMPTY + TAG_DESC_FRIEND + TAG_DESC_HUSBAND, Tag.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, "patient 1" + TAG_DESC_FRIEND
+                + TAG_DESC_HUSBAND + TAG_EMPTY, Tag.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, "patient 1" + TAG_DESC_FRIEND
+                + TAG_EMPTY + TAG_DESC_HUSBAND, Tag.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, "patient 1" + TAG_EMPTY + TAG_DESC_FRIEND
+                + TAG_DESC_HUSBAND, Tag.MESSAGE_CONSTRAINTS);
 
         // multiple invalid values, but only the first invalid value is captured
-        assertParseFailure(parser, "patient 1" + INVALID_NAME_DESC + INVALID_EMAIL_DESC + VALID_ADDRESS_AMY + VALID_PHONE_AMY,
+        assertParseFailure(parser, "patient 1" + INVALID_NAME_DESC
+                        + INVALID_EMAIL_DESC + VALID_ADDRESS_AMY + VALID_PHONE_AMY,
                 Name.MESSAGE_CONSTRAINTS);
     }
 
@@ -218,7 +222,8 @@ public class EditCommandParserTest {
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS));
 
         // multiple invalid values
-        userInput = "patient " + targetIndex.getOneBased() + INVALID_PHONE_DESC + INVALID_ADDRESS_DESC + INVALID_EMAIL_DESC
+        userInput = "patient " + targetIndex.getOneBased() + INVALID_PHONE_DESC
+                + INVALID_ADDRESS_DESC + INVALID_EMAIL_DESC
                 + INVALID_PHONE_DESC + INVALID_ADDRESS_DESC + INVALID_EMAIL_DESC;
 
         assertParseFailure(parser, userInput,
