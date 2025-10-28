@@ -21,7 +21,7 @@ public class DeleteCommandParser implements Parser<Command> {
      * Enum representing the different delete types.
      */
     private enum CommandType {
-        NOTE, PATIENT, INVALID
+        NOTE, PATIENT
     }
 
     /**
@@ -33,13 +33,16 @@ public class DeleteCommandParser implements Parser<Command> {
         final String trimmedArgs = args.trim();
 
         CommandType commandType = getCommandType(trimmedArgs);
+        
+        if (commandType == null) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_INVALID_DELETE_FORMAT));
+        }
 
         switch (commandType) {
         case NOTE:
             return parseDeleteNoteCommand(trimmedArgs);
         case PATIENT:
             return parseDeletePatientCommand(trimmedArgs);
-        case INVALID:
         default:
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_INVALID_DELETE_FORMAT));
         }
@@ -48,7 +51,7 @@ public class DeleteCommandParser implements Parser<Command> {
     /**
      * Determines the type of delete command based on the trimmed arguments.
      * @param trimmedArgs the trimmed arguments
-     * @return the command type (NOTE, PATIENT, or INVALID)
+     * @return the command type (NOTE or PATIENT), or null if invalid
      */
     private CommandType getCommandType(String trimmedArgs) {
         if (trimmedArgs.startsWith(ParserUtil.NOTE_STRING + " ")) {
@@ -56,7 +59,7 @@ public class DeleteCommandParser implements Parser<Command> {
         } else if (trimmedArgs.startsWith(ParserUtil.PATIENT_STRING + " ")) {
             return CommandType.PATIENT;
         } else {
-            return CommandType.INVALID;
+            return null;
         }
     }
 
