@@ -157,6 +157,20 @@ Examples:
 * `list` followed by `delete patient 2` deletes the 2nd person in the address book.
 * `search name Betsy` followed by `delete patient 1` deletes the 1st person in the results of the `search` command.
 
+### Viewing a person's information : `view`
+
+Shows detailed information for the specified person in the details panel.
+
+Format: `view INDEX`
+
+* View details of the person at the specified `INDEX`.
+* The index refers to the index number shown in the displayed person list.
+* The index must be a positive integer 1, 2, 3, …​
+
+Examples:
+* `list` followed by `view 2` shows details for the 2nd person in the address book.
+* `search name Benson` followed by `view 1` shows details for the 1st person in the results of the `search` command.
+
 ### Adding a note : `note`
 
 Adds a note to a person using either their list index, or their name and phone number.
@@ -264,5 +278,6 @@ Action     | Format, Examples
 **Delete Note** | `delete note PATIENT_INDEX NOTE_INDEX`<br> e.g., `delete note 1 2`
 **Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [i/INCOME] [m/MEDICAL_INFO] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`<br> e.g., `edit 3 i/2500`
 **Search** | `search FIELD KEYWORD [MORE_KEYWORDS]`<br> e.g., `search name James Jake`<br> e.g., `search number 91234567`
+**View**   | `view INDEX`<br> e.g., `view 2`
 **List**   | `list`
 **Help**   | `help`
