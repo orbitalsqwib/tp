@@ -45,4 +45,15 @@ public class AddCommandIntegrationTest {
                 AddCommand.MESSAGE_DUPLICATE_PERSON);
     }
 
+    @Test
+    public void execute_duplicatePersonDifferentCase_throwsCommandException() {
+        Person personInList = model.getAddressBook().getPersonList().get(0);
+        // Create a person with the same name but in a different case
+        Person personWithDifferentCase = new PersonBuilder(personInList)
+                .withName(personInList.getName().toString().toLowerCase())
+                .build();
+        assertCommandFailure(new AddCommand(personWithDifferentCase), model,
+                AddCommand.MESSAGE_DUPLICATE_PERSON);
+    }
+
 }
