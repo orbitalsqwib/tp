@@ -31,7 +31,7 @@ CaseTrack is a **desktop app for managing contacts, optimized for use via a  Lin
 
    * `list` : Lists all contacts.
 
-   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 i/1200` : Adds a contact named `John Doe` to the Address Book.
+   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 i/1200` : Adds a contact named `John Doe` to the CaseTrack.
 
    * `delete patient 3` : Deletes the 3rd contact shown in the current list.
 
@@ -78,7 +78,7 @@ Format: `help`
 
 ### Adding a person: `add`
 
-Adds a person to the address book.
+Adds a person to the CaseTrack.
 
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS i/INCOME [m/MEDICAL_INFO] [t/TAG]…​`
 
@@ -93,13 +93,13 @@ Examples:
 
 ### Listing all persons : `list`
 
-Shows a list of all persons in the address book.
+Shows a list of all persons in the CaseTrack.
 
 Format: `list`
 
 ### Editing a person : `edit patient`
 
-Edits an existing person in the address book.
+Edits an existing person in the CaseTrack.
 
 Format: `edit patient INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [i/INCOME] [m/MEDICAL_INFO] [t/TAG]…​`
 
@@ -145,7 +145,7 @@ Examples:
 
 ### Deleting a person : `delete patient`
 
-Deletes the specified person from the address book.
+Deletes the specified person from the CaseTrack.
 
 Format: `delete patient INDEX`
 
@@ -154,7 +154,7 @@ Format: `delete patient INDEX`
 * The index **must be a positive integer** 1, 2, 3, …​
 
 Examples:
-* `list` followed by `delete patient 2` deletes the 2nd person in the address book.
+* `list` followed by `delete patient 2` deletes the 2nd person in the CaseTrack.
 * `search name Betsy` followed by `delete patient 1` deletes the 1st person in the results of the `search` command.
 
 ### Adding a note : `note`
@@ -189,7 +189,7 @@ Format: `edit note PERSON_INDEX NOTE_INDEX t/NEW_TEXT`
 
 Examples:
 
-- `edit note 1 2 t/Updated note content` edits the 2nd note from the 1st person in the address book.
+- `edit note 1 2 t/Updated note content` edits the 2nd note from the 1st person in the CaseTrack.
 - `search name John` followed by `edit note 1 1 t/Follow-up completed` edits the 1st note from the 1st person in the results of the `search` command.
 
 ### Deleting a note : `delete note`
@@ -204,12 +204,12 @@ Format: `delete note PERSON_INDEX NOTE_INDEX`
 * The person must have notes to delete.
 
 Examples:
-* `delete note 1 2` deletes the 2nd note from the 1st person in the address book.
+* `delete note 1 2` deletes the 2nd note from the 1st person in the CaseTrack.
 * `search name John` followed by `delete note 1 1` deletes the 1st note from the 1st person in the results of the `search` command.
 
 ### Clearing all entries : `clear`
 
-Clears all entries from the address book.
+Clears all entries from the CaseTrack.
 
 Format: `clear`
 
