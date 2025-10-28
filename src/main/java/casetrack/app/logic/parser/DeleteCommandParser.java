@@ -18,13 +18,6 @@ public class DeleteCommandParser implements Parser<Command> {
         "Expected 'delete note <PATIENT_INDEX> <NOTE_INDEX>' or 'delete patient <PATIENT_INDEX>'";
 
     /**
-     * Enum representing the different delete types.
-     */
-    private enum CommandType {
-        NOTE, PATIENT
-    }
-
-    /**
      * Parses the given {@code String} of arguments and returns either a DeleteNoteCommand
      * or DeletePatientCommand object.
      * @throws ParseException if the user input does not follow the expected format
@@ -32,34 +25,12 @@ public class DeleteCommandParser implements Parser<Command> {
     public Command parse(String args) throws ParseException {
         final String trimmedArgs = args.trim();
 
-        CommandType commandType = getCommandType(trimmedArgs);
-        
-        if (commandType == null) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_INVALID_DELETE_FORMAT));
-        }
-
-        switch (commandType) {
-        case NOTE:
-            return parseDeleteNoteCommand(trimmedArgs);
-        case PATIENT:
-            return parseDeletePatientCommand(trimmedArgs);
-        default:
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_INVALID_DELETE_FORMAT));
-        }
-    }
-
-    /**
-     * Determines the type of delete command based on the trimmed arguments.
-     * @param trimmedArgs the trimmed arguments
-     * @return the command type (NOTE or PATIENT), or null if invalid
-     */
-    private CommandType getCommandType(String trimmedArgs) {
         if (trimmedArgs.startsWith(ParserUtil.NOTE_STRING + " ")) {
-            return CommandType.NOTE;
+            return parseDeleteNoteCommand(trimmedArgs);
         } else if (trimmedArgs.startsWith(ParserUtil.PATIENT_STRING + " ")) {
-            return CommandType.PATIENT;
+            return parseDeletePatientCommand(trimmedArgs);
         } else {
-            return null;
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_INVALID_DELETE_FORMAT));
         }
     }
 
