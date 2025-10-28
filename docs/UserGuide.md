@@ -168,7 +168,7 @@ Format: `view <PATIENT_INDEX>`
 * The index must be a positive integer 1, 2, 3, …​
 
 Examples:
-* `list` followed by `view 2` shows details for the 2nd patient in the address book.
+* `list` followed by `view 2` shows details for the 2nd patient in CaseTrack.
 * `search name Benson` followed by `view 1` shows details for the 1st patient in the results of the `search` command.
 
 ### Adding a note : `note`
