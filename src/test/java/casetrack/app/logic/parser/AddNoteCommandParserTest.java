@@ -81,6 +81,13 @@ public class AddNoteCommandParserTest {
     }
 
     @Test
+    public void parse_integerOverflowIndex_throwsParseException() {
+        String userInput = "2147483648 " + PREFIX_NOTE_TEXT + "Valid note";
+        assertParseFailure(parser, userInput, String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                NoteCommand.MESSAGE_USAGE));
+    }
+
+    @Test
     public void parse_missingName_throwsParseException() {
         String userInput = " " + PREFIX_PHONE + "91234567 " + PREFIX_NOTE_TEXT + "Valid note";
         assertParseFailure(parser, userInput, String.format(MESSAGE_INVALID_COMMAND_FORMAT,

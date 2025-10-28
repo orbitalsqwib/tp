@@ -92,6 +92,9 @@ public class EditCommandParserTest {
         // zero index
         assertParseFailure(parser, "patient 0" + NAME_DESC_AMY, MESSAGE_INVALID_FORMAT);
 
+        // integer overflow - index exceeds Integer.MAX_VALUE
+        assertParseFailure(parser, "patient 2147483648" + NAME_DESC_AMY, MESSAGE_INVALID_FORMAT);
+
         // invalid arguments being parsed as preamble
         assertParseFailure(parser, "patient 1 some random string", MESSAGE_INVALID_FORMAT);
     }
@@ -340,6 +343,14 @@ public class EditCommandParserTest {
 
         // zero note index
         assertParseFailure(parser, "note 1 0 t/Updated note",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditNoteCommand.MESSAGE_USAGE));
+
+        // integer overflow - person index exceeds Integer.MAX_VALUE
+        assertParseFailure(parser, "note 2147483648 1 t/Updated note",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditNoteCommand.MESSAGE_USAGE));
+
+        // integer overflow - note index exceeds Integer.MAX_VALUE
+        assertParseFailure(parser, "note 1 2147483648 t/Updated note",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditNoteCommand.MESSAGE_USAGE));
     }
 
