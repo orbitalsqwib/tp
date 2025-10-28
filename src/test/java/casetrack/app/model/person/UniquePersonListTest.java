@@ -78,6 +78,16 @@ public class UniquePersonListTest {
     }
 
     @Test
+    public void add_duplicateNameAndPhoneExtraWhitespace_throwsDuplicatePersonException() {
+        uniquePersonList.add(ALICE);
+        Person personWithExtraWhitespace = new PersonBuilder(ALICE)
+                .withName(ALICE.getName().toString().replaceAll(" ", "  "))
+                .withEmail("different@example.com")
+                .build();
+        assertThrows(DuplicatePersonException.class, () -> uniquePersonList.add(personWithExtraWhitespace));
+    }
+
+    @Test
     public void add_sameNameDifferentPhone_success() {
         uniquePersonList.add(ALICE);
         Person personWithSameName = new PersonBuilder(ALICE)

@@ -56,6 +56,12 @@ public class PersonTest {
         // same name (case-insensitive) and phone -> returns true
         editedBob = new PersonBuilder(BOB).withName(BOB.getName().toString().toUpperCase()).build();
         assertTrue(BOB.isSamePerson(editedBob));
+
+        // same name with extra whitespace and phone -> returns true
+        editedBob = new PersonBuilder(BOB)
+                .withName(BOB.getName().toString().replaceAll(" ", "  "))
+                .build();
+        assertTrue(BOB.isSamePerson(editedBob));
     }
 
     @Test

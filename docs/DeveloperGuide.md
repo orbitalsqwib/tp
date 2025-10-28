@@ -376,7 +376,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1. User enters the `add` command in the format add n/NAME p/PHONE a/ADDRESS i/INCOME [m/MEDICAL_INFO].
 2. System parses the command and validates input
-3. System normalizes NAME case and spaces for internal comparison and checks for duplicates using NAME+PHONE.
+3. System normalizes NAME (case-insensitive and multiple spaces collapsed to single space) and checks for duplicates using NAME+PHONE.
 4. System creates and saves the new patient record.
 5. System confirms success by displaying: Patient added: <Name> (<Phone>).
 
@@ -823,7 +823,7 @@ Use case ends.
 | **Patient Record** | A data entry with a patient's name, phone, address, income, medical info, and notes|
 | **Quick Note** | A brief text annotation attached to a patient record, typically captured during or immediately after a session |
 | **Session** | A meeting or consultation between a social worker and a patient |
-| **Duplicate Patient** | A patient record with identical name (case-insensitive) and phone number as an existing record |
+| **Duplicate Patient** | A patient record with identical name (case-insensitive, whitespace-normalized) and phone number as an existing record |
 | **Medical Information** | Health-related details about a patient including conditions, medications, or treatment notes |
 | **Partial Data** | Incomplete patient information, common during initial visits or when full details are not available |
 | **Prefix** | Command parameter identifiers (e.g., n/ for name, p/ for phone) used in the CLI syntax |

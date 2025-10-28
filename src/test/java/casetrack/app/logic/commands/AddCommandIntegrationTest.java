@@ -69,6 +69,18 @@ public class AddCommandIntegrationTest {
     }
 
     @Test
+    public void execute_duplicateNameAndPhoneExtraWhitespace_throwsCommandException() {
+        Person personInList = model.getAddressBook().getPersonList().get(0);
+        // Create a person with the same phone and name with extra whitespace
+        Person personWithExtraWhitespace = new PersonBuilder(personInList)
+                .withName(personInList.getName().toString().replaceAll(" ", "  "))
+                .withEmail("different@example.com")
+                .build();
+        assertCommandFailure(new AddCommand(personWithExtraWhitespace), model,
+                AddCommand.MESSAGE_DUPLICATE_PERSON);
+    }
+
+    @Test
     public void execute_sameNameDifferentPhone_success() {
         Person personInList = model.getAddressBook().getPersonList().get(0);
         // Create a person with the same name but different phone (should be allowed)
