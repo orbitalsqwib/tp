@@ -19,7 +19,7 @@ public class EditNoteCommand extends EditCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Edits a note of a person identified by the index number used in the displayed person list.\n"
-            + "Parameters: note <PERSON_INDEX> <NOTE_INDEX> t/NEW_TEXT\n"
+            + "Parameters: note <PATIENT_INDEX> <NOTE_INDEX> t/NEW_TEXT\n"
             + "Example: " + COMMAND_WORD + " note 1 2 t/Updated note content";
 
     public static final String MESSAGE_EDIT_NOTE_SUCCESS = "Edited Note for %1$s: %2$s";

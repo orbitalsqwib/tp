@@ -15,7 +15,7 @@ import casetrack.app.logic.parser.exceptions.ParseException;
 public class DeleteCommandParser implements Parser<Command> {
 
     public static final String MESSAGE_INVALID_DELETE_FORMAT =
-        "Expected 'delete note <PERSON_INDEX> <NOTE_INDEX>' or 'delete patient <INDEX>'";
+        "Expected 'delete note <PATIENT_INDEX> <NOTE_INDEX>' or 'delete patient <PATIENT_INDEX>'";
 
     /**
      * Parses the given {@code String} of arguments and returns either a DeleteNoteCommand
