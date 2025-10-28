@@ -157,6 +157,20 @@ Examples:
 * `list` followed by `delete patient 2` deletes the 2nd patient in the CaseTrack.
 * `search name Betsy` followed by `delete patient 1` deletes the 1st patient in the results of the `search` command.
 
+### Viewing a patient's information : `view`
+
+Displays detailed information about a specified patient in the details panel.
+
+Format: `view <PATIENT_INDEX>`
+
+* View details of the patient at the specified `<PATIENT_INDEX>`.
+* The index refers to the index number shown in the displayed patient list.
+* The index must be a positive integer 1, 2, 3, …​
+
+Examples:
+* `list` followed by `view 2` shows details for the 2nd patient in CaseTrack.
+* `search name Benson` followed by `view 1` shows details for the 1st patient in the results of the `search` command.
+
 ### Adding a note : `note`
 
 Adds a note to a patient using either their list index, or their name and phone number.
@@ -267,5 +281,6 @@ Action     | Format, Examples
 **Edit Note** | `edit note <PATIENT_INDEX> <NOTE_INDEX> t/NEW_TEXT`<br> e.g., `edit note 1 2 t/Updated note content`
 **Delete Note** | `delete note <PATIENT_INDEX> <NOTE_INDEX>`<br> e.g., `delete note 1 2`<br> e.g., `search name John` followed by `delete note 1 1` deletes the 1st note from the 1st patient in the results of the `search` command.
 **Search** | `search FIELD KEYWORD [MORE_KEYWORDS]`<br> e.g., `search name James Jake`<br> e.g., `search number 91234567`
+**View**   | `view INDEX`<br> e.g., `view 2`
 **Help**   | `help`
 **Exit**   | `exit`
