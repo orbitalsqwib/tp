@@ -15,9 +15,7 @@ import casetrack.app.model.person.Person;
 /**
  * Edits a note of a person identified using its displayed index from the address book.
  */
-public class EditNoteCommand extends Command {
-
-    public static final String COMMAND_WORD = "edit";
+public class EditNoteCommand extends EditCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Edits a note of a person identified by the index number used in the displayed person list.\n"
