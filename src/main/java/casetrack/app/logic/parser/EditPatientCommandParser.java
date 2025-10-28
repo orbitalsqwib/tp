@@ -15,21 +15,21 @@ import java.util.Optional;
 import java.util.Set;
 
 import casetrack.app.commons.core.index.Index;
-import casetrack.app.logic.commands.EditCommand;
-import casetrack.app.logic.commands.EditCommand.EditPersonDescriptor;
+import casetrack.app.logic.commands.EditPatientCommand;
+import casetrack.app.logic.commands.EditPatientCommand.EditPersonDescriptor;
 import casetrack.app.logic.parser.exceptions.ParseException;
 import casetrack.app.model.tag.Tag;
 
 /**
  * Parses input arguments and creates an EditCommand object for editing a patient.
  */
-public class EditPatientCommandParser implements Parser<EditCommand> {
+public class EditPatientCommandParser implements Parser<EditPatientCommand> {
 
     /**
      * Parses the given {@code String} of arguments and returns an EditCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
-    public EditCommand parse(String args) throws ParseException {
+    public EditPatientCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
                         PREFIX_INCOME, PREFIX_MEDICAL_INFO, PREFIX_TAG);
@@ -38,7 +38,7 @@ public class EditPatientCommandParser implements Parser<EditCommand> {
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (ParseException pe) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE), pe);
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditPatientCommand.MESSAGE_USAGE), pe);
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
@@ -48,9 +48,9 @@ public class EditPatientCommandParser implements Parser<EditCommand> {
         fillEditPersonDescriptor(descriptor, argMultimap);
 
         if (!descriptor.isAnyFieldEdited()) {
-            throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
+            throw new ParseException(EditPatientCommand.MESSAGE_NOT_EDITED);
         }
-        return new EditCommand(index, descriptor);
+        return new EditPatientCommand(index, descriptor);
     }
 
     /**

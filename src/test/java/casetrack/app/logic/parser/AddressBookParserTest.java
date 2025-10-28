@@ -16,8 +16,8 @@ import org.junit.jupiter.api.Test;
 import casetrack.app.logic.commands.AddCommand;
 import casetrack.app.logic.commands.ClearCommand;
 import casetrack.app.logic.commands.DeletePatientCommand;
-import casetrack.app.logic.commands.EditCommand;
-import casetrack.app.logic.commands.EditCommand.EditPersonDescriptor;
+import casetrack.app.logic.commands.EditPatientCommand;
+import casetrack.app.logic.commands.EditPatientCommand.EditPersonDescriptor;
 import casetrack.app.logic.commands.ExitCommand;
 import casetrack.app.logic.commands.FindCommand;
 import casetrack.app.logic.commands.HelpCommand;
@@ -60,9 +60,10 @@ public class AddressBookParserTest {
     public void parseCommand_edit() throws Exception {
         Person person = new PersonBuilder().build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
-        EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getEditPersonDescriptorDetails(descriptor));
-        assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
+        EditPatientCommand command = (EditPatientCommand) parser.parseCommand(EditPatientCommand.COMMAND_WORD
+                + " patient " + INDEX_FIRST_PERSON.getOneBased() + " "
+                + PersonUtil.getEditPersonDescriptorDetails(descriptor));
+        assertEquals(new EditPatientCommand(INDEX_FIRST_PERSON, descriptor), command);
     }
 
     @Test
