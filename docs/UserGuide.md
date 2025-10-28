@@ -67,6 +67,35 @@ CaseTrack is a **desktop app for managing contacts, optimized for use via a  Lin
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </box>
 
+### Parameter Constraints
+
+<box type="info" seamless>
+
+**Notes about parameter formats:**<br>
+
+* **NAME**: Should only contain alphanumeric characters, spaces, periods (.), apostrophes ('), 's/o', 'd/o', 'S/O', or 'D/O', and it should not be blank.
+  * Examples: `John Doe`, `Dr. Lim`, `o'Connor`, `Mary O'Brien`, `John Jr.`, `Ravichandran S/O Tharumalinga`
+
+* **PHONE_NUMBER**: Should only contain numbers, and it should be at least 3 digits long.
+
+* **EMAIL**: Should be of the format local-part@domain and adhere to the following constraints:
+  1. The local-part should only contain alphanumeric characters and these special characters, excluding the parentheses, (+_.-). The local-part may not start or end with any special characters.
+  2. This is followed by a '@' and then a domain name. The domain name is made up of domain labels separated by periods.
+  The domain name must:
+    - end with a domain label at least 2 characters long
+    - have each domain label start and end with alphanumeric characters
+    - have each domain label consist of alphanumeric characters, separated only by hyphens, if any.
+
+* **ADDRESS**: Can take any values, and it should not be blank.
+
+* **INCOME**: Should be a valid non-negative number with up to 2 decimal places (e.g., `1200`, `2500.50`).
+
+* **MEDICAL_INFO**: Can take any values, and it should not be blank.
+
+* **TAG**: Should be alphanumeric without spaces.
+
+</box>
+
 ### Viewing help : `help`
 
 Shows a message explaining how to access the help page.
