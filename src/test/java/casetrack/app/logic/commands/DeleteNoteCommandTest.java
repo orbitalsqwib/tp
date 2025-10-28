@@ -202,7 +202,7 @@ public class DeleteNoteCommandTest {
         Index targetPersonIndex = Index.fromOneBased(1);
         Index targetNoteIndex = Index.fromOneBased(1);
         DeleteNoteCommand deleteNoteCommand = new DeleteNoteCommand(targetPersonIndex, targetNoteIndex);
-        String expected = DeleteNoteCommand.class.getCanonicalName() + "{personIndex=" + targetPersonIndex
+        String expected = DeleteNoteCommand.class.getCanonicalName() + "{targetIndex=" + targetPersonIndex
                 + ", noteIndex=" + targetNoteIndex + "}";
         assertEquals(expected, deleteNoteCommand.toString());
     }

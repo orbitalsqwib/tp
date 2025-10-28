@@ -35,7 +35,7 @@ Given below is a quick overview of main components and how they interact with ea
 
 **Main components of the architecture**
 
-**`Main`** (consisting of classes [`Main`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
+**`Main`** (consisting of classes [`Main`](https://github.com/AY2526S1-CS2103-F12-3/tp/blob/master/src/main/java/casetrack/app/Main.java) and [`MainApp`](https://github.com/AY2526S1-CS2103-F12-3/tp/blob/master/src/main/java/casetrack/app/MainApp.java)) is in charge of the app launch and shut down.
 * At app launch, it initializes the other components in the correct sequence, and connects them up with each other.
 * At shut down, it shuts down the other components and invokes cleanup methods where necessary.
 
@@ -50,7 +50,7 @@ The bulk of the app's work is done by the following four components:
 
 **How the architecture components interact with each other**
 
-The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `delete 1`.
+The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `delete patient 1`.
 
 <puml src="diagrams/ArchitectureSequenceDiagram.puml" width="574" />
 
@@ -67,13 +67,13 @@ The sections below give more details of each component.
 
 ### UI component
 
-The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/Ui.java)
+The **API** of this component is specified in [`Ui.java`](https://github.com/AY2526S1-CS2103-F12-3/tp/blob/master/src/main/java/casetrack/app/ui/Ui.java)
 
 <puml src="diagrams/UiClassDiagram.puml" alt="Structure of the UI Component"/>
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
-The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
+The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2526S1-CS2103-F12-3/tp/blob/master/src/main/java/casetrack/app/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/AY2526S1-CS2103-F12-3/tp/blob/master/src/main/resources/view/MainWindow.fxml)
 
 The `UI` component,
 
@@ -84,15 +84,15 @@ The `UI` component,
 
 ### Logic component
 
-**API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/logic/Logic.java)
+**API** : [`Logic.java`](https://github.com/AY2526S1-CS2103-F12-3/tp/blob/master/src/main/java/casetrack/app/logic/Logic.java)
 
 Here's a (partial) class diagram of the `Logic` component:
 
 <puml src="diagrams/LogicClassDiagram.puml" width="550"/>
 
-The sequence diagram below illustrates the interactions within the `Logic` component, taking `execute("delete 1")` API call as an example.
+The sequence diagram below illustrates the interactions within the `Logic` component, taking `execute("delete patient 1")` API call as an example.
 
-<puml src="diagrams/DeleteSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `delete 1` Command" />
+<puml src="diagrams/DeletePatientSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `delete patient 1` Command" />
 
 <box type="info" seamless>
 
@@ -102,8 +102,8 @@ The sequence diagram below illustrates the interactions within the `Logic` compo
 How the `Logic` component works:
 
 1. When `Logic` is called upon to execute a command, it is passed to an `AddressBookParser` object which in turn creates a parser that matches the command (e.g., `DeleteCommandParser`) and uses it to parse the command.
-1. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `DeleteCommand`) which is executed by the `LogicManager`.
-1. The command can communicate with the `Model` when it is executed (e.g. to delete a person).<br>
+1. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `DeletePatientCommand` or `DeleteNoteCommand`) which is executed by the `LogicManager`.
+1. The command can communicate with the `Model` when it is executed (e.g. to delete a patient or a note).<br>
    Note that although this is shown as a single step in the diagram above (for simplicity), in the code it can take several interactions (between the command object and the `Model`) to achieve.
 1. The result of the command execution is encapsulated as a `CommandResult` object which is returned back from `Logic`.
 
@@ -116,7 +116,7 @@ How the parsing works:
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
 ### Model component
-**API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
+**API** : [`Model.java`](https://github.com/AY2526S1-CS2103-F12-3/tp/blob/master/src/main/java/casetrack/app/model/Model.java)
 
 <puml src="diagrams/ModelClassDiagram.puml" width="450" />
 
@@ -139,7 +139,7 @@ The `Model` component,
 
 ### Storage component
 
-**API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
+**API** : [`Storage.java`](https://github.com/AY2526S1-CS2103-F12-3/tp/blob/master/src/main/java/casetrack/app/storage/Storage.java)
 
 <puml src="diagrams/StorageClassDiagram.puml" width="550" />
 
@@ -176,11 +176,11 @@ Step 1. The user launches the application for the first time. The `VersionedAddr
 
 <puml src="diagrams/UndoRedoState0.puml" alt="UndoRedoState0" />
 
-Step 2. The user executes `delete 5` command to delete the 5th person in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
+Step 2. The user executes `delete 5` command to delete the 5th patient in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
 
 <puml src="diagrams/UndoRedoState1.puml" alt="UndoRedoState1" />
 
-Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
+Step 3. The user executes `add n/David …​` to add a new patient. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
 
 <puml src="diagrams/UndoRedoState2.puml" alt="UndoRedoState2" />
 
@@ -190,7 +190,7 @@ Step 3. The user executes `add n/David …​` to add a new person. The `add` co
 
 </box>
 
-Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
+Step 4. The user now decides that adding the patient was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
 
 <puml src="diagrams/UndoRedoState3.puml" alt="UndoRedoState3" />
 
@@ -246,7 +246,7 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 * **Alternative 2:** Individual command knows how to undo/redo by
   itself.
-  * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
+  * Pros: Will use less memory (e.g. for `delete`, just save the patient being deleted).
   * Cons: We must ensure that the implementation of each individual command are correct.
 
 _{more aspects and alternatives to be added}_
@@ -264,8 +264,43 @@ How the search works:
 1. `AddressBookParser` creates a `FindCommandParser` to parse the search command.
 2. `FindCommandParser` extracts the search type and keywords.
 3. An appropriate predicate is created (e.g., `PhoneContainsKeywordsPredicate` for phone searches).
-4. `FindCommand` updates the filtered person list using the predicate.
-5. The predicate validates keywords and matches against person's phone (including country codes).
+4. `FindCommand` updates the filtered patient list using the predicate.
+5. The predicate validates keywords and matches against patient's phone (including country codes).
+
+### Delete patient / note feature
+
+#### Implementation
+
+The delete feature supports two types of delete operations: deleting patients and deleting notes from patients.
+
+**Delete Patient Command**
+
+The `DeletePatientCommand` removes a patient from the address book.
+
+<puml src="diagrams/DeletePatientSequenceDiagram.puml" alt="Interactions inside the Logic Component for the `delete patient 1` Command" />
+
+How delete patient works:
+
+1. `AddressBookParser` creates a `DeleteCommandParser` to parse the delete command.
+2. `DeleteCommandParser` identifies the command as a patient deletion based on the "patient" keyword.
+3. `DeletePatientCommand` is created with the patient index.
+4. The command retrieves the patient from the filtered list and calls `Model#deletePerson()`.
+5. The patient is removed from the address book and the UI is updated.
+
+**Delete Note Command**
+
+The `DeleteNoteCommand` removes a specific note from a patient's record.
+
+<puml src="diagrams/DeleteNoteSequenceDiagram.puml" alt="Interactions inside the Logic Component for the `delete note 1 2` Command" />
+
+How delete note works:
+
+1. `AddressBookParser` creates a `DeleteCommandParser` to parse the delete command.
+2. `DeleteCommandParser` identifies the command as a note deletion based on the "note" keyword.
+3. `DeleteNoteCommand` is created with both patient and note index.
+4. The command retrieves the patient and validates that the note index is valid.
+5. The note is removed from the patient's list of notes using `Person#removeNote()`.
+6. The patient is updated back to the model and the UI is updated.
 
 ### \[Proposed\] Data archiving
 
@@ -636,7 +671,7 @@ Use case ends.
 
 * 2a. Patient index is invalid (not a number, less than 1, or more than the number of total patients).
 
-    * 2a1. System shows error: "The person index provided is invalid."
+    * 2a1. System shows error: "The patient index provided is invalid."
 
     Use case ends.
 
@@ -654,7 +689,7 @@ Use case ends.
 
 * 3c. Person has no notes.
 
-    * 3c1. System shows an error: "This person has no notes to edit."
+    * 3c1. System shows an error: "This patient has no notes to edit."
 
     Use case ends.
 
@@ -823,22 +858,41 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases …​ }_
 
-### Deleting a person
+### Deleting a patient
 
-1. Deleting a person while all persons are being shown
+1. Deleting a patient while all patients are being shown
 
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+   1. Prerequisites: List all patients using the `list` command. Multiple patients in the list.
 
-   1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+   1. Test case: `delete patient 1`<br>
+      Expected: First patient is deleted from the list. Details of the deleted patient shown in the status message. Timestamp in the status bar is updated.
 
-   1. Test case: `delete 0`<br>
-      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+   1. Test case: `delete patient 0`<br>
+      Expected: No patient is deleted. Error details shown in the status message. Status bar remains the same.
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
+   1. Other incorrect delete patient commands to try: `delete patient`, `delete patient x`, `delete patient -1` (where x is larger than the list size)<br>
       Expected: Similar to previous.
 
-1. _{ more test cases …​ }_
+1. Deleting a note from a patient
+
+   1. Prerequisites: List all patients using the `list` command. Choose a patient with multiple notes, doing so through the `view` command.
+
+   1. Test case: `delete note 1 1`<br>
+      Expected: First note from the first patient is deleted. Details of the deleted note shown in the status message. Patient's note list is updated.
+
+   1. Test case: `delete note 1 0`<br>
+      Expected: No note is deleted. Error message indicating invalid note index is shown.
+
+   2. Test case: `delete note 1 5` (where patient 1 has only 2 notes)<br>
+      Expected: No note is deleted. Error message indicating invalid note index is shown.
+
+   3. Test case: `delete note 1` (missing note index)<br>
+      Expected: Error message indicating invalid note command format is shown.
+
+   4. Test case: `delete note` (missing both patient and note index)<br>
+      Expected: Error message indicating invalid command format is shown.
+
+2. _{ more test cases …​ }_
 
 ### Saving data
 

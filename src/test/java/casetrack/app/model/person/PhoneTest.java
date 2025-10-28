@@ -31,14 +31,18 @@ public class PhoneTest {
         assertFalse(Phone.isValidPhone("phone")); // non-numeric
         assertFalse(Phone.isValidPhone("9011p041")); // alphabets within digits
         assertFalse(Phone.isValidPhone("9312 1534")); // spaces within digits
+        assertFalse(Phone.isValidPhone("123456789012345678")); // more than 17 digits
+        assertFalse(Phone.isValidPhone("+999 123456789012345678")); // more than 17 digits with country code
 
         // valid phone numbers
         assertTrue(Phone.isValidPhone("911")); // exactly 3 numbers
         assertTrue(Phone.isValidPhone("93121534"));
         assertTrue(Phone.isValidPhone("124293842033123")); // long phone numbers
+        assertTrue(Phone.isValidPhone("12345678901234567")); // exactly 17 digits (maximum)
         assertTrue(Phone.isValidPhone("999 124293842033123")); // long phone numbers with country code
         assertTrue(Phone.isValidPhone("+999 124293842033123")); // long phone numbers with country code and +
         assertTrue(Phone.isValidPhone("+999124293842033123")); // phone numbers with no space before country code
+        assertTrue(Phone.isValidPhone("+999 12345678901234567")); // country code with 17 digit number
     }
 
     @Test

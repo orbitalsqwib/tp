@@ -11,7 +11,7 @@ import static casetrack.app.logic.parser.CliSyntax.PREFIX_TAG;
 import java.util.Set;
 
 import casetrack.app.logic.commands.AddCommand;
-import casetrack.app.logic.commands.EditCommand.EditPersonDescriptor;
+import casetrack.app.logic.commands.EditPatientCommand.EditPersonDescriptor;
 import casetrack.app.model.person.Person;
 import casetrack.app.model.tag.Tag;
 
