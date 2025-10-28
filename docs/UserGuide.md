@@ -82,6 +82,13 @@ Adds a person to the address book.
 
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS i/INCOME [m/MEDICAL_INFO] [t/TAG]…​`
 
+<box type="info" seamless>
+
+**Constraints:**
+* Names should only contain alphanumeric characters and spaces
+* Names cannot be fully numeric (e.g., `123` or `456789` are not allowed)
+</box>
+
 <box type="tip" seamless>
 
 **Tip:** A person can have any number of tags (including 0)
@@ -106,8 +113,9 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [i/INCOME] [m/MEDIC
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
+* When editing names, they should only contain alphanumeric characters and spaces, and cannot be fully numeric.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person’s tags by typing `t/` without
+* You can remove all the person's tags by typing `t/` without
     specifying any tags after it.
 
 Examples:
