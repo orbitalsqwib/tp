@@ -159,7 +159,7 @@ Examples:
 
 ### Viewing a person's information : `view`
 
-Shows detailed information for the specified person in the details panel.
+Displays detailed information about a specified person in the details panel.
 
 Format: `view INDEX`
 
