@@ -90,9 +90,9 @@ Here's a (partial) class diagram of the `Logic` component:
 
 <puml src="diagrams/LogicClassDiagram.puml" width="550"/>
 
-The sequence diagram below illustrates the interactions within the `Logic` component, taking `execute("delete 1")` API call as an example.
+The sequence diagram below illustrates the interactions within the `Logic` component, taking `execute("delete patient 1")` API call as an example.
 
-<puml src="diagrams/DeleteSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `delete 1` Command" />
+<puml src="diagrams/DeletePatientSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `delete patient 1` Command" />
 
 <box type="info" seamless>
 
@@ -102,8 +102,8 @@ The sequence diagram below illustrates the interactions within the `Logic` compo
 How the `Logic` component works:
 
 1. When `Logic` is called upon to execute a command, it is passed to an `AddressBookParser` object which in turn creates a parser that matches the command (e.g., `DeleteCommandParser`) and uses it to parse the command.
-1. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `DeleteCommand`) which is executed by the `LogicManager`.
-1. The command can communicate with the `Model` when it is executed (e.g. to delete a patient).<br>
+1. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `DeletePatientCommand` or `DeleteNoteCommand`) which is executed by the `LogicManager`.
+1. The command can communicate with the `Model` when it is executed (e.g. to delete a patient or a note).<br>
    Note that although this is shown as a single step in the diagram above (for simplicity), in the code it can take several interactions (between the command object and the `Model`) to achieve.
 1. The result of the command execution is encapsulated as a `CommandResult` object which is returned back from `Logic`.
 
@@ -266,6 +266,41 @@ How the search works:
 3. An appropriate predicate is created (e.g., `PhoneContainsKeywordsPredicate` for phone searches).
 4. `FindCommand` updates the filtered patient list using the predicate.
 5. The predicate validates keywords and matches against patient's phone (including country codes).
+
+### Delete patient / note feature
+
+#### Implementation
+
+The delete feature supports two types of delete operations: deleting patients and deleting notes from patients.
+
+**Delete Patient Command**
+
+The `DeletePatientCommand` removes a patient from the address book.
+
+<puml src="diagrams/DeletePatientSequenceDiagram.puml" alt="Interactions inside the Logic Component for the `delete patient 1` Command" />
+
+How delete patient works:
+
+1. `AddressBookParser` creates a `DeleteCommandParser` to parse the delete command.
+2. `DeleteCommandParser` identifies the command as a patient deletion based on the "patient" keyword.
+3. `DeletePatientCommand` is created with the patient index.
+4. The command retrieves the patient from the filtered list and calls `Model#deletePerson()`.
+5. The patient is removed from the address book and the UI is updated.
+
+**Delete Note Command**
+
+The `DeleteNoteCommand` removes a specific note from a patient's record.
+
+<puml src="diagrams/DeleteNoteSequenceDiagram.puml" alt="Interactions inside the Logic Component for the `delete note 1 2` Command" />
+
+How delete note works:
+
+1. `AddressBookParser` creates a `DeleteCommandParser` to parse the delete command.
+2. `DeleteCommandParser` identifies the command as a note deletion based on the "note" keyword.
+3. `DeleteNoteCommand` is created with both patient and note index.
+4. The command retrieves the patient and validates that the note index is valid.
+5. The note is removed from the patient's list of notes using `Person#removeNote()`.
+6. The patient is updated back to the model and the UI is updated.
 
 ### \[Proposed\] Data archiving
 
@@ -825,20 +860,39 @@ testers are expected to do more *exploratory* testing.
 
 ### Deleting a patient
 
-1. Deleting a patient while all persons are being shown
+1. Deleting a patient while all patients are being shown
 
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+   1. Prerequisites: List all patients using the `list` command. Multiple patients in the list.
 
-   1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+   1. Test case: `delete patient 1`<br>
+      Expected: First patient is deleted from the list. Details of the deleted patient shown in the status message. Timestamp in the status bar is updated.
 
-   1. Test case: `delete 0`<br>
+   1. Test case: `delete patient 0`<br>
       Expected: No patient is deleted. Error details shown in the status message. Status bar remains the same.
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
+   1. Other incorrect delete patient commands to try: `delete patient`, `delete patient x`, `delete patient -1` (where x is larger than the list size)<br>
       Expected: Similar to previous.
 
-1. _{ more test cases …​ }_
+1. Deleting a note from a patient
+
+   1. Prerequisites: List all patients using the `list` command. Choose a patient with multiple notes, doing so through the `view` command.
+
+   1. Test case: `delete note 1 1`<br>
+      Expected: First note from the first patient is deleted. Details of the deleted note shown in the status message. Patient's note list is updated.
+
+   1. Test case: `delete note 1 0`<br>
+      Expected: No note is deleted. Error message indicating invalid note index is shown.
+
+   2. Test case: `delete note 1 5` (where patient 1 has only 2 notes)<br>
+      Expected: No note is deleted. Error message indicating invalid note index is shown.
+
+   3. Test case: `delete note 1` (missing note index)<br>
+      Expected: Error message indicating invalid note command format is shown.
+
+   4. Test case: `delete note` (missing both patient and note index)<br>
+      Expected: Error message indicating invalid command format is shown.
+
+2. _{ more test cases …​ }_
 
 ### Saving data
 
