@@ -76,45 +76,45 @@ Shows a message explaining how to access the help page.
 Format: `help`
 
 
-### Adding a person: `add`
+### Adding a patient: `add`
 
-Adds a person to the CaseTrack.
+Adds a patient to the CaseTrack.
 
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS i/INCOME [m/MEDICAL_INFO] [t/TAG]…​`
 
 <box type="tip" seamless>
 
-**Tip:** A person can have any number of tags (including 0)
+**Tip:** A patient can have any number of tags (including 0)
 </box>
 
 Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 i/1200`
 * `add n/Betsy Crowe p/1234567 e/betsycrowe@example.com a/Newgate Prison i/0 m/Asthma t/criminal`
 
-### Listing all persons : `list`
+### Listing all patients : `list`
 
-Shows a list of all persons in the CaseTrack.
+Shows a list of all patients in the CaseTrack.
 
 Format: `list`
 
-### Editing a person : `edit patient`
+### Editing a patient : `edit patient`
 
-Edits an existing person in the CaseTrack.
+Edits an existing patient in the CaseTrack.
 
 Format: `edit patient <PATIENT_INDEX> [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [i/INCOME] [m/MEDICAL_INFO] [t/TAG]…​`
 
-* Edits the person at the specified `PATIENT_INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
+* Edits the patient at the specified `PATIENT_INDEX`. The index refers to the index number shown in the displayed patient list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person’s tags by typing `t/` without
+* When editing tags, the existing tags of the patient will be removed i.e adding of tags is not cumulative.
+* You can remove all the patient’s tags by typing `t/` without
     specifying any tags after it.
 
 Examples:
-*  `edit patient 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-*  `edit patient 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
-*  `edit patient 3 i/2500.50` Updates only the income of the 3rd person.
-*  `edit patient 4 m/Diabetes` Updates only the medical info of the 4th person.
+*  `edit patient 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st patient to be `91234567` and `johndoe@example.com` respectively.
+*  `edit patient 2 n/Betsy Crower t/` Edits the name of the 2nd patient to be `Betsy Crower` and clears all existing tags.
+*  `edit patient 3 i/2500.50` Updates only the income of the 3rd patient.
+*  `edit patient 4 m/Diabetes` Updates only the medical info of the 4th patient.
 
 ### Locating persons: `search`
 
@@ -143,29 +143,29 @@ Examples:
 * `search tag friend colleague` returns persons with tags containing `friend` or `colleague`<br>
   ![result for 'search name alex david'](images/findAlexDavidResult.png)
 
-### Deleting a person : `delete patient`
+### Deleting a patient : `delete patient`
 
-Deletes the specified person from the CaseTrack.
+Deletes the specified patient from the CaseTrack.
 
 Format: `delete patient <PATIENT_INDEX>`
 
-* Deletes the person at the specified `PATIENT_INDEX`.
-* The index refers to the index number shown in the displayed person list.
+* Deletes the patient at the specified `PATIENT_INDEX`.
+* The index refers to the index number shown in the displayed patient list.
 * The index **must be a positive integer** 1, 2, 3, …​
 
 Examples:
-* `list` followed by `delete patient 2` deletes the 2nd person in the CaseTrack.
-* `search name Betsy` followed by `delete patient 1` deletes the 1st person in the results of the `search` command.
+* `list` followed by `delete patient 2` deletes the 2nd patient in the CaseTrack.
+* `search name Betsy` followed by `delete patient 1` deletes the 1st patient in the results of the `search` command.
 
 ### Adding a note : `note`
 
-Adds a note to a person using either their list index, or their name and phone number.
+Adds a note to a patient using either their list index, or their name and phone number.
 
 Format (by index): `note <PATIENT_INDEX> t/TEXT`
 
 Format (by name and phone): `note n/NAME p/PHONE t/TEXT`
 
-* `PATIENT_INDEX` refers to the index shown in the displayed person list and **must be a positive integer** 1, 2, 3, ...
+* `PATIENT_INDEX` refers to the index shown in the displayed patient list and **must be a positive integer** 1, 2, 3, ...
 * When using `n/NAME p/PHONE`, do not include an index before the prefixes.
 * `t/TEXT` must contain at least one non‑whitespace character.
 * Do not repeat single‑valued prefixes (`n/`, `p/`, `t/`).
@@ -177,35 +177,35 @@ Examples:
 
 ### Editing a note : `edit note`
 
-Edits a specific note for a person.
+Edits a specific note for a patient.
 
 Format: `edit note <PATIENT_INDEX> <NOTE_INDEX> t/NEW_TEXT`
 
-- Edits the note at the specified `NOTE_INDEX` from the person at `PATIENT_INDEX`.
+- Edits the note at the specified `NOTE_INDEX` from the patient at `PATIENT_INDEX`.
 - Both indices refer to the index numbers shown in the displayed lists.
 - Both indices **must be positive integers** 1, 2, 3, ...
-- The person must have notes to edit.
+- The patient must have notes to edit.
 - `t/NEW_TEXT` must contain at least one non-whitespace character.
 
 Examples:
 
-- `edit note 1 2 t/Updated note content` edits the 2nd note from the 1st person in the CaseTrack.
-- `search name John` followed by `edit note 1 1 t/Follow-up completed` edits the 1st note from the 1st person in the results of the `search` command.
+- `edit note 1 2 t/Updated note content` edits the 2nd note from the 1st patient in the CaseTrack.
+- `search name John` followed by `edit note 1 1 t/Follow-up completed` edits the 1st note from the 1st patient in the results of the `search` command.
 
 ### Deleting a note : `delete note`
 
-Deletes a specific note from a person.
+Deletes a specific note from a patient.
 
 Format: `delete note <PATIENT_INDEX> <NOTE_INDEX>`
 
-* Deletes the note at the specified `NOTE_INDEX` from the person at `PATIENT_INDEX`.
+* Deletes the note at the specified `NOTE_INDEX` from the patient at `PATIENT_INDEX`.
 * Both indices refer to the index numbers shown in the displayed lists.
 * Both indices **must be positive integers** 1, 2, 3, ...
-* The person must have notes to delete.
+* The patient must have notes to delete.
 
 Examples:
-* `delete note 1 2` deletes the 2nd note from the 1st person in the CaseTrack.
-* `search name John` followed by `delete note 1 1` deletes the 1st note from the 1st person in the results of the `search` command.
+* `delete note 1 2` deletes the 2nd note from the 1st patient in the CaseTrack.
+* `search name John` followed by `delete note 1 1` deletes the 1st note from the 1st patient in the results of the `search` command.
 
 ### Clearing all entries : `clear`
 
@@ -265,7 +265,7 @@ Action     | Format, Examples
 **Clear All Patients**  | `clear`
 **Add Note** | `note <PATIENT_INDEX> t/TEXT` or `note n/NAME p/PHONE t/TEXT`<br> e.g., `note 1 t/Follow-up in 2 weeks`<br> e.g., `note n/John Doe p/91234567 t/Mother mentioned financial difficulties`
 **Edit Note** | `edit note <PATIENT_INDEX> <NOTE_INDEX> t/NEW_TEXT`<br> e.g., `edit note 1 2 t/Updated note content`
-**Delete Note** | `delete note <PATIENT_INDEX> <NOTE_INDEX>`<br> e.g., `delete note 1 2`<br> e.g., `search name John` followed by `delete note 1 1` deletes the 1st note from the 1st person in the results of the `search` command.
+**Delete Note** | `delete note <PATIENT_INDEX> <NOTE_INDEX>`<br> e.g., `delete note 1 2`<br> e.g., `search name John` followed by `delete note 1 1` deletes the 1st note from the 1st patient in the results of the `search` command.
 **Search** | `search FIELD KEYWORD [MORE_KEYWORDS]`<br> e.g., `search name James Jake`<br> e.g., `search number 91234567`
 **List**   | `list`
 **Help**   | `help`
