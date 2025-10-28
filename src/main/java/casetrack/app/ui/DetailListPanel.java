@@ -57,6 +57,7 @@ public class DetailListPanel extends UiPart<Region> {
         }
 
         ObservableList<PersonAttribute> detailList = FXCollections.observableArrayList(
+            new PersonAttribute(person.getName().getClass().getSimpleName(), person.getName().fullName),
             new PersonAttribute(person.getPhone().getClass().getSimpleName(), person.getPhone().value),
             new PersonAttribute(person.getAddress().getClass().getSimpleName(), person.getAddress().value),
             new PersonAttribute(person.getEmail().getClass().getSimpleName(), person.getEmail().value),
