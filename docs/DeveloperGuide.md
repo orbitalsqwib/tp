@@ -297,9 +297,9 @@ How delete note works:
 
 1. `AddressBookParser` creates a `DeleteCommandParser` to parse the delete command.
 2. `DeleteCommandParser` identifies the command as a note deletion based on the "note" keyword.
-3. `DeleteNoteCommand` is created with both patient index and note index.
-4. The command retrieves the patient and validates that the note index is within bounds.
-5. The note is removed from the patient's note list using `Person#removeNote()`.
+3. `DeleteNoteCommand` is created with both patient and note index.
+4. The command retrieves the patient and validates that the note index is valid.
+5. The note is removed from the patient's list of notes using `Person#removeNote()`.
 6. The patient is updated back to the model and the UI is updated.
 
 ### \[Proposed\] Data archiving
