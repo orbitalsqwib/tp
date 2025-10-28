@@ -70,7 +70,7 @@ dependencies {
 }
 
 shadowJar {
-    archiveFileName = 'addressbook.jar'
+    archiveFileName = 'casetrack.jar'
 }
 
 defaultTasks 'clean', 'test'
