@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import casetrack.app.logic.commands.EditCommand.EditPersonDescriptor;
+import casetrack.app.logic.commands.EditPatientCommand.EditPersonDescriptor;
 import casetrack.app.testutil.EditPersonDescriptorBuilder;
 
 public class EditPersonDescriptorTest {

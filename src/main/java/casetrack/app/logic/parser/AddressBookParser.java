@@ -12,7 +12,7 @@ import casetrack.app.logic.commands.AddCommand;
 import casetrack.app.logic.commands.ClearCommand;
 import casetrack.app.logic.commands.Command;
 import casetrack.app.logic.commands.DeleteCommand;
-import casetrack.app.logic.commands.EditCommand;
+import casetrack.app.logic.commands.EditPatientCommand;
 import casetrack.app.logic.commands.ExitCommand;
 import casetrack.app.logic.commands.FindCommand;
 import casetrack.app.logic.commands.HelpCommand;
@@ -58,7 +58,7 @@ public class AddressBookParser {
         case AddCommand.COMMAND_WORD:
             return new AddCommandParser().parse(arguments);
 
-        case EditCommand.COMMAND_WORD:
+        case EditPatientCommand.COMMAND_WORD:
             return new EditCommandParser().parse(arguments);
 
         case DeleteCommand.COMMAND_WORD:
