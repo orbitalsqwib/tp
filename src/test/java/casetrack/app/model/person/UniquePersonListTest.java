@@ -59,6 +59,47 @@ public class UniquePersonListTest {
     }
 
     @Test
+    public void add_duplicateNameAndPhone_throwsDuplicatePersonException() {
+        uniquePersonList.add(ALICE);
+        Person personWithSameNameAndPhone = new PersonBuilder(ALICE)
+                .withEmail("different@example.com")
+                .build();
+        assertThrows(DuplicatePersonException.class, () -> uniquePersonList.add(personWithSameNameAndPhone));
+    }
+
+    @Test
+    public void add_duplicateNameAndPhoneDifferentCase_throwsDuplicatePersonException() {
+        uniquePersonList.add(ALICE);
+        Person personWithSameNameDifferentCase = new PersonBuilder(ALICE)
+                .withName(ALICE.getName().toString().toUpperCase())
+                .withEmail("different@example.com")
+                .build();
+        assertThrows(DuplicatePersonException.class, () -> uniquePersonList.add(personWithSameNameDifferentCase));
+    }
+
+    @Test
+    public void add_sameNameDifferentPhone_success() {
+        uniquePersonList.add(ALICE);
+        Person personWithSameName = new PersonBuilder(ALICE)
+                .withPhone("99999999")
+                .withEmail("different@example.com")
+                .build();
+        uniquePersonList.add(personWithSameName);
+        assertTrue(uniquePersonList.contains(personWithSameName));
+    }
+
+    @Test
+    public void add_samePhoneDifferentName_success() {
+        uniquePersonList.add(ALICE);
+        Person personWithSamePhone = new PersonBuilder(ALICE)
+                .withName("Different Name")
+                .withEmail("different@example.com")
+                .build();
+        uniquePersonList.add(personWithSamePhone);
+        assertTrue(uniquePersonList.contains(personWithSamePhone));
+    }
+
+    @Test
     public void setPerson_nullTargetPerson_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> uniquePersonList.setPerson(null, ALICE));
     }

@@ -60,7 +60,7 @@ public class NameTest {
         // different values -> returns false
         assertFalse(name.equals(new Name("Other Valid Name")));
 
-        // same values but different case -> returns true
+        // same values but different case -> returns true (case-insensitive)
         assertTrue(name.equals(new Name("valid name")));
         assertTrue(name.equals(new Name("VALID NAME")));
         assertTrue(name.equals(new Name("VaLiD nAmE")));
