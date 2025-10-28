@@ -21,7 +21,7 @@ public class EditNoteCommandParser implements Parser<EditNoteCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(" " + args, PREFIX_NOTE_TEXT);
 
-        // Preamble should contain two indices: PERSON_INDEX and NOTE_INDEX
+        // Preamble should contain two indices: PATIENT_INDEX and NOTE_INDEX
         String preamble = argMultimap.getPreamble().trim();
         String[] parts = preamble.split("\\s+");
 
@@ -35,12 +35,12 @@ public class EditNoteCommandParser implements Parser<EditNoteCommand> {
                     EditNoteCommand.MESSAGE_USAGE));
         }
 
-        Index personIndex;
+        Index patientIndex;
         Index noteIndex;
         Note newNote;
 
         try {
-            personIndex = ParserUtil.parseIndex(parts[0]);
+            patientIndex = ParserUtil.parseIndex(parts[0]);
             noteIndex = ParserUtil.parseIndex(parts[1]);
         } catch (ParseException pe) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
@@ -49,7 +49,7 @@ public class EditNoteCommandParser implements Parser<EditNoteCommand> {
 
         newNote = ParserUtil.parseNote(argMultimap.getValue(PREFIX_NOTE_TEXT).get());
 
-        return new EditNoteCommand(personIndex, noteIndex, newNote);
+        return new EditNoteCommand(patientIndex, noteIndex, newNote);
     }
 }
 
