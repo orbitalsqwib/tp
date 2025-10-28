@@ -45,6 +45,9 @@ public class NameTest {
         assertTrue(Name.isValidName("o'Connor")); // names with apostrophes
         assertTrue(Name.isValidName("d'Angelo")); // names with apostrophes
         assertTrue(Name.isValidName("Mary O'Brien")); // names with apostrophes in middle
+        assertTrue(Name.isValidName("Mary-Jane")); // names with hyphens
+        assertTrue(Name.isValidName("Jean-Claude")); // names with hyphens
+        assertTrue(Name.isValidName("Anne-Marie Watson")); // names with hyphens and spaces
     }
 
     @Test
