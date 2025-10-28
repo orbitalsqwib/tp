@@ -101,9 +101,9 @@ Format: `list`
 
 Edits an existing person in the address book.
 
-Format: `edit patient INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [i/INCOME] [m/MEDICAL_INFO] [t/TAG]…​`
+Format: `edit patient <PATIENT_INDEX> [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [i/INCOME] [m/MEDICAL_INFO] [t/TAG]…​`
 
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
+* Edits the person at the specified `PATIENT_INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
@@ -147,9 +147,9 @@ Examples:
 
 Deletes the specified person from the address book.
 
-Format: `delete patient INDEX`
+Format: `delete patient <PATIENT_INDEX>`
 
-* Deletes the person at the specified `INDEX`.
+* Deletes the person at the specified `PATIENT_INDEX`.
 * The index refers to the index number shown in the displayed person list.
 * The index **must be a positive integer** 1, 2, 3, …​
 
@@ -161,11 +161,11 @@ Examples:
 
 Adds a note to a person using either their list index, or their name and phone number.
 
-Format (by index): `note INDEX t/TEXT`
+Format (by index): `note <PATIENT_INDEX> t/TEXT`
 
 Format (by name and phone): `note n/NAME p/PHONE t/TEXT`
 
-* `INDEX` refers to the index shown in the displayed person list and **must be a positive integer** 1, 2, 3, ...
+* `PATIENT_INDEX` refers to the index shown in the displayed person list and **must be a positive integer** 1, 2, 3, ...
 * When using `n/NAME p/PHONE`, do not include an index before the prefixes.
 * `t/TEXT` must contain at least one non‑whitespace character.
 * Do not repeat single‑valued prefixes (`n/`, `p/`, `t/`).
@@ -179,9 +179,9 @@ Examples:
 
 Edits a specific note for a person.
 
-Format: `edit note PERSON_INDEX NOTE_INDEX t/NEW_TEXT`
+Format: `edit note <PATIENT_INDEX> <NOTE_INDEX> t/NEW_TEXT`
 
-- Edits the note at the specified `NOTE_INDEX` from the person at `PERSON_INDEX`.
+- Edits the note at the specified `NOTE_INDEX` from the person at `PATIENT_INDEX`.
 - Both indices refer to the index numbers shown in the displayed lists.
 - Both indices **must be positive integers** 1, 2, 3, ...
 - The person must have notes to edit.
@@ -196,9 +196,9 @@ Examples:
 
 Deletes a specific note from a person.
 
-Format: `delete note PERSON_INDEX NOTE_INDEX`
+Format: `delete note <PATIENT_INDEX> <NOTE_INDEX>`
 
-* Deletes the note at the specified `NOTE_INDEX` from the person at `PERSON_INDEX`.
+* Deletes the note at the specified `NOTE_INDEX` from the person at `PATIENT_INDEX`.
 * Both indices refer to the index numbers shown in the displayed lists.
 * Both indices **must be positive integers** 1, 2, 3, ...
 * The person must have notes to delete.
@@ -258,11 +258,15 @@ _Details coming soon ..._
 
 Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS i/INCOME [m/MEDICAL_INFO] [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 i/2500 m/Diabetes t/friend t/colleague`
-**Clear**  | `clear`
-**Delete Patient** | `delete patient INDEX`<br> e.g., `delete patient 3`
-**Delete Note** | `delete note PATIENT_INDEX NOTE_INDEX`<br> e.g., `delete note 1 2`
-**Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [i/INCOME] [m/MEDICAL_INFO] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`<br> e.g., `edit 3 i/2500`
+**Add Patient**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS i/INCOME [m/MEDICAL_INFO] [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 i/2500 m/Diabetes t/friend t/colleague`
+**Edit Patient**   | `edit patient <PATIENT_INDEX> [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [i/INCOME] [m/MEDICAL_INFO] [t/TAG]…​`<br> e.g.,`edit patient 2 n/James Lee e/jameslee@example.com`<br> e.g., `edit patient 3 i/2500`
+**Delete Patient** | `delete patient <PATIENT_INDEX>`<br> e.g., `delete patient 3`
+**List All Patients** | `list`
+**Clear All Patients**  | `clear`
+**Add Note** | `note <PATIENT_INDEX> t/TEXT` or `note n/NAME p/PHONE t/TEXT`<br> e.g., `note 1 t/Follow-up in 2 weeks`<br> e.g., `note n/John Doe p/91234567 t/Mother mentioned financial difficulties`
+**Edit Note** | `edit note <PATIENT_INDEX> <NOTE_INDEX> t/NEW_TEXT`<br> e.g., `edit note 1 2 t/Updated note content`
+**Delete Note** | `delete note <PATIENT_INDEX> <NOTE_INDEX>`<br> e.g., `delete note 1 2`<br> e.g., `search name John` followed by `delete note 1 1` deletes the 1st note from the 1st person in the results of the `search` command.
 **Search** | `search FIELD KEYWORD [MORE_KEYWORDS]`<br> e.g., `search name James Jake`<br> e.g., `search number 91234567`
 **List**   | `list`
 **Help**   | `help`
+**Exit**   | `exit`

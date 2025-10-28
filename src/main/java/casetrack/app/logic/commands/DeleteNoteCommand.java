@@ -18,7 +18,7 @@ public class DeleteNoteCommand extends DeleteCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes a note from a person identified by the index number used in the displayed person list.\n"
-            + "Parameters: note <PERSON_INDEX> <NOTE_INDEX>\n"
+            + "Parameters: note <PATIENT_INDEX> <NOTE_INDEX>\n"
             + "Example: " + COMMAND_WORD + " note 1 2";
 
     public static final String MESSAGE_DELETE_NOTE_SUCCESS = "Deleted Note from %1$s: %2$s";

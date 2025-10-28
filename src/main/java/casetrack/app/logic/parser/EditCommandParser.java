@@ -13,7 +13,7 @@ import casetrack.app.logic.parser.exceptions.ParseException;
 public class EditCommandParser implements Parser<Command> {
 
     public static final String MESSAGE_INVALID_EDIT_FORMAT =
-        "Expected 'edit note <PATIENT_INDEX> <NOTE_INDEX> t/<TEXT>' or 'edit patient <INDEX> [fields...]'";
+        "Expected 'edit note <PATIENT_INDEX> <NOTE_INDEX> t/<TEXT>' or 'edit patient <PATIENT_INDEX> [fields...]'";
 
     /**
      * Parses the given {@code String} of arguments and returns either an EditCommand
