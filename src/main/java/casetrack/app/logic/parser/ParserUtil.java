@@ -23,7 +23,7 @@ import casetrack.app.model.tag.Tag;
  */
 public class ParserUtil {
 
-    public static final String MESSAGE_INVALID_INDEX = "The index provided is invalid.";
+    public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String PATIENT_STRING = "patient";
     public static final String NOTE_STRING = "note";
 
@@ -37,11 +37,7 @@ public class ParserUtil {
         if (!StringUtil.isNonZeroUnsignedInteger(trimmedIndex)) {
             throw new ParseException(MESSAGE_INVALID_INDEX);
         }
-        try {
-            return Index.fromOneBased(Integer.parseInt(trimmedIndex));
-        } catch (NumberFormatException nfe) {
-            throw new ParseException(MESSAGE_INVALID_INDEX);
-        }
+        return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
 
     /**
