@@ -33,7 +33,7 @@ public class Phone {
     public static boolean isValidPhone(String test) {
         return test.matches(VALIDATION_REGEX);
     }
-    
+
     @Override
     public String toString() {
         return value;
