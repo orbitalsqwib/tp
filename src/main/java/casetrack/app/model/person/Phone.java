@@ -31,15 +31,9 @@ public class Phone {
      * Returns true if a given string is a valid phone number.
      */
     public static boolean isValidPhone(String test) {
-        if (!test.matches(VALIDATION_REGEX)) {
-            return false;
-        }
-        // Remove spaces and + sign to count only digits
-        String digitsOnly = test.replaceAll("[\\s+]", "");
-        // Maximum 20 digits total (country code + phone number)
-        return digitsOnly.length() <= 20;
+        return test.matches(VALIDATION_REGEX);
     }
-
+    
     @Override
     public String toString() {
         return value;
