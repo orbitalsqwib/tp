@@ -91,6 +91,23 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 i/1200`
 * `add n/Betsy Crowe p/1234567 e/betsycrowe@example.com a/Newgate Prison i/0 m/Asthma t/criminal`
 
+<box type="info" seamless>
+
+**Note on Duplicate Patients:**
+CaseTrack prevents adding duplicate patients. A patient is considered a duplicate if **both** the name and phone number match an existing patient:
+- Name matching is **case-insensitive** (e.g., "John Doe" = "john doe")
+- Extra spaces in names are ignored (e.g., "John Doe" = "John  Doe")
+- Multiple patients can share the same name if they have different phone numbers
+- Multiple patients can share the same phone number if they have different names
+
+Examples:
+- ✅ Allowed: "John Doe" (91234567) and "John Doe" (98765432) - same name, different phone
+- ✅ Allowed: "John Doe" (91234567) and "Jane Doe" (91234567) - different name, same phone
+- ❌ Blocked: "John Doe" (91234567) and "john doe" (91234567) - duplicate (case-insensitive match)
+- ❌ Blocked: "John Doe" (91234567) and "John  Doe" (91234567) - duplicate (whitespace ignored)
+
+</box>
+
 ### Listing all patients : `list`
 
 Shows a list of all patients in the CaseTrack.
