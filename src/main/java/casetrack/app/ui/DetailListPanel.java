@@ -53,7 +53,7 @@ public class DetailListPanel extends UiPart<Region> {
             for (int i = 0; i < personNotes.size(); i++) {
                 noteValue += (i + 1) + ". " + personNotes.get(i).value + "\n";
             }
-            noteValue.strip();
+            noteValue = noteValue.strip();
         }
 
         ObservableList<PersonAttribute> detailList = FXCollections.observableArrayList(
