@@ -77,7 +77,8 @@ CaseTrack is a **desktop app for managing contacts, optimized for use via a  Lin
 * **NAME**: Should only contain alphanumeric characters, spaces, periods (.), apostrophes ('), hyphens (-), 's/o', 'd/o', 'S/O', or 'D/O', and it should not be blank.
   * Examples: `John Doe`, `Dr. Lim`, `o'Connor`, `Mary O'Brien`, `John Jr.`, `Ravichandran S/O Tharumalinga`, `Mary-Jane`, `Jean-Claude`
 
-* **PHONE_NUMBER**: Should only contain numbers, and it should be at least 3 digits long. The maximum length is **17 digits**, excluding any country code.
+* **PHONE_NUMBER**: Should only contain numbers, and it should be at least 3 digits long. The maximum length is **17 digits**, excluding any country code. An optional country code (up to 3 digits) may precede the phone number, with an optional '+' prefix. A space may optionally separate the country code from the main number.
+  * Examples: `12345678`, `91234567`, `+65 91234567` (with space), `+6591234567` (without space), `1 800123456`, `999 12345678`
 
 * **EMAIL**: Should be of the format local-part@domain and adhere to the following constraints:
   1. The local-part should only contain alphanumeric characters and these special characters, excluding the parentheses, (+_.-). The local-part may not start or end with any special characters.
