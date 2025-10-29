@@ -18,6 +18,8 @@ public class DeleteCommandParser implements Parser<Command> {
     public static final String MESSAGE_INVALID_DELETE_FORMAT =
         "Expected 'delete note <PATIENT_INDEX> <NOTE_INDEX>' or 'delete patient <PATIENT_INDEX>'";
 
+    private static final int EXPECTED_ARGS_FOR_DELETE_NOTE = 2;
+
     /**
      * Parses the given {@code String} of arguments and returns either a DeleteNoteCommand
      * or DeletePatientCommand object.
@@ -48,7 +50,7 @@ public class DeleteCommandParser implements Parser<Command> {
         String remainingArgs = removeCommandPrefix(trimmedArgs, ParserUtil.NOTE_STRING);
         String[] parts = remainingArgs.split("\\s+");
 
-        if (parts.length != 2) {
+        if (parts.length != EXPECTED_ARGS_FOR_DELETE_NOTE) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     DeleteNoteCommand.MESSAGE_USAGE));
         }
