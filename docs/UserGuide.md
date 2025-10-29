@@ -6,7 +6,7 @@
 
 # CaseTrack User Guide
 
-CaseTrack is a **desktop app for managing contacts, optimized for use via a  Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, CaseTrack can get your contact management tasks done faster than traditional GUI apps.
+CaseTrack is a **desktop app for managing patients, optimized for use via a  Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, CaseTrack can get your patient management tasks done faster than traditional GUI apps.
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -30,13 +30,13 @@ CaseTrack is a **desktop app for managing contacts, optimized for use via a  Lin
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
-   * `list` : Lists all contacts.
+   * `list` : Lists all patients.
 
-   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 i/1200` : Adds a contact named `John Doe` to the CaseTrack.
+   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 i/1200` : Adds a patient named `John Doe` to the CaseTrack.
 
-   * `delete patient 3` : Deletes the 3rd contact shown in the current list.
+   * `delete patient 3` : Deletes the 3rd patient shown in the current list.
 
-   * `clear` : Deletes all contacts.
+   * `clear` : Deletes all patients.
 
    * `exit` : Exits the app.
 
@@ -217,6 +217,12 @@ Format: `delete patient <PATIENT_INDEX>`
 * The index refers to the index number shown in the displayed patient list.
 * The index **must be a positive integer** 1, 2, 3, …​
 
+<box type="warning" seamless>
+
+**Caution:** Deleting a patient is permanent and cannot be reverted.
+
+</box>
+
 Examples:
 * `list` followed by `delete patient 2` deletes the 2nd patient in the CaseTrack.
 * `search name Betsy` followed by `delete patient 1` deletes the 1st patient in the results of the `search` command.
@@ -281,6 +287,12 @@ Format: `delete note <PATIENT_INDEX> <NOTE_INDEX>`
 * Both indices **must be positive integers** 1, 2, 3, ...
 * The patient must have notes to delete.
 
+<box type="warning" seamless>
+
+**Caution:** Deleting a patient note is permanent and cannot be reverted.
+
+</box>
+
 Examples:
 * `delete note 1 2` deletes the 2nd note from the 1st patient in the CaseTrack.
 * `search name John` followed by `delete note 1 1` deletes the 1st note from the 1st patient in the results of the `search` command.
@@ -341,6 +353,6 @@ Action     | Format, Examples
 **Edit Note** | `edit note <PATIENT_INDEX> <NOTE_INDEX> t/NEW_TEXT`<br> e.g., `edit note 1 2 t/Updated note content`
 **Delete Note** | `delete note <PATIENT_INDEX> <NOTE_INDEX>`<br> e.g., `delete note 1 2`<br> e.g., `search name John` followed by `delete note 1 1` deletes the 1st note from the 1st patient in the results of the `search` command.
 **Search** | `search FIELD KEYWORD [MORE_KEYWORDS]`<br> e.g., `search name James Jake`<br> e.g., `search number 91234567`
-**View**   | `view INDEX`<br> e.g., `view 2`
+**View**   | `view <PATIENT_INDEX>`<br> e.g., `view 2`
 **Help**   | `help`
 **Exit**   | `exit`
