@@ -89,6 +89,8 @@ CaseTrack is a **desktop app for managing contacts, optimized for use via a  Lin
 * **ADDRESS**: Can take any values, and it should not be blank.
 
 * **INCOME**: Should be a valid non-negative number with up to 2 decimal places (e.g., `1200`, `2500.50`).
+  * Display: Income is shown with exactly two decimal places. If you enter more than two decimal places, the value is shown rounded to the nearest cent (e.g., `0.00000000000001` displays as `0.00`).
+  * Currency: Only Singapore Dollars (SGD) are supported. Enter numeric amounts without any currency symbols; all income is treated and displayed as SGD (e.g., `1200` shows as `SGD 1,200.00`).
 
 * **MEDICAL_INFO**: Can take any values, and it should not be blank.
 
