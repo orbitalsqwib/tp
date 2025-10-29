@@ -3,7 +3,6 @@ package casetrack.app.storage;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -85,73 +84,59 @@ class JsonAdaptedPerson {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person.
      */
     public Person toModelType() throws IllegalValueException {
-        final List<Tag> personTags = new ArrayList<>();
-        for (JsonAdaptedTag tag : tags) {
-            personTags.add(tag.toModelType());
-        }
+        List<Tag> personTags = tags.stream()
+                .map(tag -> {
+                    try {
+                        return tag.toModelType();
+                    } catch (IllegalValueException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .collect(Collectors.toList());
 
-        final List<Note> personNotes = new ArrayList<>();
-        for (String noteValue : notes) {
-            if (noteValue == null) {
-                throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                        Note.class.getSimpleName()));
-            }
-            if (!Note.isValidNote(noteValue)) {
-                throw new IllegalValueException(Note.MESSAGE_CONSTRAINTS);
-            }
-            personNotes.add(new Note(noteValue));
-        }
+        List<Note> personNotes = notes.stream()
+                .map(note -> validateAndCreateNote(note))
+                .collect(Collectors.toList());
 
-        if (name == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
-        }
-        if (!Name.isValidName(name)) {
-            throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
-        }
-        final Name modelName = new Name(name);
+        Name modelName = validateAndCreate(name, Name::isValidName, Name::new, 
+                Name.class.getSimpleName(), Name.MESSAGE_CONSTRAINTS);
+        Phone modelPhone = validateAndCreate(phone, Phone::isValidPhone, Phone::new,
+                Phone.class.getSimpleName(), Phone.MESSAGE_CONSTRAINTS);
+        Email modelEmail = validateAndCreate(email, Email::isValidEmail, Email::new,
+                Email.class.getSimpleName(), Email.MESSAGE_CONSTRAINTS);
+        Address modelAddress = validateAndCreate(address, Address::isValidAddress, Address::new,
+                Address.class.getSimpleName(), Address.MESSAGE_CONSTRAINTS);
+        Income modelIncome = validateAndCreate(income, Income::isValidIncome, Income::new,
+                Income.class.getSimpleName(), Income.MESSAGE_CONSTRAINTS);
+        MedicalInfo modelMedicalInfo = validateAndCreate(medicalInfo != null ? medicalInfo : "-",
+                MedicalInfo::isValidMedicalInfo, MedicalInfo::new,
+                MedicalInfo.class.getSimpleName(), MedicalInfo.MESSAGE_CONSTRAINTS);
 
-        if (phone == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName()));
-        }
-        if (!Phone.isValidPhone(phone)) {
-            throw new IllegalValueException(Phone.MESSAGE_CONSTRAINTS);
-        }
-        final Phone modelPhone = new Phone(phone);
-
-        if (email == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName()));
-        }
-        if (!Email.isValidEmail(email)) {
-            throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);
-        }
-        final Email modelEmail = new Email(email);
-
-        if (address == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName()));
-        }
-        if (!Address.isValidAddress(address)) {
-            throw new IllegalValueException(Address.MESSAGE_CONSTRAINTS);
-        }
-        final Address modelAddress = new Address(address);
-
-        if (income == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Income.class.getSimpleName()));
-        }
-        if (!Income.isValidIncome(income)) {
-            throw new IllegalValueException(Income.MESSAGE_CONSTRAINTS);
-        }
-        final Income modelIncome = new Income(income);
-
-        // Use "-" as default if medicalInfo is null (for backward compatibility)
-        String medicalInfoValue = (medicalInfo == null) ? "-" : medicalInfo;
-        if (!MedicalInfo.isValidMedicalInfo(medicalInfoValue)) {
-            throw new IllegalValueException(MedicalInfo.MESSAGE_CONSTRAINTS);
-        }
-        final MedicalInfo modelMedicalInfo = new MedicalInfo(medicalInfoValue);
-
-        final Set<Tag> modelTags = new HashSet<>(personTags);
         return new Person(modelName, modelPhone, modelEmail, modelAddress, modelIncome,
-                modelMedicalInfo, modelTags, personNotes);
+                modelMedicalInfo, new HashSet<>(personTags), personNotes);
+    }
+
+    private Note validateAndCreateNote(String noteValue) {
+        if (noteValue == null) {
+            throw new RuntimeException(new IllegalValueException(
+                    String.format(MISSING_FIELD_MESSAGE_FORMAT, Note.class.getSimpleName())));
+        }
+        if (!Note.isValidNote(noteValue)) {
+            throw new RuntimeException(new IllegalValueException(Note.MESSAGE_CONSTRAINTS));
+        }
+        return new Note(noteValue);
+    }
+
+    private <T> T validateAndCreate(String value, java.util.function.Predicate<String> validator,
+            java.util.function.Function<String, T> constructor, String typeName, String errorMessage)
+            throws IllegalValueException {
+        if (value == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, typeName));
+        }
+        if (!validator.test(value)) {
+            throw new IllegalValueException(errorMessage);
+        }
+        return constructor.apply(value);
     }
 
 }
