@@ -219,7 +219,7 @@ Format: `delete patient <PATIENT_INDEX>`
 
 <box type="warning" seamless>
 
-**Caution:** Deleting a patient is permanent and cannot be undone.
+**Caution:** Deleting a patient is permanent and cannot be reverted.
 
 </box>
 
@@ -289,7 +289,7 @@ Format: `delete note <PATIENT_INDEX> <NOTE_INDEX>`
 
 <box type="warning" seamless>
 
-**Caution:** Deleting a patient note is permanent and cannot be undone.
+**Caution:** Deleting a patient note is permanent and cannot be reverted.
 
 </box>
 
