@@ -11,13 +11,16 @@ public class Name {
 
     public static final String MESSAGE_CONSTRAINTS =
             "Names should only contain alphanumeric characters, spaces, periods (.), apostrophes ('), hyphens (-),"
-                    + " 's/o', 'd/o', 'S/O', or 'D/O', and it should not be blank";
+                    + " 's/o', 'd/o', 'S/O', or 'D/O', and it should not be blank."
+                    + " Names must contain at least one alphabetic character.";
 
     /*
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
+     * Names must contain at least one alphabetic character (enforced by the lookahead).
      */
-    public static final String VALIDATION_REGEX = "[\\p{Alnum}]([\\p{Alnum} .'-]|(([sd]/o)|([SD]/O) ))*";
+    public static final String VALIDATION_REGEX =
+            "(?=.*[\\p{Alpha}])[\\p{Alnum}]([\\p{Alnum} .'-]|(([sd]/o)|([SD]/O) ))*";
 
     public final String fullName;
 
