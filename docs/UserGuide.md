@@ -84,7 +84,6 @@ CaseTrack is a **desktop app for managing contacts, optimized for use via a  Lin
     * Labels or text in parentheses (e.g., `91234567 (HP)`, `1234 5678 (Office)`)
     * Multiple phone numbers in one field (e.g., `1234 5678 (HP) 1111-3333 (Office)`)
     * Parentheses around country codes (e.g., `(+65) 91234567`)
-    * 
 
 
 * **EMAIL**: Should be of the format local-part@domain and adhere to the following constraints:
