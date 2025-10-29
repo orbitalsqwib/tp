@@ -57,12 +57,19 @@ public class Name {
         }
 
         Name otherName = (Name) other;
-        return fullName.equals(otherName.fullName);
+        return normalizedName(fullName).equals(normalizedName(otherName.fullName));
     }
 
     @Override
     public int hashCode() {
-        return fullName.hashCode();
+        return normalizedName(fullName).hashCode();
+    }
+
+    /**
+     * Normalizes a name by converting to lowercase and replacing multiple consecutive spaces with a single space.
+     */
+    private static String normalizedName(String name) {
+        return name.toLowerCase().replaceAll("\\s+", " ").trim();
     }
 
 }

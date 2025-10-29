@@ -68,5 +68,25 @@ public class NameTest {
 
         // different values -> returns false
         assertFalse(name.equals(new Name("Other Valid Name")));
+
+        // same values but different case -> returns true (case-insensitive)
+        assertTrue(name.equals(new Name("valid name")));
+        assertTrue(name.equals(new Name("VALID NAME")));
+        assertTrue(name.equals(new Name("VaLiD nAmE")));
+
+        // same values but different whitespace -> returns true (whitespace normalized)
+        assertTrue(name.equals(new Name("Valid  Name"))); // double space
+        assertTrue(name.equals(new Name("Valid   Name"))); // triple space
+        assertTrue(name.equals(new Name("Valid    Name"))); // multiple spaces
+    }
+
+    @Test
+    public void equals_multipleWords() {
+        Name name = new Name("Alice Bob Charlie");
+
+        // same name with extra spaces between words -> returns true
+        assertTrue(name.equals(new Name("Alice  Bob  Charlie")));
+        assertTrue(name.equals(new Name("Alice   Bob   Charlie")));
+        assertTrue(name.equals(new Name("Alice Bob  Charlie")));
     }
 }
