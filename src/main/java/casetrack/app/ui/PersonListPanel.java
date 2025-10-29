@@ -1,9 +1,7 @@
 package casetrack.app.ui;
 
 import java.util.function.Consumer;
-import java.util.logging.Logger;
 
-import casetrack.app.commons.core.LogsCenter;
 import casetrack.app.model.person.Person;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
