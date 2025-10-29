@@ -23,7 +23,6 @@ public class LogsCenter {
     private static final String LOG_FILE = "casetrack.log";
     private static final Logger logger; // logger for this class
     private static Logger baseLogger; // to be used as the parent of all other loggers created by this class.
-    private static Level currentLogLevel = Level.INFO;
 
     // This static block ensures essential loggers are created early
     static {
@@ -36,7 +35,7 @@ public class LogsCenter {
      * using {@link #getLogger(String)} and {@link #getLogger(Class)} methods except for those that are manually set.
      */
     public static void init(Config config) {
-        currentLogLevel = config.getLogLevel();
+        Level currentLogLevel = config.getLogLevel();
         logger.info("Log level will be set as: " + currentLogLevel);
         // set the level of the baseLogger which will be inherited by other loggers
         baseLogger.setLevel(currentLogLevel);
