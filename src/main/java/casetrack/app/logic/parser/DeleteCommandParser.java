@@ -1,6 +1,7 @@
 package casetrack.app.logic.parser;
 
 import static casetrack.app.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static java.util.Objects.requireNonNull;
 
 import casetrack.app.commons.core.index.Index;
 import casetrack.app.logic.commands.Command;
@@ -42,7 +43,9 @@ public class DeleteCommandParser implements Parser<Command> {
      * @throws ParseException if the arguments are invalid
      */
     private DeleteNoteCommand parseDeleteNoteCommand(String trimmedArgs) throws ParseException {
-        assert trimmedArgs != null : "trimmedArgs should not be null";
+        requireNonNull(trimmedArgs);
+        assert trimmedArgs.startsWith(ParserUtil.NOTE_STRING + " ")
+                : "trimmedArgs should start with note prefix";
 
         String remainingArgs = removeCommandPrefix(trimmedArgs, ParserUtil.NOTE_STRING);
         String[] parts = remainingArgs.split("\\s+");
@@ -64,7 +67,9 @@ public class DeleteCommandParser implements Parser<Command> {
      * @throws ParseException if the arguments are invalid
      */
     private DeletePatientCommand parseDeletePatientCommand(String trimmedArgs) throws ParseException {
-        assert trimmedArgs != null : "trimmedArgs should not be null";
+        requireNonNull(trimmedArgs);
+        assert trimmedArgs.startsWith(ParserUtil.PATIENT_STRING + " ")
+                : "trimmedArgs should start with patient prefix";
 
         String remainingArgs = removeCommandPrefix(trimmedArgs, ParserUtil.PATIENT_STRING);
         String[] parts = remainingArgs.split("\\s+");
