@@ -399,9 +399,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
   Use case ends.
 
-* 2b. Invalid PHONE (not 8 digits after trimming):
+* 2b. Invalid PHONE (not 3-17 digits after trimming):
 
-    * 2b1. System shows "Phone number must be 8 digits.".
+    * 2b1. System shows "Phone number must be 3-17 digits.".
 
     * 2b2. No patient is added.
 
@@ -575,9 +575,9 @@ Use case ends.
 
       Use case ends.
 
-*	2c. Phone number invalid (not 8 digits).
+*	2c. Phone number invalid (not 3-17 digits).
 
-    * 2c1. System shows an error: “Phone number must be 8 digits.”
+    * 2c1. System shows an error: "Phone number must be 3-17 digits."
 
       Use case ends.
 
@@ -623,9 +623,9 @@ Use case ends.
 
       Use case ends.
 
-*	2c. Phone number invalid (not 8 digits).
+*	2c. Phone number invalid (not 3-17 digits).
 
-    * 2c1. System shows an error: “Phone number must be 8 digits.”
+    * 2c1. System shows an error: "Phone number must be 3-17 digits."
 
       Use case ends.
 
