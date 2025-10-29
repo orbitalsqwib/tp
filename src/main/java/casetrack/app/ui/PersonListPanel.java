@@ -20,7 +20,6 @@ public class PersonListPanel extends UiPart<Region> {
     private static final String FXML = "PersonListPanel.fxml";
 
     protected Consumer<Person> selectPersonCallback;
-    private final Logger logger = LogsCenter.getLogger(PersonListPanel.class);
 
     @FXML
     private ListView<Person> personListView;
