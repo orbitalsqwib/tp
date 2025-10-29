@@ -62,7 +62,7 @@ public class DetailListPanel extends UiPart<Region> {
             new PersonAttribute(person.getAddress().getClass().getSimpleName(), person.getAddress().value),
             new PersonAttribute(person.getEmail().getClass().getSimpleName(), person.getEmail().value),
             new PersonAttribute(person.getIncome().getClass().getSimpleName(), person.getIncome().toString()),
-            new PersonAttribute(person.getMedicalInfo().getClass().getSimpleName(), person.getMedicalInfo().toString()),
+            new PersonAttribute("Medical Info", person.getMedicalInfo().toString()),
             new PersonAttribute("Notes", noteValue)
         );
         detailListView.setItems(detailList);
