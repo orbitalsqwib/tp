@@ -98,7 +98,7 @@ class JsonAdaptedPerson {
                 .map(note -> validateAndCreateNote(note))
                 .collect(Collectors.toList());
 
-        Name modelName = validateAndCreate(name, Name::isValidName, Name::new, 
+        Name modelName = validateAndCreate(name, Name::isValidName, Name::new,
                 Name.class.getSimpleName(), Name.MESSAGE_CONSTRAINTS);
         Phone modelPhone = validateAndCreate(phone, Phone::isValidPhone, Phone::new,
                 Phone.class.getSimpleName(), Phone.MESSAGE_CONSTRAINTS);
