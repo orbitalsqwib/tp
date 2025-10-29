@@ -117,7 +117,7 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS i/INCOME [m/MEDICAL_INFO] [
 <box type="info" seamless>
 
 **Constraints:**
-* Names should only contain alphanumeric characters and spaces
+* Names should only contain alphanumeric characters, spaces, periods (.), apostrophes ('), hyphens (-), 's/o', 'd/o', 'S/O', or 'D/O', and it should not be blank
 * Names cannot be fully numeric (e.g., `123` or `456789` are not allowed)
 </box>
 
