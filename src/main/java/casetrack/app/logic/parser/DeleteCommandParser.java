@@ -44,8 +44,6 @@ public class DeleteCommandParser implements Parser<Command> {
      */
     private DeleteNoteCommand parseDeleteNoteCommand(String trimmedArgs) throws ParseException {
         requireNonNull(trimmedArgs);
-        assert trimmedArgs.startsWith(ParserUtil.NOTE_STRING + " ")
-                : "trimmedArgs should start with note prefix";
 
         String remainingArgs = removeCommandPrefix(trimmedArgs, ParserUtil.NOTE_STRING);
         String[] parts = remainingArgs.split("\\s+");
@@ -68,8 +66,6 @@ public class DeleteCommandParser implements Parser<Command> {
      */
     private DeletePatientCommand parseDeletePatientCommand(String trimmedArgs) throws ParseException {
         requireNonNull(trimmedArgs);
-        assert trimmedArgs.startsWith(ParserUtil.PATIENT_STRING + " ")
-                : "trimmedArgs should start with patient prefix";
 
         String remainingArgs = removeCommandPrefix(trimmedArgs, ParserUtil.PATIENT_STRING);
         String[] parts = remainingArgs.split("\\s+");
