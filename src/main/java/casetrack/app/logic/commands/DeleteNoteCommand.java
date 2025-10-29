@@ -60,6 +60,7 @@ public class DeleteNoteCommand extends DeleteCommand {
         }
 
         Note noteToDelete = notes.get(noteIndex.getZeroBased());
+        assert noteToDelete != null : "Note to delete should not be null";
         Person updatedPerson = personToUpdate.removeNote(noteIndex.getZeroBased());
         model.setPerson(personToUpdate, updatedPerson);
 

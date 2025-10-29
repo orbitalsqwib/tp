@@ -55,4 +55,16 @@ public class DeleteCommandParserTest {
         assertParseFailure(parser, "",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommandParser.MESSAGE_INVALID_DELETE_FORMAT));
     }
+
+    @Test
+    public void parse_patientWithWrongArgs_throwsParseException() {
+        assertParseFailure(parser, "patient 1 2",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeletePatientCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_patientWithoutArgs_throwsParseException() {
+        assertParseFailure(parser, "patient",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommandParser.MESSAGE_INVALID_DELETE_FORMAT));
+    }
 }
