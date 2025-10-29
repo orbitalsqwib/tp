@@ -25,6 +25,7 @@ public class DeleteCommandParser implements Parser<Command> {
     public Command parse(String args) throws ParseException {
         final String trimmedArgs = args.trim();
 
+        // to determine delete command type
         if (trimmedArgs.startsWith(ParserUtil.NOTE_STRING + " ")) {
             return parseDeleteNoteCommand(trimmedArgs);
         } else if (trimmedArgs.startsWith(ParserUtil.PATIENT_STRING + " ")) {
@@ -41,6 +42,8 @@ public class DeleteCommandParser implements Parser<Command> {
      * @throws ParseException if the arguments are invalid
      */
     private DeleteNoteCommand parseDeleteNoteCommand(String trimmedArgs) throws ParseException {
+        assert trimmedArgs != null : "trimmedArgs should not be null";
+
         String remainingArgs = removeCommandPrefix(trimmedArgs, ParserUtil.NOTE_STRING);
         String[] parts = remainingArgs.split("\\s+");
 
@@ -61,6 +64,8 @@ public class DeleteCommandParser implements Parser<Command> {
      * @throws ParseException if the arguments are invalid
      */
     private DeletePatientCommand parseDeletePatientCommand(String trimmedArgs) throws ParseException {
+        assert trimmedArgs != null : "trimmedArgs should not be null";
+
         String remainingArgs = removeCommandPrefix(trimmedArgs, ParserUtil.PATIENT_STRING);
         String[] parts = remainingArgs.split("\\s+");
 
