@@ -22,7 +22,7 @@ public abstract class DeleteCommand extends Command {
     /**
      * Creates a DeleteCommand with the target index.
      *
-     * @param targetIndex The index of the target in the filtered person list
+     * @param targetIndex The index of the target to be deleted.
      */
     public DeleteCommand(Index targetIndex) {
         requireNonNull(targetIndex);
@@ -30,7 +30,12 @@ public abstract class DeleteCommand extends Command {
     }
 
     /**
-     * Returns the patient at the index in the filtered list, or throws an exception if invalid.
+     * Returns the {@link Person} at the specified index in the filtered list.
+     *
+     * @param model The model with the filtered person list
+     * @param index The index of the person in the filtered list
+     * @return {@link Person} at the specified index
+     * @throws CommandException if the index is out of bounds for the filtered list
      */
     protected Person getPersonByIndex(Model model, Index index) throws CommandException {
         List<Person> lastShownList = model.getFilteredPersonList();

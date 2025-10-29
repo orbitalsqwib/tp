@@ -22,7 +22,7 @@ public class DeletePatientCommand extends DeleteCommand {
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
 
     /**
-     * Creates a DeletePatientCommand to delete the person at the given index.
+     * Creates a DeletePatientCommand to delete the person at the target index.
      *
      * @param targetIndex The index of the person in the person list
      */
