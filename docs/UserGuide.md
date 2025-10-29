@@ -74,7 +74,7 @@ CaseTrack is a **desktop app for managing contacts, optimized for use via a  Lin
 
 **Notes about parameter formats:**<br>
 
-* **NAME**: Should only contain alphanumeric characters, spaces, periods (.), apostrophes ('), hyphens (-), 's/o', 'd/o', 'S/O', or 'D/O', and it should not be blank.
+* **NAME**: Should only contain alphanumeric characters, spaces, periods (.), apostrophes ('), hyphens (-), 's/o', 'd/o', 'S/O', or 'D/O', and it should not be blank. Names cannot be fully numeric (e.g., `123` or `456789` are not allowed).
   * Examples: `John Doe`, `Dr. Lim`, `o'Connor`, `Mary O'Brien`, `John Jr.`, `Ravichandran S/O Tharumalinga`, `Mary-Jane`, `Jean-Claude`
 
 * **PHONE_NUMBER**: Should only contain numbers, and it should be at least 3 digits long. The maximum length is **17 digits**, excluding any country code. An optional country code (up to 3 digits) may precede the phone number, with an optional '+' prefix. A space may optionally separate the country code from the main number.
@@ -124,7 +124,7 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS i/INCOME [m/MEDICAL_INFO] [
 <box type="info" seamless>
 
 **Constraints:**
-* Names should only contain alphanumeric characters and spaces
+* Names should only contain alphanumeric characters, spaces, periods (.), apostrophes ('), hyphens (-), 's/o', 'd/o', 'S/O', or 'D/O', and it should not be blank
 * Names cannot be fully numeric (e.g., `123` or `456789` are not allowed)
 </box>
 
