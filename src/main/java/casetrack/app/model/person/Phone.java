@@ -13,7 +13,8 @@ public class Phone {
     public static final String MESSAGE_CONSTRAINTS =
             "Phone numbers should only contain numbers, and it should be at least 3 digits long. "
                     + "The maximum length is 17 digits, excluding any country code. "
-                    + "Phone numbers may be preceded by an optional country code (up to 3 digits) with an optional '+' prefix. "
+                    + "Phone numbers may be preceded by an optional country code (up to 3 digits) "
+                    + "with an optional '+' prefix. "
                     + "A space may optionally separate the country code from the main number.";
     public static final String VALIDATION_REGEX = "(\\+\\d{1,3}\\s?|\\d{1,3}\\s)?\\d{3,17}";
     public final String value;
