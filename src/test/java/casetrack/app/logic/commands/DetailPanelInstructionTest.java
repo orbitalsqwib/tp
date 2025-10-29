@@ -140,8 +140,6 @@ public class DetailPanelInstructionTest {
 
     @Test
     public void execute_commandResult_withNull() {
-        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
         DetailPanelInstruction clearInstruction = new DetailPanelInstruction(null);
         CommandResult commandResult = new CommandResult("Message", clearInstruction);
 
