@@ -752,7 +752,94 @@ testers are expected to do more *exploratory* testing.
    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
-1. _{ more test cases …​ }_
+### Adding a patient
+
+1. Adding a patient with all required fields
+
+   1. Test case: `add n/John Doe p/91234567 e/johndoe@example.com a/123 Main St i/5000 m/Diabetes`<br>
+      Expected: Patient is added to the list. Success message shows patient details. Patient appears in the patient list.
+
+   1. Test case: `add n/Jane Smith p/98765432 e/janesmith@example.com a/456 Elm St i/3000`<br>
+      Expected: Patient is added without medical information. Success message confirms addition.
+
+1. Adding a patient with invalid inputs
+
+   1. Test case: `add n/John Doe p/12 e/johndoe@example.com a/123 Main St i/5000`<br>
+      Expected: No patient is added. Error message indicates phone number must be 3-17 digits.
+
+   1. Test case: `add n/John Doe p/91234567 e/johndoe@example.com a/123 Main St i/-100`<br>
+      Expected: No patient is added. Error message indicates income must be non-negative.
+
+   1. Test case: `add n/John Doe p/91234567 e/johndoe@example.com a/123 Main St i/abc`<br>
+      Expected: No patient is added. Error message indicates income must be numeric.
+
+   1. Test case: `add n/John Doe p/91234567 e/invalidemail a/123 Main St i/5000`<br>
+      Expected: No patient is added. Error message indicates invalid email format.
+
+1. Adding a patient with missing required fields
+
+   1. Test case: `add p/91234567 e/johndoe@example.com a/123 Main St i/5000`<br>
+      Expected: No patient is added. Error message indicates name is required.
+
+   1. Test case: `add n/John Doe e/johndoe@example.com a/123 Main St i/5000`<br>
+      Expected: No patient is added. Error message indicates phone is required.
+
+   1. Test case: `add n/John Doe p/91234567 a/123 Main St i/5000`<br>
+      Expected: No patient is added. Error message indicates email is required.
+
+1. Adding a duplicate patient
+
+   1. Prerequisites: A patient "John Doe" with phone "91234567" already exists.
+
+   1. Test case: `add n/John Doe p/91234567 e/johndoe@example.com a/456 Different St i/6000`<br>
+      Expected: No patient is added. Error message indicates patient already exists.
+
+   1. Test case: `add n/john doe p/91234567 e/johndoe@example.com a/789 Another St i/7000`<br>
+      Expected: No patient is added. Error message indicates patient already exists (name comparison is case-insensitive).
+
+### Searching/filtering patients
+
+1. Searching by name
+
+   1. Prerequisites: Multiple patients in the list with different names.
+
+   1. Test case: `search name John`<br>
+      Expected: All patients with "John" in their name are displayed. Count message shows number of patients found.
+
+   1. Test case: `search name xyz`<br>
+      Expected: No patients displayed. Message indicates no patients found.
+
+1. Searching by phone number
+
+   1. Prerequisites: Multiple patients in the list with different phone numbers.
+
+   1. Test case: `search number +6591234567`<br>
+      Expected: Patients with matching phone number (including country code) are displayed.
+
+   1. Test case: `search number 91234567`<br>
+      Expected: Patients with matching phone number are displayed.
+
+1. Searching by email
+
+   1. Prerequisites: Patients with email addresses in the list.
+
+   1. Test case: `search email john@example.com`<br>
+      Expected: Patients with matching email are displayed.
+
+1. Searching by tags
+
+   1. Prerequisites: Patients with various tags in the list.
+
+   1. Test case: `search tag diabetes`<br>
+      Expected: All patients tagged with "diabetes" are displayed.
+
+1. Invalid search commands
+
+   1. Test case: `search`<br>
+      Expected: Error message indicating search attribute must be specified.
+
+   1. Test case: `search invalidtype keyword`<br>
+      Expected: Error message indicating invalid search type.
 
 ### Deleting a patient
 
@@ -788,7 +875,146 @@ testers are expected to do more *exploratory* testing.
    4. Test case: `delete note` (missing both patient and note index)<br>
       Expected: Error message indicating invalid command format is shown.
 
-2. _{ more test cases …​ }_
+### Adding a note to a patient
+
+1. Adding a note by patient index
+
+   1. Prerequisites: List all patients using the `list` command. At least one patient in the list.
+
+   1. Test case: `note 1 t/Patient reported feeling better today`<br>
+      Expected: Note is added to the first patient. Success message shows the note content. Patient's note list is updated.
+
+   1. Test case: `note 1 t/Follow-up needed next week`<br>
+      Expected: Another note is added to the first patient. Multiple notes can exist for one patient.
+
+1. Adding a note with invalid inputs
+
+   1. Test case: `note 0 t/Some note`<br>
+      Expected: No note is added. Error message indicates invalid patient index.
+
+   1. Test case: `note 1 t/`<br>
+      Expected: No note is added. Error message indicates note cannot be empty.
+
+   1. Test case: `note 999 t/Some note` (where 999 exceeds the list size)<br>
+      Expected: No note is added. Error message indicates patient index is out of range.
+
+   1. Test case: `note 1` (missing note text)<br>
+      Expected: No note is added. Error message indicates invalid command format.
+
+1. Adding a note by patient name and phone
+
+   1. Prerequisites: A patient "John Doe" with phone "91234567" exists.
+
+   1. Test case: `note n/John Doe p/91234567 t/Patient attended session today`<br>
+      Expected: Note is added to the patient. Success message confirms addition.
+
+   1. Test case: `note n/Jane Doe p/99999999 t/Some note`<br>
+      Expected: No note is added. Error message indicates no patient found with given details.
+
+### Editing a note
+
+1. Editing an existing note
+
+   1. Prerequisites: First patient has at least 2 notes.
+
+   1. Test case: `edit note 1 1 t/Updated note content`<br>
+      Expected: First note of the first patient is updated. Success message shows the updated note.
+
+   1. Test case: `edit note 1 2 t/Another update`<br>
+      Expected: Second note of the first patient is updated.
+
+1. Editing a note with invalid inputs
+
+   1. Test case: `edit note 1 0 t/Some content`<br>
+      Expected: No note is edited. Error message indicates invalid note index.
+
+   1. Test case: `edit note 1 999 t/Some content` (where patient 1 has fewer than 999 notes)<br>
+      Expected: No note is edited. Error message indicates note index is out of range.
+
+   1. Test case: `edit note 1 1 t/`<br>
+      Expected: No note is edited. Error message indicates note cannot be empty.
+
+   1. Test case: `edit note 0 1 t/Some content`<br>
+      Expected: No note is edited. Error message indicates invalid patient index.
+
+1. Editing a note when patient has no notes
+
+   1. Prerequisites: A patient exists with no notes.
+
+   1. Test case: `edit note 1 1 t/Some content`<br>
+      Expected: No note is edited. Error message indicates patient has no notes to edit.
+
+### Viewing patient details
+
+1. Viewing details of a patient
+
+   1. Prerequisites: Multiple patients in the list.
+
+   1. Test case: `view 1`<br>
+      Expected: Details of the first patient are displayed in the detail panel, including all notes, medical information, and other attributes.
+
+   1. Test case: `view 2`<br>
+      Expected: Details of the second patient are displayed.
+
+1. Viewing with invalid index
+
+   1. Test case: `view 0`<br>
+      Expected: Error message indicates invalid patient index.
+
+   1. Test case: `view 999` (where 999 exceeds the list size)<br>
+      Expected: Error message indicates patient index is out of range.
+
+   1. Test case: `view` (missing index)<br>
+      Expected: Error message indicates invalid command format.
+
+### Editing patient income
+
+1. Editing income with valid values
+
+   1. Prerequisites: List all patients using the `list` command. At least one patient in the list.
+
+   1. Test case: `edit patient 1 i/6000`<br>
+      Expected: First patient's income is updated to 6000. Success message confirms the update.
+
+   1. Test case: `edit patient 1 i/0`<br>
+      Expected: First patient's income is updated to 0. Zero is a valid income value.
+
+1. Editing income with invalid values
+
+   1. Test case: `edit patient 1 i/-500`<br>
+      Expected: Income is not updated. Error message indicates income must be non-negative.
+
+   1. Test case: `edit patient 1 i/abc`<br>
+      Expected: Income is not updated. Error message indicates income must be numeric.
+
+   1. Test case: `edit patient 1 i/$5000`<br>
+      Expected: Income is not updated. Error message indicates invalid income format (no currency symbols).
+
+   1. Test case: `edit patient 0 i/5000`<br>
+      Expected: Income is not updated. Error message indicates invalid patient index.
+
+### Editing patient medical information
+
+1. Editing medical information with valid values
+
+   1. Prerequisites: List all patients using the `list` command. At least one patient in the list.
+
+   1. Test case: `edit patient 1 m/Diabetes, Hypertension`<br>
+      Expected: First patient's medical information is updated. Success message confirms the update.
+
+   1. Test case: `edit patient 1 m/None`<br>
+      Expected: First patient's medical information is updated to "None".
+
+1. Editing medical information with invalid values
+
+   1. Test case: `edit patient 1 m/`<br>
+      Expected: Medical information is not updated. Error message indicates medical information cannot be empty.
+
+   1. Test case: `edit patient 1 m/   `<br>
+      Expected: Medical information is not updated. Error message indicates medical information cannot be only whitespace.
+
+   1. Test case: `edit patient 0 m/Diabetes`<br>
+      Expected: Medical information is not updated. Error message indicates invalid patient index.
 
 ### Saving data
 
