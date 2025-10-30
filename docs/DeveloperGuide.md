@@ -209,10 +209,6 @@ How delete note works:
 5. The note is removed from the patient's list of notes using `Person#removeNote()`.
 6. The patient is updated back to the model and the UI is updated.
 
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
-
 
 --------------------------------------------------------------------------------------------------------------------
 
