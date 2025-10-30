@@ -229,7 +229,7 @@ How delete note works:
 **Target user profile**:
 
 * Tech-savvy social workers in hospitals (with no access to patient information from the hospital database)
-* has a need to manage a significant number of contacts
+* has a need to manage a significant number of patients
 * prefer desktop apps over other types
 * can type fast
 * prefers typing to mouse interactions
@@ -249,7 +249,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | User                                        | list all patients at once    | browse patient records easily and get an overview of my caseload      |
 | `* * *`  | User                                        | delete patient records        | clean up patient records when they are no longer relevant or cases are closed |
 | `* * *`  | New User                                    | see usage instructions and command help | refer to instructions when I forget how to use the app |
-| `* *`     | Social Worker                               | filter contacts by attributes (medical condition, income level, name) | get information about my patients quickly during sessions |
+| `* *`     | Social Worker                               | filter patients by attributes (medical condition, income level, name) | get information about my patients quickly during sessions |
 | `* *`     | Social Worker                               | take quick notes during or right after a session, even with incomplete data | capture important context immediately and avoid forgetting key details later |
 | `* *`     | Social Worker                               | enter partial patient details and still retrieve useful results | still access key patient information even when the data I have is incomplete |
 | `* *`     | Social Worker                               | tag and categorize patients based on needs | prioritize cases and follow up more systematically |
@@ -743,7 +743,7 @@ testers are expected to do more *exploratory* testing.
 
    1. Download the jar file and copy into an empty folder
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+   1. Double-click the jar file Expected: Shows the GUI with a set of sample patients. The window size may not be optimum.
 
 1. Saving window preferences
 
