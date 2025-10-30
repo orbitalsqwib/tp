@@ -503,7 +503,7 @@ Use case ends.
 * Invalid inputs will not delete notes.
 
 **MSS**
-1.	Actor types the command to remove a quick note with patient reference and note index.
+1.	User types the command to remove a quick note with patient reference and note index.
 2.	System validates the patient reference (index or Name + Phone).
 3.	System validates the note index.
 4.	System deletes the specified note under the patient’s record.
@@ -542,7 +542,7 @@ Use case ends.
 
       Use case ends.
 
-* *a. At any time, Actor cancels the action.
+* *a. At any time, User cancels the action.
 
     Use case ends.
 
@@ -559,7 +559,7 @@ Use case ends.
 
 **MSS**
 
-1. Actor types the command to edit a quick note with patient index, note index, and new note text.
+1. User types the command to edit a quick note with patient index, note index, and new note text.
 2. System validates the patient index.
 3. System validates the note index.
 4. System validates the new note text.
@@ -600,7 +600,7 @@ Use case ends.
 
   Use case ends.
 
-- \*a. At any time, Actor cancels the action.
+- \*a. At any time, User cancels the action.
 
   Use case ends.
 
