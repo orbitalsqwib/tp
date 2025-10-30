@@ -84,19 +84,35 @@ class JsonAdaptedPerson {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person.
      */
     public Person toModelType() throws IllegalValueException {
-        List<Tag> personTags = tags.stream()
-                .map(tag -> {
-                    try {
-                        return tag.toModelType();
-                    } catch (IllegalValueException e) {
-                        throw new RuntimeException(e);
-                    }
-                })
-                .collect(Collectors.toList());
+        List<Tag> personTags;
+        try {
+            personTags = tags.stream()
+                    .map(tag -> {
+                        try {
+                            return tag.toModelType();
+                        } catch (IllegalValueException e) {
+                            throw new RuntimeException(e);
+                        }
+                    })
+                    .collect(Collectors.toList());
+        } catch (RuntimeException e) {
+            if (e.getCause() instanceof IllegalValueException) {
+                throw (IllegalValueException) e.getCause();
+            }
+            throw e;
+        }
 
-        List<Note> personNotes = notes.stream()
-                .map(note -> validateAndCreateNote(note))
-                .collect(Collectors.toList());
+        List<Note> personNotes;
+        try {
+            personNotes = notes.stream()
+                    .map(note -> validateAndCreateNote(note))
+                    .collect(Collectors.toList());
+        } catch (RuntimeException e) {
+            if (e.getCause() instanceof IllegalValueException) {
+                throw (IllegalValueException) e.getCause();
+            }
+            throw e;
+        }
 
         Name modelName = validateAndCreate(name, Name::isValidName, Name::new,
                 Name.class.getSimpleName(), Name.MESSAGE_CONSTRAINTS);
