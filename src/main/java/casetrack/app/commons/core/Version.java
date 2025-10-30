@@ -17,6 +17,12 @@ public class Version implements Comparable<Version> {
 
     private static final Pattern VERSION_PATTERN = Pattern.compile(VERSION_REGEX);
 
+    // Regex capturing group indices
+    private static final int MAJOR_VERSION_GROUP = 1;
+    private static final int MINOR_VERSION_GROUP = 2;
+    private static final int PATCH_VERSION_GROUP = 3;
+    private static final int EARLY_ACCESS_GROUP = 4;
+
     private final int major;
     private final int minor;
     private final int patch;
@@ -61,10 +67,10 @@ public class Version implements Comparable<Version> {
             throw new IllegalArgumentException(String.format(EXCEPTION_STRING_NOT_VERSION, versionString));
         }
 
-        return new Version(Integer.parseInt(versionMatcher.group(1)),
-                Integer.parseInt(versionMatcher.group(2)),
-                Integer.parseInt(versionMatcher.group(3)),
-                versionMatcher.group(4) == null ? false : true);
+        return new Version(Integer.parseInt(versionMatcher.group(MAJOR_VERSION_GROUP)),
+                Integer.parseInt(versionMatcher.group(MINOR_VERSION_GROUP)),
+                Integer.parseInt(versionMatcher.group(PATCH_VERSION_GROUP)),
+                versionMatcher.group(EARLY_ACCESS_GROUP) != null);
     }
 
     @JsonValue

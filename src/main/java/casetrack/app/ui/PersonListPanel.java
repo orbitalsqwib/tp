@@ -1,9 +1,7 @@
 package casetrack.app.ui;
 
 import java.util.function.Consumer;
-import java.util.logging.Logger;
 
-import casetrack.app.commons.core.LogsCenter;
 import casetrack.app.model.person.Person;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -20,7 +18,6 @@ public class PersonListPanel extends UiPart<Region> {
     private static final String FXML = "PersonListPanel.fxml";
 
     protected Consumer<Person> selectPersonCallback;
-    private final Logger logger = LogsCenter.getLogger(PersonListPanel.class);
 
     @FXML
     private ListView<Person> personListView;

@@ -19,6 +19,8 @@ import casetrack.app.model.person.TagContainsKeywordsPredicate;
  */
 public class FindCommandParser implements Parser<FindCommand> {
 
+    private static final int MINIMUM_ARGS_COUNT = 2;
+
     /**
      * Parses the given {@code String} of arguments in the context of the FindCommand
      * and returns a FindCommand object for execution.
@@ -33,7 +35,7 @@ public class FindCommandParser implements Parser<FindCommand> {
 
         String[] argParts = trimmedArgs.split("\\s+");
 
-        if (argParts.length < 2) {
+        if (argParts.length < MINIMUM_ARGS_COUNT) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }

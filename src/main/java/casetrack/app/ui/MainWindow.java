@@ -28,6 +28,8 @@ import javafx.stage.Stage;
 public class MainWindow extends UiPart<Stage> {
 
     private static final String FXML = "MainWindow.fxml";
+    private static final double DIVIDER_POSITION_THRESHOLD = 0.6;
+    private static final double DEFAULT_DIVIDER_POSITION = 0.5;
 
     private final Logger logger = LogsCenter.getLogger(getClass());
 
@@ -67,8 +69,8 @@ public class MainWindow extends UiPart<Stage> {
             detailListPanel.showDetails(t);
 
             // unhide panel if hidden
-            if (listPane.getDividerPositions()[0] > 0.6) {
-                listPane.setDividerPosition(0, 0.5);
+            if (listPane.getDividerPositions()[0] > DIVIDER_POSITION_THRESHOLD) {
+                listPane.setDividerPosition(0, DEFAULT_DIVIDER_POSITION);
             }
         }
     };

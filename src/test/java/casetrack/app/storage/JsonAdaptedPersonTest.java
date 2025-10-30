@@ -263,4 +263,47 @@ public class JsonAdaptedPersonTest {
         Person modelPerson = person.toModelType();
         assertTrue(modelPerson.getTags().isEmpty());
     }
+
+    @Test
+    public void toModelType_multipleInvalidNotes_throwsIllegalValueException() {
+        List<String> invalidNotes = new ArrayList<>();
+        invalidNotes.add("");
+        invalidNotes.add("   ");
+        invalidNotes.add("\t");
+
+        JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL,
+                VALID_ADDRESS, VALID_INCOME, VALID_MEDICAL_INFO, VALID_TAGS, invalidNotes);
+
+        String expectedMessage = Note.MESSAGE_CONSTRAINTS;
+        assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+    }
+
+    @Test
+    public void toModelType_mixedValidInvalidNotes_throwsIllegalValueException() {
+        List<String> mixedNotes = new ArrayList<>();
+        mixedNotes.add("Valid note 1");
+        mixedNotes.add("Valid note 2");
+        mixedNotes.add(""); // Invalid
+
+        JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL,
+                VALID_ADDRESS, VALID_INCOME, VALID_MEDICAL_INFO, VALID_TAGS, mixedNotes);
+
+        String expectedMessage = Note.MESSAGE_CONSTRAINTS;
+        assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+    }
+
+    @Test
+    public void toModelType_multipleValidNotes_success() throws Exception {
+        List<String> validNotes = new ArrayList<>();
+        validNotes.add("Note 1");
+        validNotes.add("Note 2");
+        validNotes.add("Note 3");
+        validNotes.add("Note 4");
+
+        JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL,
+                VALID_ADDRESS, VALID_INCOME, VALID_MEDICAL_INFO, VALID_TAGS, validNotes);
+
+        Person modelPerson = person.toModelType();
+        assertEquals(4, modelPerson.getNotes().size());
+    }
 }

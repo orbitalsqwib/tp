@@ -13,6 +13,8 @@ import casetrack.app.model.person.Note;
  */
 public class EditNoteCommandParser implements Parser<EditNoteCommand> {
 
+    private static final int EXPECTED_INDICES_COUNT = 2;
+
     /**
      * Parses the given {@code String} of arguments and returns an EditNoteCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
@@ -25,7 +27,7 @@ public class EditNoteCommandParser implements Parser<EditNoteCommand> {
         String preamble = argMultimap.getPreamble().trim();
         String[] parts = preamble.split("\\s+");
 
-        if (parts.length != 2) {
+        if (parts.length != EXPECTED_INDICES_COUNT) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     EditNoteCommand.MESSAGE_USAGE));
         }
