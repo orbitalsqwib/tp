@@ -267,8 +267,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `*`      | Social Worker                               | see patients close to my proximity | plan home visits efficiently |
 | `*`      | Social Worker                               | group patients by neighbourhood | cover multiple visits in one area |
 
-*{More to be added}*
-
 ### Use cases
 
 (For all use cases below, the **System** is the `CaseTrack` and the **Actor** is the `user`, unless specified otherwise)
@@ -705,9 +703,6 @@ Use case ends.
 
   Use case ends.
 
-
-*{More to be added}*
-
 ### Non-Functional Requirements
 
 1. Should work on any mainstream OS as long as it has Java `17` or above installed.
@@ -715,8 +710,6 @@ Use case ends.
 3. All patient data must be stored locally with no transmission over networks to ensure patient privacy compliance.
 4. Healthcare helpers with basic computer literacy should be able to perform common tasks (add, search, update patient records) within 5 minutes of initial training.
 5. A user with above average typing speed for regular English text should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-*{More to be added}*
 
 ### Glossary
 
