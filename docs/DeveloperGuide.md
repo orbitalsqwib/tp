@@ -174,6 +174,23 @@ How the search works:
 4. `FindCommand` updates the filtered patient list using the predicate.
 5. The predicate validates keywords and matches against patient's phone (including country codes).
 
+### Add new note feature
+
+#### Implementation
+
+The add note feature adds a note to a patient.
+
+<puml src="diagrams/NoteSequenceDiagram.puml" alt="Interactions inside the Logic Component for the `add note 1 2` Command" />
+
+How add note works:
+
+1. `AddressBookParser` creates a `NoteCommandParser` to parse the add command.
+2. `NoteCommandParser` identifies the command as a note addition based on the "note" keyword.
+3. `NoteCommand` is created with the patient index and note text.
+4. The command retrieves the patient and validates that the note text is not empty.
+5. The note is added to the patient's list of notes using `Person#addNote()`.
+6. The patient is updated back to the model and the UI is updated.
+
 ### Delete patient / note feature
 
 #### Implementation
