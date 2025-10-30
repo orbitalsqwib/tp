@@ -123,7 +123,7 @@ How the parsing works:
 
 The `Model` component,
 
-* stores the address book data i.e., all `Person` objects (which are contained in a `UniquePersonList` object).
+* stores the CaseTrack data i.e., all `Person` objects (which are contained in a `UniquePersonList` object).
 * stores the currently 'selected' `Person` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
@@ -144,7 +144,7 @@ The `Model` component,
 <puml src="diagrams/StorageClassDiagram.puml" width="550" />
 
 The `Storage` component,
-* can save both address book data and user preference data in JSON format, and read them back into corresponding objects.
+* can save both CaseTrack data and user preference data in JSON format, and read them back into corresponding objects.
 * inherits from both `AddressBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
 * depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
 
@@ -157,6 +157,22 @@ Classes used by multiple components are in the `casetrack.app.commons` package.
 ## **Implementation**
 
 This section describes some noteworthy details on how certain features are implemented.
+
+### Add new patient feature
+
+#### Implementation
+
+The add patient feature adds a patient to the CaseTrack.
+
+<puml src="diagrams/AddPatientSequenceDiagram.puml" alt="Interactions inside the Logic Component for the `add n/Alice ... i/5000 mi/diabetes` Command" />
+
+How add patient works:
+
+1. `AddressBookParser` creates a `AddCommandParser` to parse the add command.
+2. `AddCommandParser` identifies the command as a patient addition based on the "add" keyword.
+3. `AddCommand` is created with the patient details.
+4. The command validates the patient details and creates a new patient object.
+5. The patient is added to the CaseTrack and the UI is updated.
 
 ### Search feature
 
@@ -199,7 +215,7 @@ The delete feature supports two types of delete operations: deleting patients an
 
 **Delete Patient Command**
 
-The `DeletePatientCommand` removes a patient from the address book.
+The `DeletePatientCommand` removes a patient from the CaseTrack.
 
 <puml src="diagrams/DeletePatientSequenceDiagram.puml" alt="Interactions inside the Logic Component for the `delete patient 1` Command" />
 
@@ -209,7 +225,7 @@ How delete patient works:
 2. `DeleteCommandParser` identifies the command as a patient deletion based on the "patient" keyword.
 3. `DeletePatientCommand` is created with the patient index.
 4. The command retrieves the patient from the filtered list and calls `Model#deletePerson()`.
-5. The patient is removed from the address book and the UI is updated.
+5. The patient is removed from the CaseTrack and the UI is updated.
 
 **Delete Note Command**
 
