@@ -281,7 +281,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 2. System parses the command and validates input
 3. System normalizes NAME (case-insensitive and multiple spaces collapsed to single space) and checks for duplicates using NAME+PHONE.
 4. System creates and saves the new patient record.
-5. System confirms success by displaying: Patient added: <Name> (<Phone>).
+5. System confirms through success message.
 
    Use case ends.
 
@@ -289,14 +289,14 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 1a. Missing mandatory fields (n/ or p/ absent, or empty after prefix)
 
-    * 1a1. System shows "Name and phone are required fields.".
+    * 1a1. System shows the required fields.
 
     * 1a2. No patient is added.
 
   Use case ends.
 
 * 2a. Invalid NAME (contains digits/symbols)
-    * 2a1. System shows "Invalid name format. Names may only contain letters and spaces.".
+    * 2a1. System shows an error message.
 
     * 2a2. No patient is added.
 
@@ -304,7 +304,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2b. Invalid PHONE (not 3-17 digits after trimming):
 
-    * 2b1. System shows "Phone number must be 3-17 digits.".
+    * 2b1. System shows an error message.
 
     * 2b2. No patient is added.
 
@@ -312,7 +312,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2c. Invalid INCOME (not numeric or < 0):
 
-    * 2c1. System shows "Income must be a non-negative number.".
+    * 2c1. System shows an error message.
 
     * 2c2. No patient is added.
 
@@ -328,7 +328,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 3a. Duplicate patient found (same normalized NAME and same PHONE already exist):
 
-    * 3a1. System shows "This patient already exists.".
+    * 3a1. System shows an error message.
 
     * 3a2. No patient is added.
 
@@ -400,31 +400,31 @@ Use case ends.
 
 * 1a. No attributes specified (empty search command).
 
-    * 1a1. System shows error: "Specify attribute to search."
+    * 1a1. System shows an error message.
 
       Use case ends.
 
 * 2a. Invalid name format (contains non-alphabetic characters except spaces and hyphens).
 
-    * 2a1. System shows error: "Invalid name format. Names may only contain alphabetic characters, spaces, hyphens."
+    * 2a1. System shows an error message.
 
       Use case ends.
 
 * 2b. Invalid condition format (contains non-alphabetic characters except spaces and hyphens).
 
-    * 2b1. System shows error: "Invalid condition format. Conditions can only contain letters and spaces, hyphens."
+    * 2b1. System shows an error message.
 
       Use case ends.
 
 * 2c. Invalid income format (not a positive number, contains commas or currency symbols).
 
-    * 2c1. System shows error: "Invalid income format. Enter a positive whole number."
+    * 2c1. System shows an error message.
 
       Use case ends.
 
 * 2d. Unrecognized attribute prefix (e.g., age/, city/).
 
-    * 2d1. System shows error: "Invalid attribute."
+    * 2d1. System shows an error message.
 
       Use case ends.
 
@@ -436,8 +436,8 @@ Use case ends.
 
 * 3a. No patients match the search criteria.
 
-    * 3a1. System shows message: "No patient found."
-
+    * 3a1. System informs the user that there are no patients available.
+    
       Use case ends.
 
 * *a. At any time, User cancels the action.
@@ -468,25 +468,25 @@ Use case ends.
 **Extensions**
 *	2a. Missing patient reference.
 
-    * 2a1. System shows error: “Either index or (Name and Phone) is required.”
+    * 2a1. System shows an error message.
 
       Use case ends.
 
 *	2b. No matching patient found.
 
-    * 2b1. System shows error: “No patient found with the given details.”
+    * 2b1. System shows an error message.
 
       Use case ends.
 
 *	2c. Phone number invalid (not 3-17 digits).
 
-    * 2c1. System shows an error: "Phone number must be 3-17 digits."
+    * 2c1. System shows an error message.
 
       Use case ends.
 
 *	3a. Note text is empty.
 
-    * 3a1. System shows an error: “Note cannot be empty.”
+    * 3a1. System shows an error message.
 
       Use case ends.
 
@@ -494,7 +494,7 @@ Use case ends.
 
     Use case ends.
 
-#### Use case: (UC06): Remove Quick Note
+#### Use case: (UC06): Delete Quick Note
 
 **Preconditions**
 * Patient record exists in the system (by index or by Name + Phone).
@@ -516,31 +516,31 @@ Use case ends.
 **Extensions**
 *	2a. Missing patient reference.
 
-    * 2a1. System shows error: “Either index or (Name and Phone) is required.”
+    * 2a1. System shows an error message.
 
       Use case ends.
 
 *	2b. No matching patient found.
 
-    * 2b1. System shows error: “No patient found with the given details.”
+    * 2b1. System shows an error message.
 
       Use case ends.
 
 *	2c. Phone number invalid (not 3-17 digits).
 
-    * 2c1. System shows an error: "Phone number must be 3-17 digits."
+    * 2c1. System shows an error message.
 
       Use case ends.
 
 *	3a. Note index is empty.
 
-    * 3a1. System shows an error: “Note index is required”
+    * 3a1. System shows an error message.
 
       Use case ends.
 
 *	3b. Note index is invalid (not a number, less than 1, or more than the number of total notes the patient currently has)
 
-    * 3b1. System shows an error: “The note index must be in the range 1 to [total number of notes the patient has].”
+    * 3b1. System shows an error message.
 
       Use case ends.
 
@@ -574,31 +574,31 @@ Use case ends.
 
 * 2a. Patient index is invalid (not a number, less than 1, or more than the number of total patients).
 
-    * 2a1. System shows error: "The patient index provided is invalid."
+    * 2a1. System shows an error message.
 
     Use case ends.
 
 * 3a. Note index is empty.
 
-    * 3a1. System shows an error: "Note index is required."
+    * 3a1. System shows an error message
 
     Use case ends.
 
 * 3b. Note index is invalid (not a number, less than 1, or more than the number of total notes the patient currently has).
 
-    * 3b1. System shows an error: "The note index provided is invalid."
+    * 3b1. System shows an error message.
 
     Use case ends.
 
 * 3c. Person has no notes.
 
-    * 3c1. System shows an error: "This patient has no notes to edit."
+    * 3c1. System shows an error message.
 
     Use case ends.
 
 * 4a. Note text is empty or contains only whitespace.
 
-  * 4a1. System shows an error: "Note cannot be empty."
+  * 4a1. System shows an error message.
 
   Use case ends.
 
@@ -641,7 +641,7 @@ Use case ends.
 
 * 4a. The patient selection is invalid.
 
-    * 4a1. System indicates that the selection is invalid. (not a number, less than 1, or out of range).
+    * 4a1. System indicates that the selection is invalid.
 
       Use case resumes at step 2.
 
@@ -691,7 +691,7 @@ Use case ends.
 
 * 4a. The patient selection is invalid.
 
-    * 4a1. System indicates that the selection is invalid. (not a number, less than 1, or out of range).
+    * 4a1. System indicates that the selection is invalid.
 
       Use case resumes at step 2.
 
