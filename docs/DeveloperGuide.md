@@ -332,7 +332,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
   Use case ends.
 
-* *a. At anytime, user cancels the action.
+* *a. At anytime, User cancels the action.
 
   Use case ends.
 
@@ -362,7 +362,7 @@ Use case ends.
 
 * 2a. The list is empty.
 
-    * 2a1. System informs the user that there are no patients available
+    * 2a1. System informs the User that there are no patients available
 
       Use case ends.
 
@@ -378,7 +378,7 @@ Use case ends.
 
       Use case ends.
 
-* *a. At anytime, user cancels the action.
+* *a. At anytime, User cancels the action.
 
   Use case ends.
 
@@ -434,7 +434,7 @@ Use case ends.
 
 * 3a. No patients match the search criteria.
 
-    * 3a1. System informs the user that there are no patients available.
+    * 3a1. System informs the User that there are no patients available.
     
       Use case ends.
 
