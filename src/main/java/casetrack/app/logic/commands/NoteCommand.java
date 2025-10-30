@@ -25,7 +25,7 @@ public class NoteCommand extends Command {
 
     public static final String COMMAND_WORD = "note";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a note to a person. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a note to a patient. "
             + "Parameters: "
             + "INDEX " + PREFIX_NOTE_TEXT + "TEXT\n"
             + "OR "

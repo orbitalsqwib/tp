@@ -19,13 +19,13 @@ import casetrack.app.model.person.Person;
 public class DeleteNoteCommand extends DeleteCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes a note from a person identified by the index number used in the displayed person list.\n"
+            + ": Deletes a note from a patient identified by the index number used in the displayed patient list.\n"
             + "Parameters: note <PATIENT_INDEX> <NOTE_INDEX>\n"
             + "Example: " + COMMAND_WORD + " note 1 2";
 
     public static final String MESSAGE_DELETE_NOTE_SUCCESS = "Deleted Note from %1$s: %2$s";
     public static final String MESSAGE_INVALID_NOTE_INDEX = "The note index provided is invalid.";
-    public static final String MESSAGE_NO_NOTES = "This person has no notes to delete.";
+    public static final String MESSAGE_NO_NOTES = "This patient has no notes to delete.";
 
     private static final Logger logger = LogsCenter.getLogger(DeleteNoteCommand.class);
     private final Index noteIndex;
