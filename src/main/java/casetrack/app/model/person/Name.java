@@ -17,9 +17,13 @@ public class Name {
     /*
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
-     * Names must contain at least one alphabetic character (enforced by the lookahead).
      */
     public static final String VALIDATION_REGEX = "[\\p{Alnum}()]([\\p{Alnum} .'()@-]|(([sdSD]/[oO]) ))*";
+
+    /*
+     * Ensures that at least one character is an alphabetic character
+     */
+    public static final String AT_LEAST_ONE_ALPHABET = ".*[a-zA-Z].*";
 
     public final String fullName;
 
@@ -38,7 +42,7 @@ public class Name {
      * Returns true if a given string is a valid name.
      */
     public static boolean isValidName(String test) {
-        return test.matches(VALIDATION_REGEX);
+        return test.matches(VALIDATION_REGEX) && test.matches(AT_LEAST_ONE_ALPHABET);
     }
 
 
