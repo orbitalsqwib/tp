@@ -253,6 +253,12 @@ Format: `view <PATIENT_INDEX>`
 * The index refers to the index number shown in the displayed patient list.
 * The index must be a positive integer 1, 2, 3, …​
 
+<box type="info" seamless>
+
+**Note:** The `view` command works with any currently displayed patient list. After using `list`, `search`, or any other command that filters patients, you can use `view` with the index from that filtered list. This allows you to quickly navigate and view patient details entirely through keyboard commands.
+
+</box>
+
 Examples:
 * `list` followed by `view 2` shows details for the 2nd patient in CaseTrack.
 * `search name Benson` followed by `view 1` shows details for the 1st patient in the results of the `search` command.
