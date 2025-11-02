@@ -1123,3 +1123,17 @@ This appendix lists planned enhancements for upcoming releases.
         - User maximizes application window ➜ Result box scales proportionally, displaying more content without requiring scrolling for moderately long messages.
         - User executes command with extremely long output ➜ Result box expands to predefined maximum height (e.g., 40% of window height), then enables smooth vertical scrolling for remaining content.
         - All feedback messages remain immediately visible without manual scrolling for typical use cases, preserving the CLI-style immediate feedback experience.
+
+7. Make search name function use AND-based matching for precise results
+    - Feature flaw: The `search name` command performs a loose OR-based keyword match, returning any patient whose name contains any of the provided keywords rather than all of them. This causes search results to include many irrelevant entries, making it difficult to locate specific patients efficiently.
+    - Change: Modify the `search name` command to use AND-based matching by default, requiring all provided keywords to be present in the patient's name. Optionally, add a flag to enable OR-based matching when users need broader search results.
+    - Sample inputs:
+```
+     search name John Tan
+     search name John Tan --any
+```
+- Sample behavior:
+    - Command: `search name John Tan` (AND-based, default) ➜ Returns only patients whose names contain both "John" AND "Tan" (e.g., "John Tan", "Tan John Wei").
+    - Command: `search name John Tan` (current behavior) ➜ Returns all patients with "John" OR "Tan" in their names (e.g., "John Doe", "Mary Tan", "John Tan"), resulting in many irrelevant matches.
+    - Command: `search name John Tan --any` (OR-based, optional) ➜ Returns patients with "John" OR "Tan" for broader searches when needed.
+    - Result message displays search mode: `5 patients found matching all keywords: John, Tan` or `12 patients found matching any keyword: John, Tan`
