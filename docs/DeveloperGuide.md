@@ -1114,3 +1114,12 @@ This appendix lists planned enhancements for upcoming releases.
         - First `add` command succeeds; internally normalized and stored as "+65 9111 1111"
         - Second `add` command fails with: `This patient already exists in CaseTrack. A patient with the name "John Doe" and phone number "+65 9111 1111" is already registered.`
         - UI displays country code indicator in settings panel (e.g., "Default Country Code: +65") and shows normalized format in patient details
+
+6. Make result display box dynamically resizable for improved readability
+    - Feature flaw: The result display box remains fixed in size, requiring users to scroll vertically and/or horizontally to view long messages or error feedback, even when the application window is maximized. This breaks the natural command-feedback flow and hinders usability.
+    - Change: Implement dynamic resizing for the result display box with automatic text wrapping and adaptive height. The box should expand to accommodate longer messages up to a reasonable maximum, and all UI components should resize proportionally when the application window is resized. Enable smooth vertical scrolling only when messages exceed the maximum displayable height.
+    - Sample behavior:
+        - User executes command with invalid format ➜ Result box expands vertically to display the complete error message without horizontal scrolling; text wraps naturally within the available width.
+        - User maximizes application window ➜ Result box scales proportionally, displaying more content without requiring scrolling for moderately long messages.
+        - User executes command with extremely long output ➜ Result box expands to predefined maximum height (e.g., 40% of window height), then enables smooth vertical scrolling for remaining content.
+        - All feedback messages remain immediately visible without manual scrolling for typical use cases, preserving the CLI-style immediate feedback experience.
