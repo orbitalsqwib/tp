@@ -746,7 +746,10 @@ Use case ends.
 ### Non-Functional Requirements
 
 1. Should work on any mainstream OS as long as it has Java `17` or above installed.
-2. Should be able to store and retrieve up to 10,000 patient records without noticeable delay (< 3 seconds for search operations).
+2. Should be able to store and retrieve up to 10,000 patient records with the following performance requirements:
+    - Initial application startup and data load: < 1 minute on modern hardware (M2 Pro MacBook or equivalent)
+    - Search and filter operations: < 3 seconds to display results
+    - Individual record operations (add/edit/delete): < 1 second
 3. All patient data must be stored locally with no transmission over networks to ensure patient privacy compliance.
 4. Healthcare helpers with basic computer literacy should be able to perform common tasks (add, search, update patient records) within 5 minutes of initial training.
 5. A user with above average typing speed for regular English text should be able to accomplish most of the tasks faster using commands than using the mouse.
