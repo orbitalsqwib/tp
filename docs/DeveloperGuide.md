@@ -406,7 +406,7 @@ Use case ends.
   Use case ends.
 
 
-#### Use case (UC04): Search/Filter Patients
+#### Use case (UC04): Search Patients
 
 **MSS**
 
@@ -437,22 +437,10 @@ Use case ends.
 
       Use case ends.
 
-* 2c. Invalid number format (when searching by number).
-
-    * 2c1. System shows an error message.
-
-      Use case ends.
-
-* 2d. Invalid email format (when searching by email).
-
-    * 2d1. System shows an error message.
-
-      Use case ends.
-
 * 3a. No patients match the search criteria.
 
-    * 3a1. System informs the User that there are no patients available.
-    
+    * 3a1. System informs the User that no patients match the search criteria.
+
       Use case ends.
 
 * *a. At any time, User cancels the action.
