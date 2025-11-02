@@ -22,7 +22,7 @@ public class NoteCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a note to a patient. "
             + "Parameters: INDEX " + PREFIX_NOTE_TEXT + "TEXT\n"
-            + "Example: " + COMMAND_WORD + " 1 " + PREFIX_NOTE_TEXT 
+            + "Example: " + COMMAND_WORD + " 1 " + PREFIX_NOTE_TEXT
             + "Follow-up in 2 weeks about housing support";
 
     public static final String MESSAGE_SUCCESS = "Note added for %1$s (%2$s): %3$s";
