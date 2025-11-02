@@ -1048,3 +1048,20 @@ testers are expected to do more *exploratory* testing.
       1. Go to `/data` folder and delete `casetrack.json`.
       2. Launch CaseTrack.
       3. CaseTrack launches normally with sample data loaded.
+
+## **Appendix: Planned Enhancements**
+
+This appendix documents known limitations and planned enhancements for future releases of CaseTrack.
+
+### Update Legacy AddressBook References
+
+**Current State:**
+
+The codebase currently retains naming conventions from the original AddressBook3 (AB3) project. These legacy references appear throughout:
+
+* **Code Components:** `AddressBook`, `AddressBookParser`, `AddressBookStorage`, `ReadOnlyAddressBook`, `JsonAddressBookStorage`
+* **Documentation:** UML diagrams showing `AddressBook` components in Architecture Overview, Model Component, Logic Component, and Storage Component sections
+
+**Planned Enhancement:**
+
+Systematically rename all AddressBook references to appropriate CaseTrack or Patient-centric terminology:
