@@ -1051,6 +1051,3 @@ testers are expected to do more *exploratory* testing.
       1. Go to `/data` folder and delete `casetrack.json`.
       2. Launch CaseTrack.
       3. CaseTrack launches normally with sample data loaded.
-
-## Appendix
-### Planned Enhancements
