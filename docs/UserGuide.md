@@ -243,21 +243,18 @@ Examples:
 
 ### Adding a note : `note`
 
-Adds a note to a patient using either their list index, or their name and phone number.
+Adds a note to a patient using their list index.
 
-Format (by index): `note <PATIENT_INDEX> t/TEXT`
-
-Format (by name and phone): `note n/NAME p/PHONE t/TEXT`
+Format: `note <PATIENT_INDEX> t/TEXT`
 
 * `PATIENT_INDEX` refers to the index shown in the displayed patient list and **must be a positive integer** 1, 2, 3, ...
-* When using `n/NAME p/PHONE`, do not include an index before the prefixes.
 * `t/TEXT` must contain at least one non‑whitespace character.
-* Do not repeat single‑valued prefixes (`n/`, `p/`, `t/`).
+* Do not repeat the `t/` prefix.
 
 Examples:
 
 * `note 1 t/Follow-up in 2 weeks`
-* `note n/John Doe p/91234567 t/Mother mentioned financial difficulties`
+* `note 2 t/Mother mentioned financial difficulties`
 
 ### Editing a note : `edit note`
 
@@ -349,7 +346,7 @@ Action     | Format, Examples
 **Delete Patient** | `delete patient <PATIENT_INDEX>`<br> e.g., `delete patient 3`
 **List All Patients** | `list`
 **Clear All Patients**  | `clear`
-**Add Note** | `note <PATIENT_INDEX> t/TEXT` or `note n/NAME p/PHONE t/TEXT`<br> e.g., `note 1 t/Follow-up in 2 weeks`<br> e.g., `note n/John Doe p/91234567 t/Mother mentioned financial difficulties`
+**Add Note** | `note <PATIENT_INDEX> t/TEXT`<br> e.g., `note 1 t/Follow-up in 2 weeks`
 **Edit Note** | `edit note <PATIENT_INDEX> <NOTE_INDEX> t/NEW_TEXT`<br> e.g., `edit note 1 2 t/Updated note content`
 **Delete Note** | `delete note <PATIENT_INDEX> <NOTE_INDEX>`<br> e.g., `delete note 1 2`<br> e.g., `search name John` followed by `delete note 1 1` deletes the 1st note from the 1st patient in the results of the `search` command.
 **Search** | `search FIELD KEYWORD [MORE_KEYWORDS]`<br> e.g., `search name James Jake`<br> e.g., `search number 91234567`
