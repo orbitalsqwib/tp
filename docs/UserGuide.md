@@ -208,6 +208,19 @@ Format: `search FIELD KEYWORD [MORE_KEYWORDS]`
 * **Email search**: Partial matches are supported. e.g. `alice` will match `alice@example.com`
 * **Tag search**: Partial matches are supported. e.g. `friend` will match tags like `friendly` or `best-friend`
 
+<box type="warning" seamless>
+
+**Important Note on Multiple Search Values (number, email, tag):**
+For `number`, `email`, and `tag` searches, multiple keywords are treated as separate search terms with OR logic. This can cause unexpected results:
+* `search number 2 1` searches for numbers containing "2" OR "1" separately (won't find "21 98765432" as intended)
+* `search number 21` searches for numbers containing "21" as a sequence (correctly finds "21 98765432")
+
+To search for a specific sequence or value in these fields, provide it as a single keyword without spaces.
+
+**Note:** Name search works differently - multiple keywords are useful for finding different people (e.g., `search name John David` finds anyone named John OR David).
+
+</box>
+
 Examples:
 * `search name John` returns `john` and `John Doe` (full word match)
 * `search name alex david` returns `Alex Yeoh`, `David Li`
