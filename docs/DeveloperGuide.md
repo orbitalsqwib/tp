@@ -733,6 +733,42 @@ Use case ends.
 3. All patient data must be stored locally with no transmission over networks to ensure patient privacy compliance.
 4. Healthcare helpers with basic computer literacy should be able to perform common tasks (add, search, update patient records) within 5 minutes of initial training.
 5. A user with above average typing speed for regular English text should be able to accomplish most of the tasks faster using commands than using the mouse.
+6. The application should be deployed and used only on secure, access-controlled systems that comply with relevant data protection regulations (e.g., PDPA, HIPAA).
+
+### Security and Privacy Considerations
+
+**Data Storage**
+
+CaseTrack stores all patient data in plaintext JSON at `data/casetrack.json`. This includes names, phone numbers, addresses, income, and medical information. No encryption is provided - this keeps the implementation simple and data recoverable.
+
+**Regulatory Compliance**
+
+Patient data falls under Singapore's PDPA and [PDPC Advisory Guidelines for the Healthcare Sector](https://www.pdpc.gov.sg/guidelines-and-consultation/2017/10/advisory-guidelines-for-the-healthcare-sector). To comply, deploy CaseTrack only in secure environments:
+
+1. **Network Isolation**: Use on systems with no internet access or isolated internal networks.
+
+2. **Physical Security**: Install on computers in locked, access-controlled areas.
+
+3. **Access Controls**: 
+   - Require strong authentication (passwords, biometrics)
+   - Set file permissions to restrict `casetrack.json` access
+   - Enable automatic screen locking
+
+4. **Data Handling**:
+   - Establish data retention and deletion policies
+   - Store backups securely
+   - Train staff on data protection
+   - Maintain access logs where possible
+
+**What CaseTrack Does NOT Provide**
+
+- Data encryption
+- User authentication
+- Audit logging
+- Network security features
+
+Organizations must provide these through their IT infrastructure and policies.
+
 
 ### Glossary
 

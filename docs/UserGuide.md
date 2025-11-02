@@ -323,12 +323,50 @@ If your changes to the data file makes its format invalid, CaseTrack will discar
 Furthermore, certain edits can cause CaseTrack to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </box>
 
+### Data security and privacy
+
+<box type="warning" seamless>
+
+**Important: Data Protection Notice**
+
+CaseTrack stores patient data in **plaintext** at `data/casetrack.json`. This includes names, phone numbers, addresses, income, and medical information.
+
+To comply with PDPA and healthcare regulations:
+
+**Use only on secure systems:**
+- No internet access or isolated networks only
+- Locked rooms with restricted physical access
+- Strong passwords/biometric authentication required
+- Automatic screen locking enabled
+
+**Protect the data file:**
+- Set file permissions to restrict access to `casetrack.json`
+- Store backups securely
+- Delete data securely when no longer needed
+
+**Organization requirements:**
+- Establish data handling policies
+- Train staff on data protection
+- Get data protection officer approval before deployment
+
+**CaseTrack does NOT provide encryption, user authentication, or audit logging.** Your organization must provide these protections.
+
+See [PDPC Advisory Guidelines for the Healthcare Sector](https://www.pdpc.gov.sg/guidelines-and-consultation/2017/10/advisory-guidelines-for-the-healthcare-sector) for requirements.
+
+</box>
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## FAQ
 
 **Q**: How do I transfer my data to another computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous CaseTrack home folder.
+**A**: Copy the `data/casetrack.json` file to the new computer's CaseTrack folder. Both computers must meet the security requirements in [Data security and privacy](#data-security-and-privacy). Transfer the file securely (e.g., encrypted USB drive or internal network).
+
+**Q**: Is my patient data encrypted?<br>
+**A**: No, data is stored in plaintext. Use CaseTrack only on secure, offline systems. See [Data security and privacy](#data-security-and-privacy) for requirements.
+
+**Q**: Can I use CaseTrack on my personal laptop?<br>
+**A**: Only if it meets security requirements: no internet access, physical security, and access controls. Get approval from your data protection officer first.
 
 --------------------------------------------------------------------------------------------------------------------
 
