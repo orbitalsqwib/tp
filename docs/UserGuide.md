@@ -6,7 +6,7 @@
 
 # CaseTrack User Guide
 
-CaseTrack is a **desktop app for managing patients, optimized for use via a  Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, CaseTrack can get your patient management tasks done faster than traditional GUI apps.
+CaseTrack is a **desktop app for managing patients, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, CaseTrack can get your patient management tasks done faster than traditional GUI apps.
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -77,15 +77,22 @@ CaseTrack is a **desktop app for managing patients, optimized for use via a  Lin
 * **NAME**: Should only contain alphanumeric characters, spaces, periods (.), apostrophes ('), hyphens (-), 's/o', 'd/o', 'S/O', or 'D/O', and it should not be blank. Names cannot be fully numeric (e.g., `123` or `456789` are not allowed).
   * Examples: `John Doe`, `Dr. Lim`, `o'Connor`, `Mary O'Brien`, `John Jr.`, `Ravichandran S/O Tharumalinga`, `Mary-Jane`, `Jean-Claude`
 
-* **PHONE_NUMBER**: Should only contain numbers, and it should be at least 3 digits long. The maximum length is **17 digits**, excluding any country code. An optional country code (up to 3 digits) may precede the phone number, with an optional '+' prefix. A space may optionally separate the country code from the main number.
-  * Examples: `12345678`, `91234567`, `+65 91234567` (with space), `+6591234567` (without space), `1 800123456`, `999 12345678`
+* **PHONE_NUMBER**: 
+  * **Basic Format**: 3-17 digits, numbers only
+  * **Country Code** (optional): Up to 3 digits with optional `+` prefix
+    * With space: `+65 91234567` (recommended) - digits before space = country code
+    * Without space: `+6591234567` - first 3 digits = country code
   * **Note**: Only ONE phone number is accepted per patient in the phone field. This phone number is used for patient identification and searching.
   * **Additional phone numbers** can be added in the patient's notes for reference purposes (e.g., "Secondary contact: 98765432"). However, **these additional phone numbers stored in notes cannot be used for searching** via the `search number` command. Only the primary phone number field is searchable.
-  * The following formats are NOT supported:
-    * Hyphens or spaces within the main number (e.g., `1234-5678`, `1234 5678`)
-    * Labels or text in parentheses (e.g., `91234567 (HP)`, `1234 5678 (Office)`)
-    * Multiple phone numbers in one field (e.g., `1234 5678 (HP) 1111-3333 (Office)`)
-    * Parentheses around country codes (e.g., `(+65) 91234567`)
+  * **Valid Examples**: 
+    * `91234567`
+    * `+65 91234567` (with space)
+    * `+6591234567` (without space)
+    * `1 800123456`
+  * **Limitations**: 
+    * One phone number per patient (add more in notes)
+    * No hyphens, spaces within number, labels, or parentheses
+    * Not supported: `1234-5678`, `91234567 (HP)`, `(+65) 91234567`
 
 
 * **EMAIL**: Should be of the format local-part@domain and adhere to the following constraints:
@@ -99,12 +106,13 @@ CaseTrack is a **desktop app for managing patients, optimized for use via a  Lin
 * **ADDRESS**: Can take any values, and it should not be blank.
 
 * **INCOME**: Should be a valid non-negative number with up to 2 decimal places (e.g., `1200`, `2500.50`).
-  * Display: Income is shown with exactly two decimal places. If you enter more than two decimal places, the value is shown rounded to the nearest cent (e.g., `0.00000000000001` displays as `0.00`).
+  * Currently **mandatory** for all patient records
+  * Display: Income is shown with exactly two decimal places. If you enter more than two decimal places, the value is shown rounded down to the nearest cent (e.g., `0.00000000000001` displays as `0.00`).
   * Currency: Only Singapore Dollars (SGD) are supported. Enter numeric amounts without any currency symbols; all income is treated and displayed as SGD (e.g., `1200` shows as `SGD 1,200.00`).
 
 * **MEDICAL_INFO**: Can take any values, and it should not be blank.
 
-* **TAG**: Should be alphanumeric without spaces.
+* **TAG**: Should be alphanumeric and may contain hyphens, without spaces.
 
 </box>
 
@@ -144,7 +152,8 @@ Examples:
 **Note on Duplicate Patients:**
 CaseTrack prevents adding duplicate patients. A patient is considered a duplicate if **both** the name and phone number match an existing patient:
 - Name matching is **case-insensitive** (e.g., "John Doe" = "john doe")
-- Extra spaces in names are ignored (e.g., "John Doe" = "John  Doe")
+- Extra spaces in names are ignored (e.g., "John  Doe" = "John Doe")
+- Phone numbers are **normalized** by removing '+' signs and spaces (e.g., "+65 91234567" = "6591234567" = "65 91234567")
 - Multiple patients can share the same name if they have different phone numbers
 - Multiple patients can share the same phone number if they have different names
 
@@ -153,6 +162,8 @@ Examples:
 - ✅ Allowed: "John Doe" (91234567) and "Jane Doe" (91234567) - different name, same phone
 - ❌ Blocked: "John Doe" (91234567) and "john doe" (91234567) - duplicate (case-insensitive match)
 - ❌ Blocked: "John Doe" (91234567) and "John  Doe" (91234567) - duplicate (whitespace ignored)
+- ❌ Blocked: "John Doe" (+65 91234567) and "John Doe" (6591234567) - duplicate (normalized phone numbers match)
+- ❌ Blocked: "John Doe" (+65 91234567) and "john doe" (65 91234567) - duplicate (both name and phone match after normalization)
 
 </box>
 
@@ -182,32 +193,56 @@ Examples:
 *  `edit patient 3 i/2500.50` Updates only the income of the 3rd patient.
 *  `edit patient 4 m/Diabetes` Updates only the medical info of the 4th patient.
 
-### Locating persons: `search`
+### Locating patients: `search`
 
-Finds persons whose specified field contains any of the given keywords.
+Finds patients whose specified field contains any of the given keywords.
 
 Format: `search FIELD KEYWORD [MORE_KEYWORDS]`
 
 * The search is case-insensitive. e.g `hans` will match `Hans`
+![case-insensitive search example](images/caseInsensitiveSearchExample.png)
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search).
+* Patients matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+![result for OR search with multiple keywords](images/searchOrMultipleKeywords.png)
 * Supported fields: `name`, `number`, `email`, `tag`
 
 **Matching behavior varies by field:**
-* **Name search**: Only full words will be matched. Each word in multi-word names is matched independently.
-  e.g. `Han` will not match `Hans`, but `Hans` will match `Hans Gruber`
+* **Name search**: Partial matches are supported. e.g. `Han` will match `Hans`, `Hans Gruber`, `Johann`
+![comparison images showing partial name matching](images/partialNameMatchingExample.png)
 * **Number search**: Partial matches are supported. e.g. `9123` will match `91234567`
 * **Email search**: Partial matches are supported. e.g. `alice` will match `alice@example.com`
 * **Tag search**: Partial matches are supported. e.g. `friend` will match tags like `friendly` or `best-friend`
 
+<box type="warning" seamless>
+
+**Important Note on Multiple Search Values (number, email, tag):**
+For `number`, `email`, and `tag` searches, multiple keywords are treated as separate search terms with OR logic. This can cause unexpected results:
+* `search number 2 1` searches for numbers containing "2" OR "1" separately (won't find "21 98765432" as intended)
+* `search number 21` searches for numbers containing "21" as a sequence (correctly finds "21 98765432")
+
+To search for a specific sequence or value in these fields, provide it as a single keyword without spaces.
+
+**Note:** Name search works differently - multiple keywords are useful for finding different people (e.g., `search name John David` finds anyone named John OR David).
+
+</box>
+
 Examples:
 * `search name John` returns `john` and `John Doe` (full word match)
 * `search name alex david` returns `Alex Yeoh`, `David Li`
-* `search number 9123` returns persons with phone number containing `9123` (e.g. `91234567`)
-* `search email alice` returns persons with email containing `alice` (e.g. `alice@example.com`)
-* `search tag friend colleague` returns persons with tags containing `friend` or `colleague`<br>
-  ![result for 'search name alex david'](images/findAlexDavidResult.png)
+* `search number +65` returns patients with phone number containing `+65` (e.g. `+6598765432`)
+![example showing search by country code](images/searchNumberOnCountryCode.png)
+* `search number 9123` returns patients with phone number containing `9123` (e.g. `91234567`)
+![example showing search by phone number](images/searchByPhoneNumberExample.png)
+
+* `search email alice` returns patients with email containing `alice` (e.g. `alice@example.com`)
+![example showing search by email](images/searchByEmailExample.png)
+* `search tag friend colleague` returns patients with tags containing `friend` or `colleague`
+![example showing partial tag matching](images/partialTagMatchingExample.png)
+
+**Note:** If no patients match your search criteria, an empty list will be displayed:
+
+![empty search results example](images/emptySearchResultsExample.png)
 
 ### Deleting a patient : `delete patient`
 
@@ -239,27 +274,30 @@ Format: `view <PATIENT_INDEX>`
 * The index refers to the index number shown in the displayed patient list.
 * The index must be a positive integer 1, 2, 3, …​
 
+<box type="info" seamless>
+
+**Note:** The `view` command works with any currently displayed patient list. You can use `view` with the patient index, which allows you to quickly view patient details entirely through keyboard commands.
+
+</box>
+
 Examples:
 * `list` followed by `view 2` shows details for the 2nd patient in CaseTrack.
 * `search name Benson` followed by `view 1` shows details for the 1st patient in the results of the `search` command.
 
 ### Adding a note : `note`
 
-Adds a note to a patient using either their list index, or their name and phone number.
+Adds a note to a patient using their list index.
 
-Format (by index): `note <PATIENT_INDEX> t/TEXT`
-
-Format (by name and phone): `note n/NAME p/PHONE t/TEXT`
+Format: `note <PATIENT_INDEX> t/TEXT`
 
 * `PATIENT_INDEX` refers to the index shown in the displayed patient list and **must be a positive integer** 1, 2, 3, ...
-* When using `n/NAME p/PHONE`, do not include an index before the prefixes.
 * `t/TEXT` must contain at least one non‑whitespace character.
-* Do not repeat single‑valued prefixes (`n/`, `p/`, `t/`).
+* Do not repeat the `t/` prefix.
 
 Examples:
 
 * `note 1 t/Follow-up in 2 weeks`
-* `note n/John Doe p/91234567 t/Mother mentioned financial difficulties`
+* `note 2 t/Mother mentioned financial difficulties`
 
 ### Editing a note : `edit note`
 
@@ -272,6 +310,7 @@ Format: `edit note <PATIENT_INDEX> <NOTE_INDEX> t/NEW_TEXT`
 - Both indices **must be positive integers** 1, 2, 3, ...
 - The patient must have notes to edit.
 - `t/NEW_TEXT` must contain at least one non-whitespace character.
+- Do not repeat the `t/` prefix.
 
 Examples:
 
@@ -317,7 +356,7 @@ CaseTrack's data is saved in the hard disk automatically after any command that 
 
 ### Editing the data file
 
-CaseTrack's data is saved automatically as a JSON file `[JAR file location]/data/casetrack.json`. Advanced users are welcome to update data directly by editing that data file.
+CaseTrack's data is saved automatically as a JSON file `[JAR file location]/data/casetrack.json`. Advanced users are welcome to update data directly by editing that data file before running CaseTrack.
 
 <box type="warning" seamless>
 
@@ -326,13 +365,53 @@ If your changes to the data file makes its format invalid, CaseTrack will discar
 Furthermore, certain edits can cause CaseTrack to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </box>
 
+### Data security and privacy
+
+<box type="warning" seamless>
+
+**Important: Data Protection Notice**
+
+CaseTrack stores patient data in **plaintext** at `data/casetrack.json`. This includes names, phone numbers, addresses, income, and medical information.
+
+To comply with PDPA and healthcare regulations:
+
+**Use only on secure systems:**
+- No internet access or isolated networks only
+- Locked rooms with restricted physical access
+- Strong passwords/biometric authentication required
+- Automatic screen locking enabled
+
+**Protect the data file:**
+- Set file permissions to restrict access to `casetrack.json`
+- Store backups securely
+- Delete data securely when no longer needed
+
+**Organization requirements:**
+- Establish data handling policies
+- Train staff on data protection
+- Get data protection officer approval before deployment
+
+**CaseTrack does NOT provide encryption, user authentication, or audit logging.** Your organization must provide these protections.
+
+See [PDPC Advisory Guidelines for the Healthcare Sector](https://www.pdpc.gov.sg/guidelines-and-consultation/2017/10/advisory-guidelines-for-the-healthcare-sector) for requirements.
+
+</box>
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## FAQ
 
 **Q**: How do I transfer my data to another computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous CaseTrack home folder.
+**A**: Copy the `data/casetrack.json` file to the new computer's CaseTrack folder. Both computers must meet the security requirements in [Data security and privacy](#data-security-and-privacy). Transfer the file securely (e.g., encrypted USB drive or internal network).
 
+**Q**: Is my patient data encrypted?<br>
+**A**: No, data is stored in plaintext. Use CaseTrack only on secure, offline systems. See [Data security and privacy](#data-security-and-privacy) for requirements.
+
+**Q**: Can I use CaseTrack on my personal laptop?<br>
+**A**: Only if it meets security requirements: no internet access, physical security, and access controls. Get approval from your data protection officer first.
+
+**Q**: Why is the income field mandatory?
+**A**: The income field supports future planned features for financial aid assessment etc.
 --------------------------------------------------------------------------------------------------------------------
 
 ## Known issues
@@ -351,7 +430,7 @@ Action     | Format, Examples
 **Delete Patient** | `delete patient <PATIENT_INDEX>`<br> e.g., `delete patient 3`
 **List All Patients** | `list`
 **Clear All Patients**  | `clear`
-**Add Note** | `note <PATIENT_INDEX> t/TEXT` or `note n/NAME p/PHONE t/TEXT`<br> e.g., `note 1 t/Follow-up in 2 weeks`<br> e.g., `note n/John Doe p/91234567 t/Mother mentioned financial difficulties`
+**Add Note** | `note <PATIENT_INDEX> t/TEXT`<br> e.g., `note 1 t/Follow-up in 2 weeks`
 **Edit Note** | `edit note <PATIENT_INDEX> <NOTE_INDEX> t/NEW_TEXT`<br> e.g., `edit note 1 2 t/Updated note content`
 **Delete Note** | `delete note <PATIENT_INDEX> <NOTE_INDEX>`<br> e.g., `delete note 1 2`<br> e.g., `search name John` followed by `delete note 1 1` deletes the 1st note from the 1st patient in the results of the `search` command.
 **Search** | `search FIELD KEYWORD [MORE_KEYWORDS]`<br> e.g., `search name James Jake`<br> e.g., `search number 91234567`
