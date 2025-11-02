@@ -211,6 +211,8 @@ Format: `search FIELD KEYWORD [MORE_KEYWORDS]`
 Examples:
 * `search name John` returns `john` and `John Doe` (full word match)
 * `search name alex david` returns `Alex Yeoh`, `David Li`
+* `search number +65` returns patients with phone number containing `+65` (e.g. `+6598765432`)
+![example showing search by country code](images/searchNumberOnCountryCode.png)
 * `search number 9123` returns patients with phone number containing `9123` (e.g. `91234567`)
 ![example showing search by phone number](images/searchByPhoneNumberExample.png)
 
