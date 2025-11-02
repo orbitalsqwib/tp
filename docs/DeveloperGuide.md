@@ -503,9 +503,9 @@ Use case ends.
 
       Use case ends.
 
-*	3a. Note text is empty.
+*	2d. Note text is empty.
 
-    * 3a1. System shows an error message.
+    * 2d1. System shows an error message.
 
       Use case ends.
 
@@ -551,15 +551,15 @@ Use case ends.
 
       Use case ends.
 
-*	3a. Note index is empty.
+*	2d. Note index is empty.
 
-    * 3a1. System shows an error message.
+    * 2d1. System shows an error message.
 
       Use case ends.
 
-*	3b. Note index is invalid.
+*	2e. Note index is invalid.
 
-    * 3b1. System shows an error message.
+    * 2e1. System shows an error message.
 
       Use case ends.
 
@@ -595,21 +595,21 @@ Use case ends.
 
     Use case ends.
 
-* 3a. Note index is empty.
+* 2b. Note index is invalid.
 
-    * 3a1. System shows an error message
-
-    Use case ends.
-
-* 3b. Note index is invalid.
-
-    * 3b1. System shows an error message.
+    * 2b1. System shows an error message.
 
     Use case ends.
 
-* 3c. Person has no notes.
+* 2c. Person has no notes.
 
-    * 3c1. System shows an error message.
+    * 2d1. System shows an error message.
+
+    Use case ends.
+
+* 2d. New note text is empty.
+
+    * 2e1. System shows an error message.
 
     Use case ends.
 
