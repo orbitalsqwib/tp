@@ -1154,3 +1154,14 @@ This appendix lists planned enhancements for upcoming releases.
     - Emergency Contact: John Lee (98765432)
     - Insurance: MediShield Life
     - Income: $3,500
+
+9. Optimize tag handling and rendering for improved performance
+    - Feature flaw: The application experiences significant lag and slowdown when a large number of tags are attached to a single patient, impacting responsiveness and usability for users who utilize extensive tagging systems.
+    - Change: Implement performance optimizations for tag storage, retrieval, and rendering. Add lazy loading for tag display, optimize the UI rendering pipeline to handle large tag collections efficiently, and introduce a configurable limit on the maximum number of visible tags (with an expandable "show more" option). Refactor the underlying tag data structure to improve lookup and filtering performance.
+    - Sample behavior:
+        - Patient with 50+ tags ➜ UI displays first 10 tags with a badge showing "+40 more tags" and an expand button; clicking expands to show all tags in a scrollable view.
+        - Tag filtering and search operations ➜ Remain responsive even with patients having 100+ tags due to optimized indexing.
+        - Tag display rendering ➜ Uses virtualization to render only visible tags, significantly reducing DOM overhead.
+        - Settings option ➜ Users can configure the default number of visible tags (e.g., 5, 10, 15, or "show all").
+    - Sample UI (textual):
+        - Tags: [Diabetes] [Hypertension] [High-Risk] [Regular-Checkup] [Senior] [Wheelchair] [Hearing-Aid] [Vision-Impaired] [Cognitive-Decline] [Fall-Risk] ... +42 more [Expand ▼]
