@@ -1128,32 +1128,32 @@ This appendix lists planned enhancements for upcoming releases.
     - Feature flaw: The `search name` command performs a loose OR-based keyword match, returning any patient whose name contains any of the provided keywords rather than all of them. This causes search results to include many irrelevant entries, making it difficult to locate specific patients efficiently.
     - Change: Modify the `search name` command to use AND-based matching by default, requiring all provided keywords to be present in the patient's name. Optionally, add a flag to enable OR-based matching when users need broader search results.
     - Sample inputs:
-```
-     search name John Tan
-     search name John Tan --any
-```
-- Sample behavior:
-    - Command: `search name John Tan` (AND-based, default) ➜ Returns only patients whose names contain both "John" AND "Tan" (e.g., "John Tan", "Tan John Wei").
-    - Command: `search name John Tan` (current behavior) ➜ Returns all patients with "John" OR "Tan" in their names (e.g., "John Doe", "Mary Tan", "John Tan"), resulting in many irrelevant matches.
-    - Command: `search name John Tan --any` (OR-based, optional) ➜ Returns patients with "John" OR "Tan" for broader searches when needed.
-    - Result message displays search mode: `5 patients found matching all keywords: John, Tan` or `12 patients found matching any keyword: John, Tan`
+    ```
+         search name John Tan
+         search name John Tan --any
+    ```
+    - Sample behavior:
+       - Command: `search name John Tan` (AND-based, default) ➜ Returns only patients whose names contain both "John" AND "Tan" (e.g., "John Tan", "Tan John Wei").
+       - Command: `search name John Tan` (current behavior) ➜ Returns all patients with "John" OR "Tan" in their names (e.g., "John Doe", "Mary Tan", "John Tan"), resulting in many irrelevant matches.
+       - Command: `search name John Tan --any` (OR-based, optional) ➜ Returns patients with "John" OR "Tan" for broader searches when needed.
+       - Result message displays search mode: `5 patients found matching all keywords: John, Tan` or `12 patients found matching any keyword: John, Tan`
 
 8. Include useful fields to make the application more complete
     - Feature flaw: CaseTrack requires income as a mandatory field while lacking more critical healthcare-related fields such as date of birth, sex/gender, emergency contact, and insurance information. This makes the application feel incomplete for its intended healthcare management purpose, especially since medical information itself is optional while income is mandatory.
     - Change: Introduce new fields for essential patient information. Add date of birth (mandatory), sex/gender (optional), emergency contact (optional with name and phone), and insurance provider (optional). Update validation logic and UI to accommodate these fields with appropriate input formats and display layouts.
     - Sample inputs:
-```
-     add n/Sarah Lee dob/15/03/1985 g/Female p/91234567 e/sarah@example.com a/123 Street i/3500 \
-       ec/John Lee; 98765432 ins/MediShield Life
-     add n/David Ng dob/22/11/1992 p/87654321 e/david@example.com a/456 Avenue
-```
-- Sample UI (textual):
-    - Name: Sarah Lee
-    - Date of Birth: 15/03/1985 (Age: 40)
-    - Gender: Female
-    - Emergency Contact: John Lee (98765432)
-    - Insurance: MediShield Life
-    - Income: $3,500
+    ```
+         add n/Sarah Lee dob/15/03/1985 g/Female p/91234567 e/sarah@example.com a/123 Street i/3500 \
+           ec/John Lee; 98765432 ins/MediShield Life
+         add n/David Ng dob/22/11/1992 p/87654321 e/david@example.com a/456 Avenue
+    ```
+    - Sample UI (textual):
+       - Name: Sarah Lee
+       - Date of Birth: 15/03/1985 (Age: 40)
+       - Gender: Female
+       - Emergency Contact: John Lee (98765432)
+       - Insurance: MediShield Life
+       - Income: $3,500
 
 9. Optimize tag handling and rendering for improved performance
     - Feature flaw: The application experiences significant lag and slowdown when a large number of tags are attached to a single patient, impacting responsiveness and usability for users who utilize extensive tagging systems.
@@ -1167,14 +1167,14 @@ This appendix lists planned enhancements for upcoming releases.
         - Tags: [Diabetes] [Hypertension] [High-Risk] [Regular-Checkup] [Senior] [Wheelchair] [Hearing-Aid] [Vision-Impaired] [Cognitive-Decline] [Fall-Risk] ... +42 more [Expand ▼]
 
 10. Support adding multiple notes to a patient in a single command
-- Feature flaw: The `note` command currently only processes the first note when multiple `t/` prefixes are provided in a single command (e.g., `note 2 t/first note t/second note`), ignoring subsequent notes. This requires users to execute multiple commands to add several notes, reducing efficiency.
-- Change: Extend the `note` command to accept and process multiple `t/` prefixes in a single command, adding all specified notes to the patient's note list in the order provided.
-- Sample inputs:
-```
- note 2 t/Patient reports chest pain during exercise t/Scheduled for ECG next week t/Follow-up required
- note 5 t/Medication dosage adjusted t/Patient tolerating new dosage well
-```
-- Sample behavior:
-- Command: `note 2 t/first note t/second note t/third note` ➜ All three notes are added to patient #2's record
-- Success message: `3 notes added to patient: John Tan`
-- Single note command continues to work: `note 2 t/single note` ➜ Adds one note as before.
+    - Feature flaw: The `note` command currently only processes the first note when multiple `t/` prefixes are provided in a single command (e.g., `note 2 t/first note t/second note`), ignoring subsequent notes. This requires users to execute multiple commands to add several notes, reducing efficiency.
+    - Change: Extend the `note` command to accept and process multiple `t/` prefixes in a single command, adding all specified notes to the patient's note list in the order provided.
+    - Sample inputs:
+    ```
+     note 2 t/Patient reports chest pain during exercise t/Scheduled for ECG next week t/Follow-up required
+     note 5 t/Medication dosage adjusted t/Patient tolerating new dosage well
+    ```
+    - Sample behavior:
+      - Command: `note 2 t/first note t/second note t/third note` ➜ All three notes are added to patient #2's record
+      - Success message: `3 notes added to patient: John Tan`
+      - Single note command continues to work: `note 2 t/single note` ➜ Adds one note as before.
