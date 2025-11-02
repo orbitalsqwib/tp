@@ -298,11 +298,10 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User enters the `add` command in the format add n/NAME p/PHONE a/ADDRESS i/INCOME [m/MEDICAL_INFO].
+1. User enters the `add` command.
 2. System validates the input.
-3. System checks for duplicate patients.
-4. System creates the new patient record.
-5. System confirms through success message.
+3. System creates the new patient record.
+4. System confirms through success message.
 
    Use case ends.
 
@@ -347,11 +346,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
   Use case ends.
 
-* 3a. Duplicate patient found.
+* 2e. Duplicate patient found.
 
-    * 3a1. System shows an error message.
+    * 2e1. System shows an error message.
 
-    * 3a2. No patient is added.
+    * 2e2. No patient is added.
 
   Use case ends.
 
