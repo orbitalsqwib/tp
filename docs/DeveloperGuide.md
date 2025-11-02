@@ -1,7 +1,7 @@
 ---
-    layout: default.md
-    title: "Developer Guide"
-    pageNav: 3
+  layout: default.md
+  title: "Developer Guide"
+  pageNav: 3
 ---
 
 # CaseTrack Developer Guide
@@ -1099,3 +1099,18 @@ This appendix lists planned enhancements for upcoming releases.
      search allergy penicillin
      ```
    - Expected outcome: Lists patients whose medical information matches the qualifier (e.g., all patients with asthma or taking Metformin).
+
+5. Add country code context for consistent phone number handling
+    - Feature flaw: Phone numbers with and without country codes (e.g., "9111 1111" vs "+65 9111 1111") are treated as distinct, allowing duplicate patients with identical details but different phone number formats to be added.
+    - Change: Allow users to configure a default country code in application settings. When checking for duplicates, normalize all phone numbers by applying the default country code to numbers lacking one. Display the active country code setting prominently in the UI and provide clear feedback about phone number normalization.
+    - Sample inputs:
+    ```
+     setcountry +65
+     add n/John Doe p/9111 1111 e/john@example.com a/123 Street
+     add n/John Doe p/+65 9111 1111 e/john@example.com a/123 Street
+    ```
+    - Sample behavior:
+        - Command: `setcountry +65` ➜ Status bar shows: `Default country code set to +65. Phone numbers without country codes will be treated as +65 numbers for duplicate detection.`
+        - First `add` command succeeds; internally normalized and stored as "+65 9111 1111"
+        - Second `add` command fails with: `This patient already exists in CaseTrack. A patient with the name "John Doe" and phone number "+65 9111 1111" is already registered.`
+        - UI displays country code indicator in settings panel (e.g., "Default Country Code: +65") and shows normalized format in patient details
