@@ -708,6 +708,41 @@ Use case ends.
 
   Use case ends.
 
+#### Use case (UC10): View patient details
+
+**Preconditions**
+* At least one patient is listed in the current view.
+
+**Guarantees**
+* Patient details will only be displayed if a valid patient index is provided.
+* Invalid inputs will not modify any patient data.
+
+**MSS**
+1. User requests to list patients.
+2. System <u>shows a list of patients</u> ([UC02](#use-case-uc02-view-all-patients))
+3. User requests to view details of a specific patient.
+4. System displays the patient details.
+5. System confirms by displaying a success message.
+
+   Use case ends.
+
+**Extensions**
+* 3a. The patient index is invalid.
+
+    * 3a1. System shows an error message.
+
+      Use case resumes at step 1.
+
+* 3b. No patient index is provided.
+
+    * 3b1. System shows an error message.
+
+      Use case resumes at step 1.
+
+* *a. At any time, User cancels the action.
+
+  Use case ends.
+
 ### Non-Functional Requirements
 
 1. Should work on any mainstream OS as long as it has Java `17` or above installed.
