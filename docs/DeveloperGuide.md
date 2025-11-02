@@ -1,7 +1,7 @@
 ---
-  layout: default.md
-  title: "Developer Guide"
-  pageNav: 3
+layout: default.md
+title: "Developer Guide"
+pageNav: 3
 ---
 
 # CaseTrack Developer Guide
@@ -84,10 +84,7 @@ The sequence diagram below illustrates the interactions within the `Logic` compo
 
 <puml src="diagrams/DeletePatientSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `delete patient 1` Command" />
 
-<box type="info" seamless>
-
-**Note:** The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of diagram.
-</box>
+> Note: The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of the diagram.
 
 How the `Logic` component works:
 
@@ -753,12 +750,7 @@ Use case ends.
 
 Given below are instructions to test the app manually.
 
-<box type="info" seamless>
-
-**Note:** These instructions only provide a starting point for testers to work on;
-testers are expected to do more *exploratory* testing.
-
-</box>
+> Note: These instructions only provide a starting point for testers to work on; testers are expected to do more exploratory testing.
 
 ### Launch and shutdown
 
@@ -1051,48 +1043,51 @@ testers are expected to do more *exploratory* testing.
 
 ## **Appendix: Planned Enhancements**
 
-This appendix documents known limitations and planned enhancements for future releases of CaseTrack.
+Team size: 5
 
-### Update Legacy AddressBook References
+This appendix lists planned enhancements for upcoming releases.
 
-**Current State:**
+1. Make product terminology consistent across UI, logs, and docs
+   - Feature flaw: Mixed "AddressBook" terms remain in UI messages, class names, and diagrams, which can confuse users (e.g., error logs mention `AddressBookStorage`).
+   - Change: Standardize user-facing terminology to "CaseTrack" and patient-centric terms. Update UI strings, log messages, and documentation references. No functional behavior changes.
+   - Sample outputs:
+     - Before: `Failed to save AddressBook to file.`
+     - After: `Failed to save CaseTrack data to file.`
 
-The codebase currently retains naming conventions from the original AddressBook3 (AB3) project. These legacy references appear throughout:
+2. Make medical information input structured and readable
+   - Feature flaw: The `m/` field is an unstructured free‑text blob, making information hard to read and impossible to filter precisely.
+   - Change: Accept optional subfields when adding/editing a patient, and render them as labeled sections in the UI.
+   - Sample inputs:
+     ```
+     add n/Noah Tan p/91234567 e/noah.tan@example.com a/123 Serangoon Ave i/4000 \
+       v/BP 128/82; Pulse 76; Temp 37.1 \
+       al/Penicillin(rash), Peanuts(swelling) \
+       mh/T2D(2019); Hypertension(2021) \
+       cm/Metformin 500mg daily; Lisinopril 10mg daily \
+       cn/Reports occasional dizziness
+     ```
+   - Sample UI (textual):
+     - Vitals: BP 128/82, Pulse 76, Temp 37.1°C
+     - Allergies: Penicillin (rash), Peanuts (swelling)
+     - History: T2D (2019), Hypertension (2021)
+     - Medications: Metformin 500mg daily; Lisinopril 10mg daily
+     - Notes: Reports occasional dizziness
 
-* **Code Components:** `AddressBook`, `AddressBookParser`, `AddressBookStorage`, `ReadOnlyAddressBook`, `JsonAddressBookStorage`
-* **Documentation:** UML diagrams showing `AddressBook` components in Architecture Overview, Model Component, Logic Component, and Storage Component sections
+3. Make Help command restore and focus the Help window
+   - Feature flaw: Re-running `help` when the Help window is minimized does nothing visible; users think the command failed.
+   - Change: If a Help window exists, bring it to front and un-minimize it; otherwise, open a new Help window. Provide a status message when restored.
+   - Sample behavior:
+     - Command: `help` (when Help is minimized) ➜ Help window is restored and focused; status bar shows: `Help window restored`.
+     - Command: `help` (when Help is closed) ➜ Help window opens as usual.
 
-**Planned Enhancement:**
-
-Systematically rename all AddressBook references to appropriate CaseTrack or Patient-centric terminology
-
-### Structured Medical Information
-
-**Current State:**
-
-The medical information field (`m/MEDICAL-INFO`) currently stores all patient medical data as a single, unformatted string. When entering detailed medical information, users must input everything on one line without structure:
-
-```
-add n/Noah Tan p/91234567 e/noah.tan@example.com a/123 Serangoon Ave i/4000 
-m/Blood Pressure: 128/82 mmHg; Pulse: 76 bpm; Temperature: 37.1°C; 
-Allergies: Penicillin (rash), Peanuts (mild swelling); 
-Medical History: Type 2 Diabetes diagnosed 2019, Hypertension since 2021; 
-Current Medications: Metformin 500mg daily, Lisinopril 10mg daily; 
-Notes: Reports occasional dizziness, advised to monitor BP daily.
-```
-
-**Planned Enhancement:**
-
-Implement something more user friendly such as structured medical information system with dedicated subsections
-
-### Help Window Focus and Restore Behavior
-
-**Current State:**
-
-When the help window is minimized and the user executes the `help` command again, the application does not restore or bring the existing help window back into focus. Instead, no visible action occurs, leaving the user uncertain whether the command was executed successfully.
-
-**Known Issue Status:** This limitation is documented in the User Guide under Known Issues.
-
-**Planned Enhancement:**
-
-Implement better help window management to handle existing window state
+4. Extend search to cover medical conditions in patient records
+   - Feature flaw: Existing search supports name/phone/email/tag only; users cannot find patients by conditions or medications stored in medical info.
+   - Change: Extend the existing `search` command with qualifiers that filter by structured medical info or substrings within the medical information field.
+   - Sample inputs:
+     ```
+     search condition asthma
+     search condition diabetes
+     search meds metformin
+     search allergy penicillin
+     ```
+   - Expected outcome: Lists patients whose medical information matches the qualifier (e.g., all patients with asthma or taking Metformin).
