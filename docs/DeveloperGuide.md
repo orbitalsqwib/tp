@@ -11,12 +11,6 @@
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Acknowledgements**
-
-_{ list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well }_
-
---------------------------------------------------------------------------------------------------------------------
-
 ## **Setting up, getting started**
 
 Refer to the guide [_Setting up and getting started_](SettingUp.md).
@@ -49,10 +43,6 @@ The bulk of the app's work is done by the following four components:
 [**`Commons`**](#common-classes) represents a collection of classes used by multiple other components.
 
 **How the architecture components interact with each other**
-
-The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `delete patient 1`.
-
-<puml src="diagrams/ArchitectureSequenceDiagram.puml" width="574" />
 
 Each of the four main components (also shown in the diagram above),
 
@@ -123,7 +113,7 @@ How the parsing works:
 
 The `Model` component,
 
-* stores the address book data i.e., all `Person` objects (which are contained in a `UniquePersonList` object).
+* stores the CaseTrack data i.e., all `Person` objects (which are contained in a `UniquePersonList` object).
 * stores the currently 'selected' `Person` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
@@ -144,7 +134,7 @@ The `Model` component,
 <puml src="diagrams/StorageClassDiagram.puml" width="550" />
 
 The `Storage` component,
-* can save both address book data and user preference data in JSON format, and read them back into corresponding objects.
+* can save both CaseTrack data and user preference data in JSON format, and read them back into corresponding objects.
 * inherits from both `AddressBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
 * depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
 
@@ -157,6 +147,22 @@ Classes used by multiple components are in the `casetrack.app.commons` package.
 ## **Implementation**
 
 This section describes some noteworthy details on how certain features are implemented.
+
+### Add new patient feature
+
+#### Implementation
+
+The add patient feature adds a patient to the CaseTrack.
+
+<puml src="diagrams/AddPatientSequenceDiagram.puml" alt="Interactions inside the Logic Component for the `add n/Alice ... i/5000 mi/diabetes` Command" />
+
+How add patient works:
+
+1. `AddressBookParser` creates a `AddCommandParser` to parse the add command.
+2. `AddCommandParser` identifies the command as a patient addition based on the "add" keyword.
+3. `AddCommand` is created with the patient details.
+4. The command validates the patient details and creates a new patient object.
+5. The patient is added to the CaseTrack and the UI is updated.
 
 ### Search feature
 
@@ -174,6 +180,23 @@ How the search works:
 4. `FindCommand` updates the filtered patient list using the predicate.
 5. The predicate validates keywords and matches against patient's phone (including country codes).
 
+### Add new note feature
+
+#### Implementation
+
+The add note feature adds a note to a patient.
+
+<puml src="diagrams/NoteSequenceDiagram.puml" alt="Interactions inside the Logic Component for the `add note 1 2` Command" />
+
+How add note works:
+
+1. `AddressBookParser` creates a `NoteCommandParser` to parse the add command.
+2. `NoteCommandParser` identifies the command as a note addition based on the "note" keyword.
+3. `NoteCommand` is created with the patient index and note text.
+4. The command retrieves the patient and validates that the note text is not empty.
+5. The note is added to the patient's list of notes using `Person#addNote()`.
+6. The patient is updated back to the model and the UI is updated.
+
 ### Delete patient / note feature
 
 #### Implementation
@@ -182,7 +205,7 @@ The delete feature supports two types of delete operations: deleting patients an
 
 **Delete Patient Command**
 
-The `DeletePatientCommand` removes a patient from the address book.
+The `DeletePatientCommand` removes a patient from the CaseTrack.
 
 <puml src="diagrams/DeletePatientSequenceDiagram.puml" alt="Interactions inside the Logic Component for the `delete patient 1` Command" />
 
@@ -192,7 +215,7 @@ How delete patient works:
 2. `DeleteCommandParser` identifies the command as a patient deletion based on the "patient" keyword.
 3. `DeletePatientCommand` is created with the patient index.
 4. The command retrieves the patient from the filtered list and calls `Model#deletePerson()`.
-5. The patient is removed from the address book and the UI is updated.
+5. The patient is removed from the CaseTrack and the UI is updated.
 
 **Delete Note Command**
 
@@ -229,7 +252,7 @@ How delete note works:
 **Target user profile**:
 
 * Tech-savvy social workers in hospitals (with no access to patient information from the hospital database)
-* has a need to manage a significant number of contacts
+* has a need to manage a significant number of patients
 * prefer desktop apps over other types
 * can type fast
 * prefers typing to mouse interactions
@@ -249,7 +272,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | User                                        | list all patients at once    | browse patient records easily and get an overview of my caseload      |
 | `* * *`  | User                                        | delete patient records        | clean up patient records when they are no longer relevant or cases are closed |
 | `* * *`  | New User                                    | see usage instructions and command help | refer to instructions when I forget how to use the app |
-| `* *`     | Social Worker                               | filter contacts by attributes (medical condition, income level, name) | get information about my patients quickly during sessions |
+| `* *`     | Social Worker                               | filter patients by a single attribute (name, number, email, or tag) | get information about my patients quickly during sessions |
 | `* *`     | Social Worker                               | take quick notes during or right after a session, even with incomplete data | capture important context immediately and avoid forgetting key details later |
 | `* *`     | Social Worker                               | enter partial patient details and still retrieve useful results | still access key patient information even when the data I have is incomplete |
 | `* *`     | Social Worker                               | tag and categorize patients based on needs | prioritize cases and follow up more systematically |
@@ -267,8 +290,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `*`      | Social Worker                               | see patients close to my proximity | plan home visits efficiently |
 | `*`      | Social Worker                               | group patients by neighbourhood | cover multiple visits in one area |
 
-*{More to be added}*
-
 ### Use cases
 
 (For all use cases below, the **System** is the `CaseTrack` and the **Actor** is the `user`, unless specified otherwise)
@@ -281,7 +302,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 2. System parses the command and validates input
 3. System normalizes NAME (case-insensitive and multiple spaces collapsed to single space) and checks for duplicates using NAME+PHONE.
 4. System creates and saves the new patient record.
-5. System confirms success by displaying: Patient added: <Name> (<Phone>).
+5. System confirms through success message.
 
    Use case ends.
 
@@ -289,14 +310,14 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 1a. Missing mandatory fields (n/ or p/ absent, or empty after prefix)
 
-    * 1a1. System shows "Name and phone are required fields.".
+    * 1a1. System shows the required fields.
 
     * 1a2. No patient is added.
 
   Use case ends.
 
 * 2a. Invalid NAME (contains digits/symbols)
-    * 2a1. System shows "Invalid name format. Names may only contain letters and spaces.".
+    * 2a1. System shows an error message.
 
     * 2a2. No patient is added.
 
@@ -304,7 +325,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2b. Invalid PHONE (not 3-17 digits after trimming):
 
-    * 2b1. System shows "Phone number must be 3-17 digits.".
+    * 2b1. System shows an error message.
 
     * 2b2. No patient is added.
 
@@ -312,7 +333,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2c. Invalid INCOME (not numeric or < 0):
 
-    * 2c1. System shows "Income must be a non-negative number.".
+    * 2c1. System shows an error message.
 
     * 2c2. No patient is added.
 
@@ -328,13 +349,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 3a. Duplicate patient found (same normalized NAME and same PHONE already exist):
 
-    * 3a1. System shows "This patient already exists.".
+    * 3a1. System shows an error message.
 
     * 3a2. No patient is added.
 
   Use case ends.
 
-* *a. At anytime, user cancels the action.
+* *a. At anytime, User cancels the action.
 
   Use case ends.
 
@@ -364,7 +385,7 @@ Use case ends.
 
 * 2a. The list is empty.
 
-    * 2a1. System informs the user that there are no patients available
+    * 2a1. System informs the User that there are no patients available
 
       Use case ends.
 
@@ -380,63 +401,45 @@ Use case ends.
 
       Use case ends.
 
-* *a. At anytime, user cancels the action.
+* *a. At anytime, User cancels the action.
 
   Use case ends.
 
 
-#### Use case (UC04): Search/Filter Patients
+#### Use case (UC04): Search Patients
 
 **MSS**
 
-1. User enters the `search` command with one or more filter attributes (name, condition, and/or income).
+1. User enters the `search` command with a single filter attribute (name, number, email, or tag) and one or more keywords.
 2. System parses the command and validates input parameters.
 3. System filters the patient list based on the provided criteria.
-4. System displays all matching patient records showing name, condition, and income.
+4. System displays all matching patient records.
 
    Use case ends.
 
 **Extensions**
 
-* 1a. No attributes specified (empty search command).
+* 1a. No field or keywords specified (empty search command).
 
-    * 1a1. System shows error: "Specify attribute to search."
-
-      Use case ends.
-
-* 2a. Invalid name format (contains non-alphabetic characters except spaces and hyphens).
-
-    * 2a1. System shows error: "Invalid name format. Names may only contain alphabetic characters, spaces, hyphens."
+    * 1a1. System shows an error message.
 
       Use case ends.
 
-* 2b. Invalid condition format (contains non-alphabetic characters except spaces and hyphens).
+* 2a. Invalid field specified (not name, number, email, or tag).
 
-    * 2b1. System shows error: "Invalid condition format. Conditions can only contain letters and spaces, hyphens."
-
-      Use case ends.
-
-* 2c. Invalid income format (not a positive number, contains commas or currency symbols).
-
-    * 2c1. System shows error: "Invalid income format. Enter a positive whole number."
+    * 2a1. System shows an error message.
 
       Use case ends.
 
-* 2d. Unrecognized attribute prefix (e.g., age/, city/).
+* 2b. No keywords provided after field specification.
 
-    * 2d1. System shows error: "Invalid attribute."
-
-      Use case ends.
-
-* 2e. Empty attribute value (e.g., name/, condition/, income/).
-
-    * 2e1. System shows error for the specific empty attribute.
+    * 2b1. System shows an error message.
 
       Use case ends.
 
 * 3a. No patients match the search criteria.
 
-    * 3a1. System shows message: "No patient found."
+    * 3a1. System informs the User that no patients match the search criteria.
 
       Use case ends.
 
@@ -468,25 +471,25 @@ Use case ends.
 **Extensions**
 *	2a. Missing patient reference.
 
-    * 2a1. System shows error: “Either index or (Name and Phone) is required.”
+    * 2a1. System shows an error message.
 
       Use case ends.
 
 *	2b. No matching patient found.
 
-    * 2b1. System shows error: “No patient found with the given details.”
+    * 2b1. System shows an error message.
 
       Use case ends.
 
 *	2c. Phone number invalid (not 3-17 digits).
 
-    * 2c1. System shows an error: "Phone number must be 3-17 digits."
+    * 2c1. System shows an error message.
 
       Use case ends.
 
 *	3a. Note text is empty.
 
-    * 3a1. System shows an error: “Note cannot be empty.”
+    * 3a1. System shows an error message.
 
       Use case ends.
 
@@ -494,7 +497,7 @@ Use case ends.
 
     Use case ends.
 
-#### Use case: (UC06): Remove Quick Note
+#### Use case: (UC06): Delete Quick Note
 
 **Preconditions**
 * Patient record exists in the system (by index or by Name + Phone).
@@ -505,7 +508,7 @@ Use case ends.
 * Invalid inputs will not delete notes.
 
 **MSS**
-1.	Actor types the command to remove a quick note with patient reference and note index.
+1.	User types the command to remove a quick note with patient reference and note index.
 2.	System validates the patient reference (index or Name + Phone).
 3.	System validates the note index.
 4.	System deletes the specified note under the patient’s record.
@@ -516,35 +519,35 @@ Use case ends.
 **Extensions**
 *	2a. Missing patient reference.
 
-    * 2a1. System shows error: “Either index or (Name and Phone) is required.”
+    * 2a1. System shows an error message.
 
       Use case ends.
 
 *	2b. No matching patient found.
 
-    * 2b1. System shows error: “No patient found with the given details.”
+    * 2b1. System shows an error message.
 
       Use case ends.
 
 *	2c. Phone number invalid (not 3-17 digits).
 
-    * 2c1. System shows an error: "Phone number must be 3-17 digits."
+    * 2c1. System shows an error message.
 
       Use case ends.
 
 *	3a. Note index is empty.
 
-    * 3a1. System shows an error: “Note index is required”
+    * 3a1. System shows an error message.
 
       Use case ends.
 
 *	3b. Note index is invalid (not a number, less than 1, or more than the number of total notes the patient currently has)
 
-    * 3b1. System shows an error: “The note index must be in the range 1 to [total number of notes the patient has].”
+    * 3b1. System shows an error message.
 
       Use case ends.
 
-* *a. At any time, Actor cancels the action.
+* *a. At any time, User cancels the action.
 
     Use case ends.
 
@@ -561,7 +564,7 @@ Use case ends.
 
 **MSS**
 
-1. Actor types the command to edit a quick note with patient index, note index, and new note text.
+1. User types the command to edit a quick note with patient index, note index, and new note text.
 2. System validates the patient index.
 3. System validates the note index.
 4. System validates the new note text.
@@ -574,35 +577,35 @@ Use case ends.
 
 * 2a. Patient index is invalid (not a number, less than 1, or more than the number of total patients).
 
-    * 2a1. System shows error: "The patient index provided is invalid."
+    * 2a1. System shows an error message.
 
     Use case ends.
 
 * 3a. Note index is empty.
 
-    * 3a1. System shows an error: "Note index is required."
+    * 3a1. System shows an error message
 
     Use case ends.
 
 * 3b. Note index is invalid (not a number, less than 1, or more than the number of total notes the patient currently has).
 
-    * 3b1. System shows an error: "The note index provided is invalid."
+    * 3b1. System shows an error message.
 
     Use case ends.
 
 * 3c. Person has no notes.
 
-    * 3c1. System shows an error: "This patient has no notes to edit."
+    * 3c1. System shows an error message.
 
     Use case ends.
 
 * 4a. Note text is empty or contains only whitespace.
 
-  * 4a1. System shows an error: "Note cannot be empty."
+  * 4a1. System shows an error message.
 
   Use case ends.
 
-- \*a. At any time, Actor cancels the action.
+- \*a. At any time, User cancels the action.
 
   Use case ends.
 
@@ -641,7 +644,7 @@ Use case ends.
 
 * 4a. The patient selection is invalid.
 
-    * 4a1. System indicates that the selection is invalid. (not a number, less than 1, or out of range).
+    * 4a1. System indicates that the selection is invalid.
 
       Use case resumes at step 2.
 
@@ -691,7 +694,7 @@ Use case ends.
 
 * 4a. The patient selection is invalid.
 
-    * 4a1. System indicates that the selection is invalid. (not a number, less than 1, or out of range).
+    * 4a1. System indicates that the selection is invalid.
 
       Use case resumes at step 2.
 
@@ -705,9 +708,6 @@ Use case ends.
 
   Use case ends.
 
-
-*{More to be added}*
-
 ### Non-Functional Requirements
 
 1. Should work on any mainstream OS as long as it has Java `17` or above installed.
@@ -715,8 +715,6 @@ Use case ends.
 3. All patient data must be stored locally with no transmission over networks to ensure patient privacy compliance.
 4. Healthcare helpers with basic computer literacy should be able to perform common tasks (add, search, update patient records) within 5 minutes of initial training.
 5. A user with above average typing speed for regular English text should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-*{More to be added}*
 
 ### Glossary
 
@@ -750,7 +748,7 @@ testers are expected to do more *exploratory* testing.
 
    1. Download the jar file and copy into an empty folder
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+   1. Double-click the jar file Expected: Shows the GUI with a set of sample patients. The window size may not be optimum.
 
 1. Saving window preferences
 
@@ -759,7 +757,94 @@ testers are expected to do more *exploratory* testing.
    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
-1. _{ more test cases …​ }_
+### Adding a patient
+
+1. Adding a patient with all required fields
+
+   1. Test case: `add n/John Doe p/91234567 e/johndoe@example.com a/123 Main St i/5000 m/Diabetes`<br>
+      Expected: Patient is added to the list. Success message shows patient details. Patient appears in the patient list.
+
+   1. Test case: `add n/Jane Smith p/98765432 e/janesmith@example.com a/456 Elm St i/3000`<br>
+      Expected: Patient is added without medical information. Success message confirms addition.
+
+1. Adding a patient with invalid inputs
+
+   1. Test case: `add n/John Doe p/12 e/johndoe@example.com a/123 Main St i/5000`<br>
+      Expected: No patient is added. Error message indicates phone number must be 3-17 digits.
+
+   1. Test case: `add n/John Doe p/91234567 e/johndoe@example.com a/123 Main St i/-100`<br>
+      Expected: No patient is added. Error message indicates income must be non-negative.
+
+   1. Test case: `add n/John Doe p/91234567 e/johndoe@example.com a/123 Main St i/abc`<br>
+      Expected: No patient is added. Error message indicates income must be numeric.
+
+   1. Test case: `add n/John Doe p/91234567 e/invalidemail a/123 Main St i/5000`<br>
+      Expected: No patient is added. Error message indicates invalid email format.
+
+1. Adding a patient with missing required fields
+
+   1. Test case: `add p/91234567 e/johndoe@example.com a/123 Main St i/5000`<br>
+      Expected: No patient is added. Error message indicates name is required.
+
+   1. Test case: `add n/John Doe e/johndoe@example.com a/123 Main St i/5000`<br>
+      Expected: No patient is added. Error message indicates phone is required.
+
+   1. Test case: `add n/John Doe p/91234567 a/123 Main St i/5000`<br>
+      Expected: No patient is added. Error message indicates email is required.
+
+1. Adding a duplicate patient
+
+   1. Prerequisites: A patient "John Doe" with phone "91234567" already exists.
+
+   1. Test case: `add n/John Doe p/91234567 e/johndoe@example.com a/456 Different St i/6000`<br>
+      Expected: No patient is added. Error message indicates patient already exists.
+
+   1. Test case: `add n/john doe p/91234567 e/johndoe@example.com a/789 Another St i/7000`<br>
+      Expected: No patient is added. Error message indicates patient already exists (name comparison is case-insensitive).
+
+### Searching/filtering patients
+
+1. Searching by name
+
+   1. Prerequisites: Multiple patients in the list with different names.
+
+   1. Test case: `search name John`<br>
+      Expected: All patients with "John" in their name are displayed. Count message shows number of patients found.
+
+   1. Test case: `search name xyz`<br>
+      Expected: No patients displayed. Message indicates no patients found.
+
+1. Searching by phone number
+
+   1. Prerequisites: Multiple patients in the list with different phone numbers.
+
+   1. Test case: `search number +6591234567`<br>
+      Expected: Patients with matching phone number (including country code) are displayed.
+
+   1. Test case: `search number 91234567`<br>
+      Expected: Patients with matching phone number are displayed.
+
+1. Searching by email
+
+   1. Prerequisites: Patients with email addresses in the list.
+
+   1. Test case: `search email john@example.com`<br>
+      Expected: Patients with matching email are displayed.
+
+1. Searching by tags
+
+   1. Prerequisites: Patients with various tags in the list.
+
+   1. Test case: `search tag diabetes`<br>
+      Expected: All patients tagged with "diabetes" are displayed.
+
+1. Invalid search commands
+
+   1. Test case: `search`<br>
+      Expected: Error message indicating search attribute must be specified.
+
+   1. Test case: `search invalidtype keyword`<br>
+      Expected: Error message indicating invalid search type.
 
 ### Deleting a patient
 
@@ -795,12 +880,153 @@ testers are expected to do more *exploratory* testing.
    4. Test case: `delete note` (missing both patient and note index)<br>
       Expected: Error message indicating invalid command format is shown.
 
-2. _{ more test cases …​ }_
+### Adding a note to a patient
+
+1. Adding a note by patient index
+
+   1. Prerequisites: List all patients using the `list` command. At least one patient in the list.
+
+   1. Test case: `note 1 t/Patient reported feeling better today`<br>
+      Expected: Note is added to the first patient. Success message shows the note content. Patient's note list is updated.
+
+   1. Test case: `note 1 t/Follow-up needed next week`<br>
+      Expected: Another note is added to the first patient. Multiple notes can exist for one patient.
+
+1. Adding a note with invalid inputs
+
+   1. Test case: `note 0 t/Some note`<br>
+      Expected: No note is added. Error message indicates invalid patient index.
+
+   1. Test case: `note 1 t/`<br>
+      Expected: No note is added. Error message indicates note cannot be empty.
+
+   1. Test case: `note 999 t/Some note` (where 999 exceeds the list size)<br>
+      Expected: No note is added. Error message indicates patient index is out of range.
+
+   1. Test case: `note 1` (missing note text)<br>
+      Expected: No note is added. Error message indicates invalid command format.
+
+1. Adding a note by patient name and phone
+
+   1. Prerequisites: A patient "John Doe" with phone "91234567" exists.
+
+   1. Test case: `note n/John Doe p/91234567 t/Patient attended session today`<br>
+      Expected: Note is added to the patient. Success message confirms addition.
+
+   1. Test case: `note n/Jane Doe p/99999999 t/Some note`<br>
+      Expected: No note is added. Error message indicates no patient found with given details.
+
+### Editing a note
+
+1. Editing an existing note
+
+   1. Prerequisites: First patient has at least 2 notes.
+
+   1. Test case: `edit note 1 1 t/Updated note content`<br>
+      Expected: First note of the first patient is updated. Success message shows the updated note.
+
+   1. Test case: `edit note 1 2 t/Another update`<br>
+      Expected: Second note of the first patient is updated.
+
+1. Editing a note with invalid inputs
+
+   1. Test case: `edit note 1 0 t/Some content`<br>
+      Expected: No note is edited. Error message indicates invalid note index.
+
+   1. Test case: `edit note 1 999 t/Some content` (where patient 1 has fewer than 999 notes)<br>
+      Expected: No note is edited. Error message indicates note index is out of range.
+
+   1. Test case: `edit note 1 1 t/`<br>
+      Expected: No note is edited. Error message indicates note cannot be empty.
+
+   1. Test case: `edit note 0 1 t/Some content`<br>
+      Expected: No note is edited. Error message indicates invalid patient index.
+
+1. Editing a note when patient has no notes
+
+   1. Prerequisites: A patient exists with no notes.
+
+   1. Test case: `edit note 1 1 t/Some content`<br>
+      Expected: No note is edited. Error message indicates patient has no notes to edit.
+
+### Viewing patient details
+
+1. Viewing details of a patient
+
+   1. Prerequisites: Multiple patients in the list.
+
+   1. Test case: `view 1`<br>
+      Expected: Details of the first patient are displayed in the detail panel, including all notes, medical information, and other attributes.
+
+   1. Test case: `view 2`<br>
+      Expected: Details of the second patient are displayed.
+
+1. Viewing with invalid index
+
+   1. Test case: `view 0`<br>
+      Expected: Error message indicates invalid patient index.
+
+   1. Test case: `view 999` (where 999 exceeds the list size)<br>
+      Expected: Error message indicates patient index is out of range.
+
+   1. Test case: `view` (missing index)<br>
+      Expected: Error message indicates invalid command format.
+
+### Editing patient income
+
+1. Editing income with valid values
+
+   1. Prerequisites: List all patients using the `list` command. At least one patient in the list.
+
+   1. Test case: `edit patient 1 i/6000`<br>
+      Expected: First patient's income is updated to 6000. Success message confirms the update.
+
+   1. Test case: `edit patient 1 i/0`<br>
+      Expected: First patient's income is updated to 0. Zero is a valid income value.
+
+1. Editing income with invalid values
+
+   1. Test case: `edit patient 1 i/-500`<br>
+      Expected: Income is not updated. Error message indicates income must be non-negative.
+
+   1. Test case: `edit patient 1 i/abc`<br>
+      Expected: Income is not updated. Error message indicates income must be numeric.
+
+   1. Test case: `edit patient 1 i/$5000`<br>
+      Expected: Income is not updated. Error message indicates invalid income format (no currency symbols).
+
+   1. Test case: `edit patient 0 i/5000`<br>
+      Expected: Income is not updated. Error message indicates invalid patient index.
+
+### Editing patient medical information
+
+1. Editing medical information with valid values
+
+   1. Prerequisites: List all patients using the `list` command. At least one patient in the list.
+
+   1. Test case: `edit patient 1 m/Diabetes, Hypertension`<br>
+      Expected: First patient's medical information is updated. Success message confirms the update.
+
+   1. Test case: `edit patient 1 m/None`<br>
+      Expected: First patient's medical information is updated to "None".
+
+1. Editing medical information with invalid values
+
+   1. Test case: `edit patient 1 m/`<br>
+      Expected: Medical information is not updated. Error message indicates medical information cannot be empty.
+
+   1. Test case: `edit patient 1 m/   `<br>
+      Expected: Medical information is not updated. Error message indicates medical information cannot be only whitespace.
+
+   1. Test case: `edit patient 0 m/Diabetes`<br>
+      Expected: Medical information is not updated. Error message indicates invalid patient index.
 
 ### Saving data
 
-1. Dealing with missing/corrupted data files
+1. Dealing with missing data files
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+   1. Missing data file
 
-1. _{ more test cases …​ }_
+      1. Go to `/data` folder and delete `casetrack.json`.
+      2. Launch CaseTrack.
+      3. CaseTrack launches normally with sample data loaded.

@@ -20,7 +20,7 @@ public class FindCommand extends Command {
     public static final String COMMAND_WORD = "search";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Finds all persons whose specified field contains any of "
+            + ": Finds all patients whose specified field contains any of "
             + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
             + "Parameters: FIELD KEYWORD [MORE_KEYWORDS]...\n"
             + "Supported fields: name, number, email, tag\n"

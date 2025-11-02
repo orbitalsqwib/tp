@@ -18,13 +18,13 @@ import casetrack.app.model.person.Person;
 public class EditNoteCommand extends EditCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Edits a note of a person identified by the index number used in the displayed person list.\n"
+            + ": Edits a note of a patient identified by the index number used in the displayed patient list.\n"
             + "Parameters: note <PATIENT_INDEX> <NOTE_INDEX> t/NEW_TEXT\n"
             + "Example: " + COMMAND_WORD + " note 1 2 t/Updated note content";
 
     public static final String MESSAGE_EDIT_NOTE_SUCCESS = "Edited Note for %1$s: %2$s";
     public static final String MESSAGE_INVALID_NOTE_INDEX = "The note index provided is invalid.";
-    public static final String MESSAGE_NO_NOTES = "This person has no notes to edit.";
+    public static final String MESSAGE_NO_NOTES = "This patient has no notes to edit.";
 
     private final Index personIndex;
     private final Index noteIndex;
