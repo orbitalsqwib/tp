@@ -267,7 +267,7 @@ Format: `edit note <PATIENT_INDEX> <NOTE_INDEX> t/NEW_TEXT`
 - Both indices **must be positive integers** 1, 2, 3, ...
 - The patient must have notes to edit.
 - `t/NEW_TEXT` must contain at least one non-whitespace character.
-
+- Do not repeat the `t/` prefix.
 Examples:
 
 - `edit note 1 2 t/Updated note content` edits the 2nd note from the 1st patient in the CaseTrack.
