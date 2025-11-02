@@ -394,27 +394,15 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-* 1a. No field or keywords specified (empty search command).
+* 1a. Invalid input parameters.
 
     * 1a1. System shows an error message.
 
       Use case ends.
 
-* 2a. Invalid field specified (not name, number, email, or tag).
+* 1b. No patients match the search criteria.
 
-    * 2a1. System shows an error message.
-
-      Use case ends.
-
-* 2b. No keywords provided after field specification.
-
-    * 2b1. System shows an error message.
-
-      Use case ends.
-
-* 3a. No patients match the search criteria.
-
-    * 3a1. System informs the User that no patients match the search criteria.
+    * 1b1. System informs the User that no patients match the search criteria.
 
       Use case ends.
 
