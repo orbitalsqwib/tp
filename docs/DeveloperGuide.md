@@ -1084,3 +1084,15 @@ Notes: Reports occasional dizziness, advised to monitor BP daily.
 **Planned Enhancement:**
 
 Implement something more user friendly such as structured medical information system with dedicated subsections
+
+### Help Window Focus and Restore Behavior
+
+**Current State:**
+
+When the help window is minimized and the user executes the `help` command again, the application does not restore or bring the existing help window back into focus. Instead, no visible action occurs, leaving the user uncertain whether the command was executed successfully.
+
+**Known Issue Status:** This limitation is documented in the User Guide under Known Issues.
+
+**Planned Enhancement:**
+
+Implement better help window management to handle existing window state
