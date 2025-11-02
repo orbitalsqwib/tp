@@ -615,7 +615,7 @@ Use case ends.
 * At least one patient is listed in the current view.
 
 **Guarantees**
-* Patient fields are updated only when a valid patient selection and valid details are provided.
+* Patient details are updated only when a valid patient selection and valid details are provided.
 * Invalid inputs do not modify any patient data.
 
 **MSS**
