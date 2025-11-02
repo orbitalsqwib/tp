@@ -315,7 +315,7 @@ CaseTrack's data is saved in the hard disk automatically after any command that 
 
 ### Editing the data file
 
-CaseTrack's data is saved automatically as a JSON file `[JAR file location]/data/casetrack.json`. Advanced users are welcome to update data directly by editing that data file.
+CaseTrack's data is saved automatically as a JSON file `[JAR file location]/data/casetrack.json`. Advanced users are welcome to update data directly by editing that data file before running CaseTrack.
 
 <box type="warning" seamless>
 
