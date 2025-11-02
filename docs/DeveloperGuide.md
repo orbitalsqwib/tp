@@ -601,7 +601,7 @@ Use case ends.
 
     Use case ends.
 
-* 3b. Note index is invalid or empty.
+* 3b. Note index is invalid.
 
     * 3b1. System shows an error message.
 
