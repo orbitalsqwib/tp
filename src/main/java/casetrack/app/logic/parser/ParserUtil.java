@@ -26,6 +26,16 @@ public class ParserUtil {
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String PATIENT_STRING = "patient";
     public static final String NOTE_STRING = "note";
+    public static final String HAS_NUMBER_IN_ARG = ".* ?\\d+( .*)?";
+
+    /**
+     * Checks if an argument string contains a numerical argument.
+     * @param args The argument string to check for.
+     * @return True if the argument contains a numerical argument, false otherwise.
+     */
+    public static boolean containsNumberArgument(String args) {
+        return args.matches(HAS_NUMBER_IN_ARG);
+    }
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
