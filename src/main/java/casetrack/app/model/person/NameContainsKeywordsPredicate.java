@@ -6,7 +6,7 @@ import java.util.function.Predicate;
 import casetrack.app.commons.util.ToStringBuilder;
 
 /**
- * Tests that a {@code Person}'s {@code Name} contains any of the keywords given (partial matching).
+ * Tests that a {@code Person}'s {@code Name} matches any of the keywords given.
  */
 public class NameContainsKeywordsPredicate implements Predicate<Person> {
     private final List<String> keywords;
