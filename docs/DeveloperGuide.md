@@ -316,14 +316,14 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
   Use case ends.
 
-* 2a. Invalid NAME (contains digits/symbols)
+* 2a. Name is invalid.
     * 2a1. System shows an error message.
 
     * 2a2. No patient is added.
 
   Use case ends.
 
-* 2b. Invalid PHONE (not 3-17 digits):
+* 2b. Phone number is invalid.
 
     * 2b1. System shows an error message.
 
@@ -331,7 +331,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
   Use case ends.
 
-* 2c. Invalid INCOME (not numeric or < 0):
+* 2c. Income is invalid.
 
     * 2c1. System shows an error message.
 
@@ -339,7 +339,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
   Use case ends.
 
-* 2d. Invalid input format (e.g., unrecognized/missing prefixes, duplicated prefixes or empty values):
+* 2d. Invalid input parameters.
 
     * 2d1. System shows an appropriate input format error message, including the correct command usage and example.
 
@@ -347,7 +347,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
   Use case ends.
 
-* 3a. Duplicate patient found (patient with same name and phone already exists):
+* 3a. Duplicate patient found.
 
     * 3a1. System shows an error message.
 
