@@ -7,6 +7,7 @@ import static casetrack.app.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import org.junit.jupiter.api.Test;
 
+import casetrack.app.logic.Messages;
 import casetrack.app.logic.commands.ViewDetailsCommand;
 
 public class ViewDetailsCommandParserTest {
@@ -21,7 +22,7 @@ public class ViewDetailsCommandParserTest {
     @Test
     public void parse_patientWithInvalidFormat_throwsParseException() {
         assertParseFailure(parser, "-1",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewDetailsCommand.MESSAGE_USAGE));
+                String.format(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX, ViewDetailsCommand.MESSAGE_USAGE));
     }
 
     @Test
