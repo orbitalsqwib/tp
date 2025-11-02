@@ -727,15 +727,15 @@ Use case ends.
    Use case ends.
 
 **Extensions**
-* 2a. The patient index is invalid.
+* 3a. The patient index is invalid.
 
-    * 2a1. System shows an error message.
+    * 3a1. System shows an error message.
 
       Use case resumes at step 1.
 
-* 3a. No patient index is provided.
+* 3b. No patient index is provided.
 
-    * 3a1. System shows an error message.
+    * 3b1. System shows an error message.
 
       Use case resumes at step 1.
 
