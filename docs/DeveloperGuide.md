@@ -589,7 +589,7 @@ Use case ends.
 
 **Extensions**
 
-* 2a. Patient index is invalid (not a number, less than 1, or more than the number of total patients).
+* 2a. Patient index is invalid.
 
     * 2a1. System shows an error message.
 
