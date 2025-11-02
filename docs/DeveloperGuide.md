@@ -1137,3 +1137,20 @@ This appendix lists planned enhancements for upcoming releases.
     - Command: `search name John Tan` (current behavior) ➜ Returns all patients with "John" OR "Tan" in their names (e.g., "John Doe", "Mary Tan", "John Tan"), resulting in many irrelevant matches.
     - Command: `search name John Tan --any` (OR-based, optional) ➜ Returns patients with "John" OR "Tan" for broader searches when needed.
     - Result message displays search mode: `5 patients found matching all keywords: John, Tan` or `12 patients found matching any keyword: John, Tan`
+
+8. Include useful fields to make the application more complete
+    - Feature flaw: CaseTrack requires income as a mandatory field while lacking more critical healthcare-related fields such as date of birth, sex/gender, emergency contact, and insurance information. This makes the application feel incomplete for its intended healthcare management purpose, especially since medical information itself is optional while income is mandatory.
+    - Change: Introduce new fields for essential patient information. Add date of birth (mandatory), sex/gender (optional), emergency contact (optional with name and phone), and insurance provider (optional). Update validation logic and UI to accommodate these fields with appropriate input formats and display layouts.
+    - Sample inputs:
+```
+     add n/Sarah Lee dob/15/03/1985 g/Female p/91234567 e/sarah@example.com a/123 Street i/3500 \
+       ec/John Lee; 98765432 ins/MediShield Life
+     add n/David Ng dob/22/11/1992 p/87654321 e/david@example.com a/456 Avenue
+```
+- Sample UI (textual):
+    - Name: Sarah Lee
+    - Date of Birth: 15/03/1985 (Age: 40)
+    - Gender: Female
+    - Emergency Contact: John Lee (98765432)
+    - Insurance: MediShield Life
+    - Income: $3,500
