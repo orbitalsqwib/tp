@@ -79,7 +79,9 @@ CaseTrack is a **desktop app for managing patients, optimized for use via a  Lin
 
 * **PHONE_NUMBER**: Should only contain numbers, and it should be at least 3 digits long. The maximum length is **17 digits**, excluding any country code. An optional country code (up to 3 digits) may precede the phone number, with an optional '+' prefix. A space may optionally separate the country code from the main number.
   * Examples: `12345678`, `91234567`, `+65 91234567` (with space), `+6591234567` (without space), `1 800123456`, `999 12345678`
-  * **Note**: Only ONE phone number is accepted per patient. More than one number can be added in the notes. The following formats are NOT supported:
+  * **Note**: Only ONE phone number is accepted per patient in the phone field. This phone number is used for patient identification and searching.
+  * **Additional phone numbers** can be added in the patient's notes for reference purposes (e.g., "Secondary contact: 98765432"). However, **these additional phone numbers stored in notes cannot be used for searching** via the `search number` command. Only the primary phone number field is searchable.
+  * The following formats are NOT supported:
     * Hyphens or spaces within the main number (e.g., `1234-5678`, `1234 5678`)
     * Labels or text in parentheses (e.g., `91234567 (HP)`, `1234 5678 (Office)`)
     * Multiple phone numbers in one field (e.g., `1234 5678 (HP) 1111-3333 (Office)`)
