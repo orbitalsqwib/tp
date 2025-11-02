@@ -1,7 +1,7 @@
 ---
-layout: default.md
-title: "Developer Guide"
-pageNav: 3
+    layout: default.md
+    title: "Developer Guide"
+    pageNav: 3
 ---
 
 # CaseTrack Developer Guide
@@ -84,7 +84,10 @@ The sequence diagram below illustrates the interactions within the `Logic` compo
 
 <puml src="diagrams/DeletePatientSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `delete patient 1` Command" />
 
-> Note: The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of the diagram.
+<box type="info" seamless>
+
+**Note:** The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of diagram.
+</box>
 
 How the `Logic` component works:
 
@@ -750,7 +753,12 @@ Use case ends.
 
 Given below are instructions to test the app manually.
 
-> Note: These instructions only provide a starting point for testers to work on; testers are expected to do more exploratory testing.
+<box type="info" seamless>
+
+**Note:** These instructions only provide a starting point for testers to work on;
+testers are expected to do more *exploratory* testing.
+
+</box>
 
 ### Launch and shutdown
 
