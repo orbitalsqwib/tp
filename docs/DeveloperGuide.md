@@ -307,7 +307,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-* 1a. Missing mandatory fields (n/ or p/ absent, or empty after prefix)
+* 1a. Missing mandatory fields.
 
     * 1a1. System shows the required fields.
 
@@ -315,42 +315,19 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
   Use case ends.
 
-* 2a. Name is invalid.
+* 2a. Invalid input parameters.
+
     * 2a1. System shows an error message.
 
     * 2a2. No patient is added.
 
   Use case ends.
 
-* 2b. Phone number is invalid.
+* 2b. Duplicate patient found.
 
     * 2b1. System shows an error message.
 
     * 2b2. No patient is added.
-
-  Use case ends.
-
-* 2c. Income is invalid.
-
-    * 2c1. System shows an error message.
-
-    * 2c2. No patient is added.
-
-  Use case ends.
-
-* 2d. Invalid input parameters.
-
-    * 2d1. System shows an appropriate input format error message, including the correct command usage and example.
-
-    * 2d2. No patient is added.
-
-  Use case ends.
-
-* 2e. Duplicate patient found.
-
-    * 2e1. System shows an error message.
-
-    * 2e2. No patient is added.
 
   Use case ends.
 
@@ -362,10 +339,10 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. Social Worker inputs a list command.
+1. User inputs a list command.
 2. CaseTrack displays a list of all patients.
 
-Use case ends.
+   Use case ends.
 
 
 #### Use case (UC03): Delete patient
@@ -478,15 +455,9 @@ Use case ends.
 
       Use case ends.
 
-*	2c. Phone number invalid (not 3-17 digits).
+*	2c. Note text is empty.
 
     * 2c1. System shows an error message.
-
-      Use case ends.
-
-*	2d. Note text is empty.
-
-    * 2d1. System shows an error message.
 
       Use case ends.
 
