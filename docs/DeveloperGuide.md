@@ -299,9 +299,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1. User enters the `add` command in the format add n/NAME p/PHONE a/ADDRESS i/INCOME [m/MEDICAL_INFO].
-2. System parses the command and validates input
-3. System normalizes NAME (case-insensitive and multiple spaces collapsed to single space) and checks for duplicates using NAME+PHONE.
-4. System creates and saves the new patient record.
+2. System validates the input.
+3. System checks for duplicate patients.
+4. System creates the new patient record.
 5. System confirms through success message.
 
    Use case ends.
@@ -323,7 +323,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
   Use case ends.
 
-* 2b. Invalid PHONE (not 3-17 digits after trimming):
+* 2b. Invalid PHONE (not 3-17 digits):
 
     * 2b1. System shows an error message.
 
@@ -347,7 +347,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
   Use case ends.
 
-* 3a. Duplicate patient found (same normalized NAME and same PHONE already exist):
+* 3a. Duplicate patient found (patient with same name and phone already exists):
 
     * 3a1. System shows an error message.
 
@@ -373,11 +373,11 @@ Use case ends.
 
 **MSS**
 
-1. User requests to list patients
-2.  System <u>shows a list of patients</u> ([UC02](#use-case-uc02-view-all-patients))
-3.  User requests to delete a specific patients in the list
-4.  System deletes the patient
-5.  System shows success message
+1. User requests to list patients.
+2.  System <u>shows a list of patients</u> ([UC02](#use-case-uc02-view-all-patients)).
+3.  User requests to delete a specific patients in the list.
+4.  System deletes the patient.
+5.  System shows success message.
 
     Use case ends.
 
@@ -411,9 +411,8 @@ Use case ends.
 **MSS**
 
 1. User enters the `search` command with one or more filter attributes (name, condition, and/or income).
-2. System parses the command and validates input parameters.
-3. System filters the patient list based on the provided criteria.
-4. System displays all matching patient records showing name, condition, and income.
+2. System validates input parameters.
+3. System displays all matching patient records.
 
    Use case ends.
 
@@ -478,11 +477,10 @@ Use case ends.
 
 **MSS**
 
-1.	User types the command to add a quick note with patient reference and text.
-2.	System validates the patient reference (index or Name + Phone).
-3.	System validates the note text is not empty.
-4.	System stores the note under the patient’s record.
-5.	System confirms success by displaying the created note.
+1. User requests to add a quick note with patient reference and text.
+2. System validates the patient reference and note text.
+3. System stores the note to the patient's record.
+4. System confirms success by displaying the created note.
 
     Use case ends.
 
@@ -526,11 +524,11 @@ Use case ends.
 * Invalid inputs will not delete notes.
 
 **MSS**
-1.	User types the command to remove a quick note with patient reference and note index.
-2.	System validates the patient reference (index or Name + Phone).
-3.	System validates the note index.
-4.	System deletes the specified note under the patient’s record.
-5.	System confirms success by displaying the deleted note.
+
+1. User requests to remove a quick note with patient reference and note index.
+2. System validates the patient reference and note index.
+3. System deletes the specified note from the patient's record.
+4. System confirms success by displaying the deleted note.
 
     Use case ends.
 
@@ -547,7 +545,7 @@ Use case ends.
 
       Use case ends.
 
-*	2c. Phone number invalid (not 3-17 digits).
+*	2c. Phone number is invalid.
 
     * 2c1. System shows an error message.
 
@@ -559,7 +557,7 @@ Use case ends.
 
       Use case ends.
 
-*	3b. Note index is invalid (not a number, less than 1, or more than the number of total notes the patient currently has)
+*	3b. Note index is invalid.
 
     * 3b1. System shows an error message.
 
@@ -583,11 +581,9 @@ Use case ends.
 **MSS**
 
 1. User types the command to edit a quick note with patient index, note index, and new note text.
-2. System validates the patient index.
-3. System validates the note index.
-4. System validates the new note text.
-5. System replaces the specified note under the patient's record with the new note text.
-6. System confirms success by displaying the updated note.
+2. System validates the patient index, note index, and new note text.
+3. System replaces the specified note under the patient's record with the new note text.
+4. System confirms success by displaying the updated note.
 
    Use case ends.
 
@@ -605,7 +601,7 @@ Use case ends.
 
     Use case ends.
 
-* 3b. Note index is invalid (not a number, less than 1, or more than the number of total notes the patient currently has).
+* 3b. Note index is invalid or empty.
 
     * 3b1. System shows an error message.
 
@@ -617,15 +613,9 @@ Use case ends.
 
     Use case ends.
 
-* 4a. Note text is empty or contains only whitespace.
+* *a. At any time, User cancels the action.
 
-  * 4a1. System shows an error message.
-
-  Use case ends.
-
-- \*a. At any time, User cancels the action.
-
-  Use case ends.
+    Use case ends.
 
 #### Use case (UC08): Edit patient income
 
