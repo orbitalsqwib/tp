@@ -298,7 +298,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User enters the `add` command.
+1. User requests to add a patient.
 2. System validates the input.
 3. System creates the new patient record.
 4. System confirms through success message.
