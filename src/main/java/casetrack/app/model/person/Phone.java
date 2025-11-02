@@ -18,6 +18,7 @@ public class Phone {
                     + "A space may optionally separate the country code from the main number.";
     public static final String VALIDATION_REGEX = "(\\+\\d{1,3}\\s?|\\d{1,3}\\s)?\\d{3,17}";
     public final String value;
+    private final String normalizedValue;
 
     /**
      * Constructs a {@code Phone}.
@@ -28,6 +29,19 @@ public class Phone {
         requireNonNull(phone);
         checkArgument(isValidPhone(phone), MESSAGE_CONSTRAINTS);
         value = phone;
+        normalizedValue = normalize(phone);
+    }
+
+    /**
+     * Normalizes a phone number by removing all '+' signs and spaces.
+     * This allows phone numbers like "+65 91234567", "65 91234567", and "+6591234567"
+     * to be treated as equal during comparison.
+     *
+     * @param phone The phone number to normalize.
+     * @return The normalized phone number containing only digits.
+     */
+    private static String normalize(String phone) {
+        return phone.replaceAll("[+\\s]", "");
     }
 
     /**
@@ -54,12 +68,12 @@ public class Phone {
         }
 
         Phone otherPhone = (Phone) other;
-        return value.equals(otherPhone.value);
+        return normalizedValue.equals(otherPhone.normalizedValue);
     }
 
     @Override
     public int hashCode() {
-        return value.hashCode();
+        return normalizedValue.hashCode();
     }
 
 }
