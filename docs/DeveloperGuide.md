@@ -406,11 +406,11 @@ Use case ends.
   Use case ends.
 
 
-#### Use case (UC04): Search Patients
+#### Use case (UC04): Search patient
 
 **MSS**
 
-1. User enters the `search` command with one or more filter attributes (name, condition, and/or income).
+1. User requests search with a single filter attribute (name, number, email, or tag).
 2. System validates input parameters.
 3. System displays all matching patient records.
 
@@ -447,7 +447,7 @@ Use case ends.
     Use case ends.
 
 
-#### Use case (UC05): Add Quick Note
+#### Use case (UC05): Add quick note
 
 **Preconditions**
 * Patient record exists in the system (by index or by Name + Phone).
@@ -495,7 +495,7 @@ Use case ends.
 
     Use case ends.
 
-#### Use case: (UC06): Delete Quick Note
+#### Use case: (UC06): Delete quick note
 
 **Preconditions**
 * Patient record exists in the system (by index or by Name + Phone).
@@ -549,7 +549,7 @@ Use case ends.
 
     Use case ends.
 
-#### Use case: (UC07): Edit Quick Note
+#### Use case: (UC07): Edit quick note
 
 **Preconditions**
 * Patient record exists in the system (by index or by Name + Phone).
