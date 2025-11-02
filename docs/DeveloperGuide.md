@@ -1064,4 +1064,23 @@ The codebase currently retains naming conventions from the original AddressBook3
 
 **Planned Enhancement:**
 
-Systematically rename all AddressBook references to appropriate CaseTrack or Patient-centric terminology:
+Systematically rename all AddressBook references to appropriate CaseTrack or Patient-centric terminology
+
+### Structured Medical Information
+
+**Current State:**
+
+The medical information field (`m/MEDICAL-INFO`) currently stores all patient medical data as a single, unformatted string. When entering detailed medical information, users must input everything on one line without structure:
+
+```
+add n/Noah Tan p/91234567 e/noah.tan@example.com a/123 Serangoon Ave i/4000 
+m/Blood Pressure: 128/82 mmHg; Pulse: 76 bpm; Temperature: 37.1°C; 
+Allergies: Penicillin (rash), Peanuts (mild swelling); 
+Medical History: Type 2 Diabetes diagnosed 2019, Hypertension since 2021; 
+Current Medications: Metformin 500mg daily, Lisinopril 10mg daily; 
+Notes: Reports occasional dizziness, advised to monitor BP daily.
+```
+
+**Planned Enhancement:**
+
+Implement something more user friendly such as structured medical information system with dedicated subsections
