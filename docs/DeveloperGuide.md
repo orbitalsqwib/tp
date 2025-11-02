@@ -609,23 +609,21 @@ Use case ends.
 
   Use case ends.
 
-#### Use case (UC08): Edit patient income
+#### Use case (UC08): Edit patient
 
 **Preconditions**
 * At least one patient is listed in the current view.
 
 **Guarantees**
-* Income is updated only when a valid patient selection and a valid income value are provided.
+* Patient details are updated only when a valid patient selection and valid details are provided.
 * Invalid inputs do not modify any patient data.
 
 **MSS**
 1. User requests to list patients.
-2. System shows a list of patients. (See [UC02](#use-case-uc02-view-all-patients))
-3. User initiates an update to a patient's income, identifying the target patient and providing the new income value.
-4. System validates the patient selection.
-5. System validates the income value.
-6. System updates the patient's income.
-7. System confirms that the update was successful.
+2. System <u>shows a list of patients</u> ([UC02](#use-case-uc02-view-all-patients))
+3. User requests an update to a patient details.
+4. System updates the patient's details.
+5. System confirms that the update was successful.
 
    Use case ends.
 
@@ -636,21 +634,21 @@ Use case ends.
 
       Use case ends.
 
-* 3a. No income value is provided.
+* 3a. The patient selection is invalid.
 
-    * 3a1. System indicates that an income value is required.
-
-      Use case ends.
-
-* 4a. The patient selection is invalid.
-
-    * 4a1. System indicates that the selection is invalid.
+    * 3a1. System shows an error message.
 
       Use case resumes at step 2.
 
-* 5a. The income value does not satisfy validation rules (e.g., non-numeric, negative, contains currency symbols or commas).
+* 3b. The patient edit details are invalid.
 
-    * 5a1. System indicates the validation error.
+    * 3b1. System shows an error message.
+
+      Use case ends.
+
+* 3c. Duplicate patient found.
+
+    * 3c1. System shows an error message.
 
       Use case ends.
 
@@ -658,57 +656,7 @@ Use case ends.
 
   Use case ends.
 
-
-#### Use case (UC09): Edit patient medical information
-
-**Preconditions**
-* At least one patient is listed in the current view.
-
-**Guarantees**
-* Medical information is updated only when a valid patient selection and a valid medical information value are provided.
-* Invalid inputs do not modify any patient data.
-
-**MSS**
-1. User requests to list patients.
-2. System shows a list of patients. (See [UC02](#use-case-uc02-view-all-patients))
-3. User initiates an update to a patient's medical information, identifying the target patient and providing the new medical information.
-4. System validates the patient selection.
-5. System validates the medical information.
-6. System updates the patient's medical information.
-7. System confirms that the update was successful.
-
-   Use case ends.
-
-**Extensions**
-* 2a. The list is empty.
-
-    * 2a1. System indicates that there are no patients available.
-
-      Use case ends.
-
-* 3a. No medical information is provided.
-
-    * 3a1. System indicates that medical information is required.
-
-      Use case ends.
-
-* 4a. The patient selection is invalid.
-
-    * 4a1. System indicates that the selection is invalid.
-
-      Use case resumes at step 2.
-
-* 5a. The medical information does not satisfy validation rules (e.g., only whitespace).
-
-    * 5a1. System indicates the validation error.
-
-      Use case ends.
-
-* *a. At any time, User cancels the action.
-
-  Use case ends.
-
-#### Use case (UC10): View patient details
+#### Use case (UC09): View patient details
 
 **Preconditions**
 * At least one patient is listed in the current view.
