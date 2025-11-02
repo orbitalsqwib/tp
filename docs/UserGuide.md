@@ -6,7 +6,7 @@
 
 # CaseTrack User Guide
 
-CaseTrack is a **desktop app for managing patients, optimized for use via a  Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, CaseTrack can get your patient management tasks done faster than traditional GUI apps.
+CaseTrack is a **desktop app for managing patients, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, CaseTrack can get your patient management tasks done faster than traditional GUI apps.
 
 <!-- * Table of Contents -->
 <page-nav-print />
