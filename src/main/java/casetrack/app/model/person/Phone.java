@@ -34,8 +34,6 @@ public class Phone {
 
     /**
      * Normalizes a phone number by removing all '+' signs and spaces.
-     * This allows phone numbers like "+65 91234567", "65 91234567", and "+6591234567"
-     * to be treated as equal during comparison.
      *
      * @param phone The phone number to normalize.
      * @return The normalized phone number containing only digits.
