@@ -272,7 +272,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | User                                        | list all patients at once    | browse patient records easily and get an overview of my caseload      |
 | `* * *`  | User                                        | delete patient records        | clean up patient records when they are no longer relevant or cases are closed |
 | `* * *`  | New User                                    | see usage instructions and command help | refer to instructions when I forget how to use the app |
-| `* *`     | Social Worker                               | filter patients by attributes (medical condition, income level, name) | get information about my patients quickly during sessions |
+| `* *`     | Social Worker                               | filter patients by a single attribute (name, number, email, or tag) | get information about my patients quickly during sessions |
 | `* *`     | Social Worker                               | take quick notes during or right after a session, even with incomplete data | capture important context immediately and avoid forgetting key details later |
 | `* *`     | Social Worker                               | enter partial patient details and still retrieve useful results | still access key patient information even when the data I have is incomplete |
 | `* *`     | Social Worker                               | tag and categorize patients based on needs | prioritize cases and follow up more systematically |
@@ -406,59 +406,41 @@ Use case ends.
   Use case ends.
 
 
-#### Use case (UC04): Search/Filter Patients
+#### Use case (UC04): Search Patients
 
 **MSS**
 
-1. User enters the `search` command with one or more filter attributes (name, condition, and/or income).
+1. User enters the `search` command with a single filter attribute (name, number, email, or tag) and one or more keywords.
 2. System parses the command and validates input parameters.
 3. System filters the patient list based on the provided criteria.
-4. System displays all matching patient records showing name, condition, and income.
+4. System displays all matching patient records.
 
    Use case ends.
 
 **Extensions**
 
-* 1a. No attributes specified (empty search command).
+* 1a. No field or keywords specified (empty search command).
 
     * 1a1. System shows an error message.
 
       Use case ends.
 
-* 2a. Invalid name format (contains non-alphabetic characters except spaces and hyphens).
+* 2a. Invalid field specified (not name, number, email, or tag).
 
     * 2a1. System shows an error message.
 
       Use case ends.
 
-* 2b. Invalid condition format (contains non-alphabetic characters except spaces and hyphens).
+* 2b. No keywords provided after field specification.
 
     * 2b1. System shows an error message.
 
       Use case ends.
 
-* 2c. Invalid income format (not a positive number, contains commas or currency symbols).
-
-    * 2c1. System shows an error message.
-
-      Use case ends.
-
-* 2d. Unrecognized attribute prefix (e.g., age/, city/).
-
-    * 2d1. System shows an error message.
-
-      Use case ends.
-
-* 2e. Empty attribute value (e.g., name/, condition/, income/).
-
-    * 2e1. System shows error for the specific empty attribute.
-
-      Use case ends.
-
 * 3a. No patients match the search criteria.
 
-    * 3a1. System informs the User that there are no patients available.
-    
+    * 3a1. System informs the User that no patients match the search criteria.
+
       Use case ends.
 
 * *a. At any time, User cancels the action.
