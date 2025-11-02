@@ -1165,3 +1165,16 @@ This appendix lists planned enhancements for upcoming releases.
         - Settings option ➜ Users can configure the default number of visible tags (e.g., 5, 10, 15, or "show all").
     - Sample UI (textual):
         - Tags: [Diabetes] [Hypertension] [High-Risk] [Regular-Checkup] [Senior] [Wheelchair] [Hearing-Aid] [Vision-Impaired] [Cognitive-Decline] [Fall-Risk] ... +42 more [Expand ▼]
+
+10. Support adding multiple notes to a patient in a single command
+- Feature flaw: The `note` command currently only processes the first note when multiple `t/` prefixes are provided in a single command (e.g., `note 2 t/first note t/second note`), ignoring subsequent notes. This requires users to execute multiple commands to add several notes, reducing efficiency.
+- Change: Extend the `note` command to accept and process multiple `t/` prefixes in a single command, adding all specified notes to the patient's note list in the order provided.
+- Sample inputs:
+```
+ note 2 t/Patient reports chest pain during exercise t/Scheduled for ECG next week t/Follow-up required
+ note 5 t/Medication dosage adjusted t/Patient tolerating new dosage well
+```
+- Sample behavior:
+- Command: `note 2 t/first note t/second note t/third note` ➜ All three notes are added to patient #2's record
+- Success message: `3 notes added to patient: John Tan`
+- Single note command continues to work: `note 2 t/single note` ➜ Adds one note as before.
