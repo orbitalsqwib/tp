@@ -109,7 +109,7 @@ CaseTrack is a **desktop app for managing patients, optimized for use via a Comm
 
 * **MEDICAL_INFO**: Can take any values, and it should not be blank.
 
-* **TAG**: Should be alphanumeric without spaces.
+* **TAG**: Should be alphanumeric and may contain hyphens, without spaces.
 
 </box>
 
