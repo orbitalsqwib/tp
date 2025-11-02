@@ -255,7 +255,7 @@ Format: `view <PATIENT_INDEX>`
 
 <box type="info" seamless>
 
-**Note:** The `view` command works with any currently displayed patient list. After using `list`, `search`, or any other command that filters patients, you can use `view` with the index from that filtered list. This allows you to quickly navigate and view patient details entirely through keyboard commands.
+**Note:** The `view` command works with any currently displayed patient list. After using `list`, `search`, or any other command that filters patients, you can use `view` with the patient index from that filtered list. This allows you to quickly view patient details entirely through keyboard commands.
 
 </box>
 
