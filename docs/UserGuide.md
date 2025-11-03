@@ -84,6 +84,8 @@ CaseTrack is a **desktop app for managing patients, optimized for use via a Comm
   * **Country Code** (optional): Up to 3 digits with optional `+` prefix
     * With space: `+65 91234567` (recommended) - digits before space = country code
     * Without space: `+6591234567` - first 3 digits = country code
+  * **Note**: Only ONE phone number is accepted per patient in the phone field. This phone number is used for patient identification and searching.
+  * **Additional phone numbers** can be added in the patient's notes for reference purposes (e.g., "Secondary contact: 98765432"). However, **these additional phone numbers stored in notes cannot be used for searching** via the `search number` command. Only the primary phone number field is searchable.
   * **Valid Examples**:
     * `91234567`
     * `+65 91234567` (with space)
