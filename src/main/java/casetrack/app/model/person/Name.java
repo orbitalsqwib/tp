@@ -11,7 +11,7 @@ public class Name {
 
     public static final String MESSAGE_CONSTRAINTS =
             "Names should only contain alphanumeric characters, spaces, periods (.), apostrophes ('), hyphens (-),"
-                    + "round brackets (()), at (@), 's/o' or 'd/o' (non case-sensitive), and it should not be blank."
+                    + "round brackets (()), at (@), 's/o' or 'd/o' (case-insensitive), and it should not be blank."
                     + " Names must contain at least one alphabetic character.";
 
     /*
