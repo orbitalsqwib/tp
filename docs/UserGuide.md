@@ -74,20 +74,22 @@ CaseTrack is a **desktop app for managing patients, optimized for use via a Comm
 
 **Notes about parameter formats:**<br>
 
-* **NAME**: Should only contain alphanumeric characters, spaces, periods (.), apostrophes ('), hyphens (-), 's/o', 'd/o', 'S/O', or 'D/O', and it should not be blank. Names cannot be fully numeric (e.g., `123` or `456789` are not allowed).
+* **NAME**: Names should only contain alphanumeric characters, spaces, periods (.), apostrophes ('), hyphens (-), round brackets (()), at (@), 's/o' or 'd/o'
+  (non case-sensitive), and it should not be blank. Names cannot be fully numeric (e.g., `123` or `456789` are not allowed), and must contain at least
+  one alphabetic character.
   * Examples: `John Doe`, `Dr. Lim`, `o'Connor`, `Mary O'Brien`, `John Jr.`, `Ravichandran S/O Tharumalinga`, `Mary-Jane`, `Jean-Claude`
 
-* **PHONE_NUMBER**: 
+* **PHONE_NUMBER**:
   * **Basic Format**: 3-17 digits, numbers only
   * **Country Code** (optional): Up to 3 digits with optional `+` prefix
     * With space: `+65 91234567` (recommended) - digits before space = country code
     * Without space: `+6591234567` - first 3 digits = country code
-  * **Valid Examples**: 
+  * **Valid Examples**:
     * `91234567`
     * `+65 91234567` (with space)
     * `+6591234567` (without space)
     * `1 800123456`
-  * **Limitations**: 
+  * **Limitations**:
     * One phone number per patient (add more in notes)
     * No hyphens, spaces within number, labels, or parentheses
     * Not supported: `1234-5678`, `91234567 (HP)`, `(+65) 91234567`
@@ -132,8 +134,9 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS i/INCOME [m/MEDICAL_INFO] [
 <box type="info" seamless>
 
 **Constraints:**
-* Names should only contain alphanumeric characters, spaces, periods (.), apostrophes ('), hyphens (-), 's/o', 'd/o', 'S/O', or 'D/O', and it should not be blank
-* Names cannot be fully numeric (e.g., `123` or `456789` are not allowed)
+* Names should only contain alphanumeric characters, spaces, periods (.), apostrophes ('), hyphens (-), round brackets (()), at (@), 's/o' or 'd/o'
+  (non case-sensitive), and it should not be blank.
+* Names cannot be fully numeric (e.g., `123` or `456789` are not allowed), and must contain at least one alphabetic character.
 </box>
 
 <box type="tip" seamless>
