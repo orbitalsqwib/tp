@@ -1052,3 +1052,133 @@ testers are expected to do more *exploratory* testing.
       1. Go to `/data` folder and delete `casetrack.json`.
       2. Launch CaseTrack.
       3. CaseTrack launches normally with sample data loaded.
+
+## **Appendix: Planned Enhancements**
+
+Team size: 5
+
+This appendix lists planned enhancements for upcoming releases.
+
+1. Make product terminology consistent across UI, logs, and docs
+   - Feature flaw: Mixed "AddressBook" terms remain in UI messages, class names, and diagrams, which can confuse users (e.g., error logs mention `AddressBookStorage`).
+   - Change: Standardize user-facing terminology to "CaseTrack" and patient-centric terms. Update UI strings, log messages, and documentation references. No functional behavior changes.
+   - Sample outputs:
+     - Before: `Failed to save AddressBook to file.`
+     - After: `Failed to save CaseTrack data to file.`
+
+2. Make medical information input structured and readable
+   - Feature flaw: The `m/` field is an unstructured free‑text blob, making information hard to read and impossible to filter precisely.
+   - Change: Accept optional subfields when adding/editing a patient, and render them as labeled sections in the UI.
+   - Sample inputs:
+     ```
+     add n/Noah Tan p/91234567 e/noah.tan@example.com a/123 Serangoon Ave i/4000 \
+       v/BP 128/82; Pulse 76; Temp 37.1 \
+       al/Penicillin(rash), Peanuts(swelling) \
+       mh/T2D(2019); Hypertension(2021) \
+       cm/Metformin 500mg daily; Lisinopril 10mg daily \
+       cn/Reports occasional dizziness
+     ```
+   - Sample UI (textual):
+     - Vitals: BP 128/82, Pulse 76, Temp 37.1°C
+     - Allergies: Penicillin (rash), Peanuts (swelling)
+     - History: T2D (2019), Hypertension (2021)
+     - Medications: Metformin 500mg daily; Lisinopril 10mg daily
+     - Notes: Reports occasional dizziness
+
+3. Make Help command restore and focus the Help window
+   - Feature flaw: Re-running `help` when the Help window is minimized does nothing visible; users think the command failed.
+   - Change: If a Help window exists, bring it to front and un-minimize it; otherwise, open a new Help window. Provide a status message when restored.
+   - Sample behavior:
+     - Command: `help` (when Help is minimized) ➜ Help window is restored and focused; status bar shows: `Help window restored`.
+     - Command: `help` (when Help is closed) ➜ Help window opens as usual.
+
+4. Extend search to cover medical conditions in patient records
+   - Feature flaw: Existing search supports name/phone/email/tag only; users cannot find patients by conditions or medications stored in medical info.
+   - Change: Extend the existing `search` command with qualifiers that filter by structured medical info or substrings within the medical information field.
+   - Sample inputs:
+     ```
+     search condition asthma
+     search condition diabetes
+     search meds metformin
+     search allergy penicillin
+     ```
+   - Expected outcome: Lists patients whose medical information matches the qualifier (e.g., all patients with asthma or taking Metformin).
+
+5. Add country code context for consistent phone number handling
+    - Feature flaw: Phone numbers with and without country codes (e.g., "9111 1111" vs "+65 9111 1111") are treated as distinct, allowing duplicate patients with identical details but different phone number formats to be added.
+    - Change: Allow users to configure a default country code in application settings. When checking for duplicates, normalize all phone numbers by applying the default country code to numbers lacking one. Display the active country code setting prominently in the UI and provide clear feedback about phone number normalization.
+    - Sample inputs:
+    ```
+     setcountry +65
+     add n/John Doe p/9111 1111 e/john@example.com a/123 Street
+     add n/John Doe p/+65 9111 1111 e/john@example.com a/123 Street
+    ```
+    - Sample behavior:
+        - Command: `setcountry +65` ➜ Status bar shows: `Default country code set to +65. Phone numbers without country codes will be treated as +65 numbers for duplicate detection.`
+        - First `add` command succeeds; internally normalized and stored as "+65 9111 1111"
+        - Second `add` command fails with: `This patient already exists in CaseTrack. A patient with the name "John Doe" and phone number "+65 9111 1111" is already registered.`
+        - UI displays country code indicator in settings panel (e.g., "Default Country Code: +65") and shows normalized format in patient details
+
+6. Make result display box dynamically resizable for improved readability
+    - Feature flaw: The result display box remains fixed in size, requiring users to scroll vertically and/or horizontally to view long messages or error feedback, even when the application window is maximized. This breaks the natural command-feedback flow and hinders usability.
+    - Change: Implement dynamic resizing for the result display box with automatic text wrapping and adaptive height. The box should expand to accommodate longer messages up to a reasonable maximum, and all UI components should resize proportionally when the application window is resized. Enable smooth vertical scrolling only when messages exceed the maximum displayable height.
+    - Sample behavior:
+        - User executes command with invalid format ➜ Result box expands vertically to display the complete error message without horizontal scrolling; text wraps naturally within the available width.
+        - User maximizes application window ➜ Result box scales proportionally, displaying more content without requiring scrolling for moderately long messages.
+        - User executes command with extremely long output ➜ Result box expands to predefined maximum height (e.g., 40% of window height), then enables smooth vertical scrolling for remaining content.
+        - All feedback messages remain immediately visible without manual scrolling for typical use cases, preserving the CLI-style immediate feedback experience.
+
+7. Make search name function use AND-based matching for precise results
+    - Feature flaw: The `search name` command performs a loose OR-based keyword match, returning any patient whose name contains any of the provided keywords rather than all of them. This causes search results to include many irrelevant entries, making it difficult to locate specific patients efficiently.
+    - Change: Modify the `search name` command to use AND-based matching by default, requiring all provided keywords to be present in the patient's name. Optionally, add a flag to enable OR-based matching when users need broader search results.
+    - Sample inputs:
+    ```
+         search name John Tan
+         search name John Tan --any
+    ```
+    - Sample behavior:
+       - Command: `search name John Tan` (AND-based, default) ➜ Returns only patients whose names contain both "John" AND "Tan" (e.g., "John Tan", "Tan John Wei").
+       - Command: `search name John Tan` (current behavior) ➜ Returns all patients with "John" OR "Tan" in their names (e.g., "John Doe", "Mary Tan", "John Tan"), resulting in many irrelevant matches.
+       - Command: `search name John Tan --any` (OR-based, optional) ➜ Returns patients with "John" OR "Tan" for broader searches when needed.
+       - Result message displays search mode: `5 patients found matching all keywords: John, Tan` or `12 patients found matching any keyword: John, Tan`
+
+8. Include useful fields to make the application more complete
+    - Feature flaw: CaseTrack requires income as a mandatory field while lacking more critical healthcare-related fields such as date of birth, sex/gender, emergency contact, and insurance information. This makes the application feel incomplete for its intended healthcare management purpose, especially since medical information itself is optional while income is mandatory.
+    - Change: Introduce new fields for essential patient information. Add date of birth (mandatory), sex/gender (optional), emergency contact (optional with name and phone), and insurance provider (optional). Update validation logic and UI to accommodate these fields with appropriate input formats and display layouts.
+    - Sample inputs:
+    ```
+         add n/Sarah Lee dob/15/03/1985 g/Female p/91234567 e/sarah@example.com a/123 Street i/3500 \
+           ec/John Lee; 98765432 ins/MediShield Life
+         add n/David Ng dob/22/11/1992 p/87654321 e/david@example.com a/456 Avenue
+    ```
+    - Sample UI (textual):
+       - Name: Sarah Lee
+       - Date of Birth: 15/03/1985 (Age: 40)
+       - Gender: Female
+       - Emergency Contact: John Lee (98765432)
+       - Insurance: MediShield Life
+       - Income: $3,500
+
+9. Optimize tag handling and rendering for improved performance
+    - Feature flaw: The application experiences significant lag and slowdown when a large number of tags are attached to a single patient, impacting responsiveness and usability for users who utilize extensive tagging systems.
+    - Change: Implement performance optimizations for tag storage, retrieval, and rendering. Add lazy loading for tag display, optimize the UI rendering pipeline to handle large tag collections efficiently, and introduce a configurable limit on the maximum number of visible tags (with an expandable "show more" option). Refactor the underlying tag data structure to improve lookup and filtering performance.
+    - Sample behavior:
+        - Patient with 50+ tags ➜ UI displays first 10 tags with a badge showing "+40 more tags" and an expand button; clicking expands to show all tags in a scrollable view.
+        - Tag filtering and search operations ➜ Remain responsive even with patients having 100+ tags due to optimized indexing.
+        - Tag display rendering ➜ Uses virtualization to render only visible tags, significantly reducing DOM overhead.
+        - Settings option ➜ Users can configure the default number of visible tags (e.g., 5, 10, 15, or "show all").
+    - Sample UI (textual):
+        - Tags: [Diabetes] [Hypertension] [High-Risk] [Regular-Checkup] [Senior] [Wheelchair] [Hearing-Aid] [Vision-Impaired] [Cognitive-Decline] [Fall-Risk] ... +42 more [Expand ▼]
+
+10. Support adding multiple notes to a patient in a single command
+    - Feature flaw: The `note` command currently only processes the first note when multiple `t/` prefixes are provided in a single command (e.g., `note 2 t/first note t/second note`), ignoring subsequent notes. This requires users to execute multiple commands to add several notes, reducing efficiency.
+    - Change: Extend the `note` command to accept and process multiple `t/` prefixes in a single command, adding all specified notes to the patient's note list in the order provided.
+    - Sample inputs:
+    ```
+     note 2 t/Patient reports chest pain during exercise t/Scheduled for ECG next week t/Follow-up required
+     note 5 t/Medication dosage adjusted t/Patient tolerating new dosage well
+    ```
+    - Sample behavior:
+      - Command: `note 2 t/first note t/second note t/third note` ➜ All three notes are added to patient #2's record
+      - Success message: `3 notes added to patient: John Tan`
+      - Single note command continues to work: `note 2 t/single note` ➜ Adds one note as before.
