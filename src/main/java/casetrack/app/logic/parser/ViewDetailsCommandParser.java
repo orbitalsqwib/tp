@@ -3,7 +3,6 @@ package casetrack.app.logic.parser;
 import static casetrack.app.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import casetrack.app.commons.core.index.Index;
-import casetrack.app.logic.Messages;
 import casetrack.app.logic.commands.Command;
 import casetrack.app.logic.commands.ViewDetailsCommand;
 import casetrack.app.logic.parser.exceptions.ParseException;

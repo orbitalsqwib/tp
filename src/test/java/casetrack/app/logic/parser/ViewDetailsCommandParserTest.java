@@ -7,7 +7,6 @@ import static casetrack.app.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import org.junit.jupiter.api.Test;
 
-import casetrack.app.logic.Messages;
 import casetrack.app.logic.commands.ViewDetailsCommand;
 
 public class ViewDetailsCommandParserTest {
